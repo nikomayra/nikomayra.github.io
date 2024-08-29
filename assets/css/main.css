@@ -3433,3 +3433,9 @@ input[type='button']:disabled,
     padding: 0;
   }
 }
+
+/* Override Fancybox close button position with more specificity */
+.fancybox__container .fancybox__button--close {
+  right: auto !important; /* Reset the right position */
+  left: 0 !important; /* Position it to the left */
+}
