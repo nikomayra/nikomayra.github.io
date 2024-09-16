@@ -2844,8 +2844,8 @@ input[type='button']:disabled,
 
 #header > header .avatar {
   display: block;
-  margin: 0 auto 2.25em auto;
-  width: 8em;
+  margin: 0 auto 1.5em auto;
+  width: 13em;
 }
 
 #header > header h1 {
@@ -3307,8 +3307,8 @@ input[type='button']:disabled,
   }
 
   #header > header .avatar {
-    margin: 0 auto 1.6875em auto;
-    width: 6em;
+    margin: 0 auto 1.5em auto;
+    width: 11em;
   }
 
   #header > header h1 {
