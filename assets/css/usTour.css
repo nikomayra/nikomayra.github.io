@@ -1,0 +1,16 @@
+.us-tour-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.us-tour-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=usTour.css.map */

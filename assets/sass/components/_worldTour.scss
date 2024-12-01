@@ -1,0 +1,31 @@
+@use "../libs/vars" as *;
+@use "sass:map";
+
+.world-tour-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .globe {
+    fill: map.get($palette, "primary", "bg");
+    stroke: map.get($palette, "secondary", "bg");
+    stroke-width: 1px;
+  }
+
+  .graticule {
+    fill: none;
+    stroke: map.get($palette, "secondary", "bg");
+    stroke-width: 0.5px;
+    stroke-opacity: 0.5;
+  }
+}
