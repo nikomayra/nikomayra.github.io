@@ -1,3 +1,4 @@
+import * as d3 from "https://cdn.skypack.dev/d3@7";
 import * as topojson from "https://cdn.skypack.dev/topojson-client@3";
 
 // Modified version of https://observablehq.com/@d3/us-state-choropleth/2
@@ -16,52 +17,132 @@ import * as topojson from "https://cdn.skypack.dev/topojson-client@3";
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-document.addEventListener("DOMContentLoaded", function () {
-  const container = document.querySelector(".us-tour-container");
-  if (!container) return;
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-  const path = d3.geoPath();
-  //   const usData = JSON.parse("../data/states-10m.json");
-  const us = statesData;
-  console.log("us", us);
-  // The counties feature collection is all U.S. counties, each with a
-  // five-digit FIPS identifier. The statemap lets us lookup the name of
-  // the state that contains a given county; a state’s two-digit identifier
-  // corresponds to the first two digits of its counties’ identifiers.
-  const counties = topojson.feature(us, us.objects.counties);
-  const states = topojson.feature(us, us.objects.states);
-  const statemap = new Map(states.features.map((d) => [d.id, d]));
-  console.log("statemap", statemap);
-  // The statemesh is just the internal borders between states, i.e.,
-  // everything but the coastlines and country borders. This avoids an
-  // additional stroke on the perimeter of the map, which would otherwise
-  // mask intricate features such as islands and inlets. (Try removing
-  // the last argument to topojson.mesh below to see the effect.)
-  const statemesh = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
-  console.log("statemesh", statemesh);
+// State name mapping (TopoJSON uses full names)
+const stateAbbreviations = {
+  California: "CA",
+  Georgia: "GA",
+  Florida: "FL",
+  "New York": "NY",
+  Texas: "TX",
+  Washington: "WA",
+  Arizona: "AZ",
+  Hawaii: "HI",
+  Illinois: "IL",
+  Missouri: "MO",
+  Nebraska: "NE",
+  Pennsylvania: "PA",
+  "South Carolina": "SC",
+  Tennessee: "TN",
+  Alabama: "AL",
+  Colorado: "CO",
+  Kentucky: "KY",
+  "North Carolina": "NC",
+  "South Dakota": "SD",
+  Utah: "UT",
+  Wisconsin: "WI",
+  Idaho: "ID",
+  Montana: "MT",
+  "New Mexico": "NM",
+  Oregon: "OR",
+  Nevada: "NV",
+  Wyoming: "WY",
+  Kansas: "KS",
+  Connecticut: "CT",
+  Iowa: "IA",
+};
 
+const visitedStates = {
+  visitedStates: Object.keys(stateAbbreviations),
+};
+
+function getColorValue(cssVar) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(cssVar)
+    .trim();
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+  const tooltip = d3.select("#us-tour").append("div").attr("class", "tooltip");
+
+  // Constants for the visualization
+  const width = 975;
+  const height = 610;
+  const transition_duration = 750;
+
+  // Create SVG container
   const svg = d3
-    .create("svg")
-    .attr("width", 975)
-    .attr("height", 610)
+    .select("#us-tour")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
-    .attr("width", "100%")
-    .attr("height", "100%");
+    .attr("style", "max-width: 100%; height: auto;");
 
-  svg
+  // Load US topology and visited states data
+  const us = await d3.json(
+    "https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json"
+  );
+
+  // Create path generator
+  const path = d3.geoPath();
+
+  // Draw states
+  const states = svg
     .append("g")
     .selectAll("path")
     .data(topojson.feature(us, us.objects.states).features)
     .join("path")
-    .attr("fill", (d) => color(valuemap.get(d.id)))
-    .attr("d", path);
+    .attr("fill", (d) => {
+      const stateName = d.properties.name;
+      return visitedStates.visitedStates.includes(stateName)
+        ? getColorValue("--visited-state-color")
+        : getColorValue("--unvisited-state-color");
+    })
+    .attr("d", path)
+    .attr("class", "state")
+    .on("mouseover", function (event, d) {
+      const stateName = d.properties.name;
+      if (!visitedStates.visitedStates.includes(stateName)) return;
 
+      const stateAbbr = stateAbbreviations[stateName];
+      const [x, y] = d3.pointer(event); // Get mouse position relative to SVG
+
+      tooltip
+        .html(`${stateAbbr}`)
+        .classed("visible", true)
+        .style("left", `${event.clientX}px`)
+        .style("top", `${event.clientY - 10}px`); // Offset slightly above cursor
+
+      d3.select(this)
+        .transition()
+        .duration(transition_duration)
+        .attr("fill", getColorValue("--hover-state-color"));
+    })
+    .on("mousemove", function (event) {
+      tooltip
+        .style("left", `${event.clientX}px`)
+        .style("top", `${event.clientY - 10}px`);
+    })
+    .on("mouseout", function (event, d) {
+      tooltip.classed("visible", false);
+
+      d3.select(this)
+        .transition()
+        .duration(transition_duration)
+        .attr(
+          "fill",
+          visitedStates.visitedStates.includes(d.properties.name)
+            ? getColorValue("--visited-state-color")
+            : getColorValue("--unvisited-state-color")
+        );
+    });
+
+  // Add state borders
   svg
     .append("path")
     .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
     .attr("fill", "none")
-    .attr("stroke", "white")
+    .attr("stroke", getColorValue("--state-border-color"))
     .attr("stroke-linejoin", "round")
     .attr("d", path);
 });

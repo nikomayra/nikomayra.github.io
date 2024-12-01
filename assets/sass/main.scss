@@ -1,5 +1,6 @@
 @use "sass:color";
-@use "libs/vars";
+@use "sass:map";
+@use "libs/vars" as *;
 @use "libs/functions";
 @use "libs/mixins";
 @use "libs/vendor";
@@ -7,6 +8,7 @@
 @use "libs/html-grid";
 @use "components/skills";
 @use "components/worldTour";
+@use "components/usTour";
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
 
@@ -277,7 +279,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: functions.palette(fg-bold);
+  color: map.get($palette, tertiary, bg); //functions.palette(fg-bold);
   font-weight: functions.font(weight-bold);
   line-height: 1em;
   margin: 0 0 (functions.size(element-margin) * 0.25) 0;
@@ -1492,6 +1494,11 @@ input[type="button"],
   $size-header: 21em;
 
   /* Basic */
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 
   body,
   input,

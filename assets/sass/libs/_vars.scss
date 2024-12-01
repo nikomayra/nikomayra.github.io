@@ -37,7 +37,7 @@ $font: (
 // Palette.
 $palette: (
   bg: #ffffff,
-  bg-w: #fffdfb,
+  bg-w: #2b2d42,
   fg: #888,
   fg-bold: #777,
   fg-light: #aaa,
@@ -72,22 +72,32 @@ $palette: (
 
   primary: (
     bg: #2b2d42,
+    bg-dark: color.mix(#2b2d42, #000000, 25%),
+    bg-light: color.mix(#2b2d42, #ffffff, 25%),
   ),
 
   secondary: (
     bg: #8d99ae,
+    bg-dark: color.mix(#8d99ae, #000000, 25%),
+    bg-light: color.mix(#8d99ae, #ffffff, 25%),
   ),
 
   tertiary: (
     bg: #edf2f4,
+    bg-dark: color.mix(#edf2f4, #000000, 25%),
+    bg-light: color.mix(#edf2f4, #ffffff, 25%),
   ),
 
   accent-1: (
-    bg: #ef233c,
+    bg: #f02b42,
+    bg-dark: color.mix(#f02b42, #000000, 25%),
+    bg-light: color.mix(#f02b42, #ffffff, 25%),
   ),
 
   accent-2: (
     bg: #d90429,
+    bg-dark: color.mix(#d90429, #000000, 25%),
+    bg-light: color.mix(#d90429, #ffffff, 25%),
   ),
 );
 

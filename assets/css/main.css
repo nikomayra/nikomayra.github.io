@@ -7,13 +7,12 @@
   --float-duration: 7s;
   --wiggle-duration: 0.4s;
   --wiggle-rotation: 7deg;
-  --skill-base-color: #ef233c;
+  --skill-base-color: #f02b42;
 }
 
 body {
   margin: 0;
   overflow: hidden;
-  background: white;
   font-family: -apple-system, system-ui, BlinkMacSystemFont;
 }
 
@@ -25,9 +24,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffff;
+  background: #2b2d42;
   overflow: hidden;
-  border: solid 5px black;
 }
 
 .skill {
@@ -97,30 +95,113 @@ body {
     transform: rotate(0deg) scale(var(--hover-scale));
   }
 }
+:root {
+  --world-land-color: #8d99ae;
+  --world-visited-country-color: #f02b42;
+  --world-border-color: #edf2f4;
+  --world-ocean-color: rgb(202, 202.5, 207.75);
+  --world-graticule-color: rgb(226.5, 229.5, 234.75);
+  --world-path-color: #edf2f4;
+  --world-flight-path-color: rgb(251.25, 202, 207.75);
+}
+
 .world-tour-container {
+  flex: 60%;
   position: relative;
-  width: 100%;
-  height: 200px;
-  min-height: 300px;
+  min-height: 400px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  padding-top: 40px;
 }
 .world-tour-container svg {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 975/610;
 }
-.world-tour-container .globe {
-  fill: #2b2d42;
-  stroke: #8d99ae;
-  stroke-width: 1px;
+.world-tour-container .sphere {
+  fill: var(--world-ocean-color);
+}
+.world-tour-container .land {
+  fill: var(--world-land-color);
+}
+.world-tour-container .borders {
+  fill: none;
+  stroke: var(--world-border-color);
+  stroke-width: 0.5px;
 }
 .world-tour-container .graticule {
   fill: none;
-  stroke: #8d99ae;
+  stroke: var(--world-graticule-color);
+  stroke-opacity: 0.2;
   stroke-width: 0.5px;
-  stroke-opacity: 0.5;
+}
+.world-tour-container .highlighted-country {
+  fill: var(--world-visited-country-color);
+  stroke: var(--world-border-color);
+  stroke-width: 0.5px;
+  transition: fill 0.3s ease;
+}
+.world-tour-container .flight-path {
+  pointer-events: none;
+}
+.world-tour-container .world-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.2em;
+  color: #2b2d42;
+  transition: color 0.3s ease;
+  pointer-events: none;
+  padding: 10px;
+}
+.world-tour-container .world-title.highlight {
+  color: #f02b42;
+}
+
+.travels-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+.us-tour-container {
+  flex: 40%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.us-tour-container svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 975/610;
+}
+.us-tour-container .tooltip {
+  position: fixed;
+  padding: 0.5rem;
+  background: rgb(226.5, 229.5, 234.75);
+  border: 1px solid #f4f4f4;
+  border-radius: 4px;
+  pointer-events: none;
+  font-size: 0.9em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transform: translate(-50%, -100%);
+}
+.us-tour-container .tooltip.visible {
+  opacity: 1;
+}
+
+:root {
+  --visited-state-color: #f02b42;
+  --unvisited-state-color: #8d99ae;
+  --hover-state-color: rgb(251.25, 202, 207.75);
+  --state-border-color: #edf2f4;
 }
 
 /*
@@ -352,7 +433,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #777;
+  color: #edf2f4;
   font-weight: 700;
   line-height: 1em;
   margin: 0 0 0.5625em 0;
@@ -2545,7 +2626,7 @@ input[type=button]:disabled,
 
 /* Wrapper */
 #wrapper {
-  background: #fffdfb;
+  background: #2b2d42;
   padding-right: 23em;
 }
 
@@ -2592,6 +2673,11 @@ input[type=button]:disabled,
 /* XLarge */
 @media screen and (max-width: 1680px) {
   /* Basic */
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
   body,
   input,
   select,

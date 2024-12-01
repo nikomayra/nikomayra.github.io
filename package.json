@@ -5,8 +5,8 @@
   "description": "Personal Website / Online Resume",
   "main": "index.js",
   "scripts": {
-    "compile-sass": "sass ./assets/sass/components/_skills.scss ./assets/css/skills.css && sass ./assets/sass/main.scss ./assets/css/main.css && sass ./assets/sass/components/_worldTour.scss ./assets/css/worldTour.css && sass ./assets/sass/components/_usTour.scss ./assets/css/usTour.css",
-    "watch-sass": "sass --watch ./assets/sass/components/_skills.scss ./assets/css/skills.css && sass --watch ./assets/sass/main.scss ./assets/css/main.css && sass --watch ./assets/sass/components/_worldTour.scss ./assets/css/worldTour.css && sass --watch sass --watch ./assets/sass/components/_usTour.scss ./assets/css/usTour.css",
+    "compile-sass": "sass ./assets/sass/main.scss ./assets/css/main.css",
+    "watch-sass": "sass --watch ./assets/sass/main.scss ./assets/css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

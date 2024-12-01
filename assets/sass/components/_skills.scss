@@ -31,7 +31,7 @@ $skill-base-color: map.get($palette, accent-1, bg);
 body {
   margin: 0;
   overflow: hidden;
-  background: white;
+  // background: white;
   font-family: -apple-system, system-ui, BlinkMacSystemFont;
 }
 
@@ -43,10 +43,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: map.get($palette, bg);
+  background: map.get($palette, primary, bg);
   overflow: hidden;
   // padding: 2em;
-  border: solid 5px black;
+  // border: solid 5px black;
 }
 
 .skill {
