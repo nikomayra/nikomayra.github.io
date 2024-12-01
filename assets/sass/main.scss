@@ -1767,7 +1767,15 @@ input[type="button"],
 
   /* Basic */
 
-  body,
+  body {
+    .travels-container {
+      flex-direction: column;
+
+      .world-tour-container {
+        border-top: 1px solid map.get($palette, tertiary, bg);
+      }
+    }
+  }
   input,
   select,
   textarea {
