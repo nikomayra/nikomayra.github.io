@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import { hexToHSL, HSLToHex } from "../js/colorConverter.js";
 
 // Modified version of https://observablehq.com/@d3/bubble-chart/2
@@ -216,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
       categoryColors[category] = `hsl(${h}, ${s}%, ${lightness}%)`;
       lightness += 10;
     });
-    console.log("categoryColors", categoryColors);
+    //console.log("categoryColors", categoryColors);
     return categoryColors;
   }
 
@@ -228,8 +229,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const height = container.clientHeight;
     // const minDimension = Math.min(width, height);
     const margin = 2;
-    console.log("width", width);
-    console.log("height", height);
+    // console.log("width", width);
+    // console.log("height", height);
 
     // Clear existing skills
     container.innerHTML = "";

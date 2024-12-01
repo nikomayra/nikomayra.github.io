@@ -101,8 +101,8 @@ body {
   --world-border-color: #edf2f4;
   --world-ocean-color: rgb(202, 202.5, 207.75);
   --world-graticule-color: rgb(226.5, 229.5, 234.75);
-  --world-path-color: #edf2f4;
   --world-flight-path-color: rgb(251.25, 202, 207.75);
+  --world-transition-duration: 0.3s;
 }
 
 .world-tour-container {
@@ -123,9 +123,6 @@ body {
 .world-tour-container .sphere {
   fill: var(--world-ocean-color);
 }
-.world-tour-container .land {
-  fill: var(--world-land-color);
-}
 .world-tour-container .borders {
   fill: none;
   stroke: var(--world-border-color);
@@ -136,12 +133,6 @@ body {
   stroke: var(--world-graticule-color);
   stroke-opacity: 0.2;
   stroke-width: 0.5px;
-}
-.world-tour-container .highlighted-country {
-  fill: var(--world-visited-country-color);
-  stroke: var(--world-border-color);
-  stroke-width: 0.5px;
-  transition: fill 0.3s ease;
 }
 .world-tour-container .flight-path {
   pointer-events: none;
@@ -154,8 +145,7 @@ body {
   text-align: center;
   font-size: 1.2em;
   color: #2b2d42;
-  transition: color 0.3s ease;
-  pointer-events: none;
+  transition: color var(--world-transition-duration) ease;
   padding: 10px;
 }
 .world-tour-container .world-title.highlight {

@@ -1,11 +1,11 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
-import * as topojson from "https://cdn.skypack.dev/topojson-client@3";
+import * as d3 from "d3";
+import * as topojson from "topojson-client";
 
 // Animation durations
-const ANIMATION = {
-  FLIGHT: 1250, // Match D3's example timing
+const ANIMATION = Object.freeze({
+  FLIGHT: 1250,
   PAUSE: 2000,
-};
+});
 
 const visitedCountries = [
   "United States of America",
@@ -27,7 +27,18 @@ const visitedCountries = [
   "Uruguay",
   "Puerto Rico",
   "Vietnam",
+  "Morocco",
 ];
+
+// Cache color values
+const colors = {
+  ocean: getColorValue("--world-ocean-color"),
+  graticule: getColorValue("--world-graticule-color"),
+  border: getColorValue("--world-border-color"),
+  visited: getColorValue("--world-visited-country-color"),
+  land: getColorValue("--world-land-color"),
+  flight: getColorValue("--world-flight-path-color"),
+};
 
 // Versor class for smooth rotation interpolation
 class Versor {
@@ -69,7 +80,7 @@ class Versor {
     let dot = a1 * a2 + b1 * b2 + c1 * c2 + d1 * d2;
     if (dot < 0) (a2 = -a2), (b2 = -b2), (c2 = -c2), (d2 = -d2), (dot = -dot);
     if (dot > 0.9995)
-      return Versor.interpolateLinear([a1, b1, c1, d1], [a2, b2, c2, d2]);
+      return Versor.#interpolateLinear([a1, b1, c1, d1], [a2, b2, c2, d2]);
     const theta0 = Math.acos(Math.max(-1, Math.min(1, dot)));
     const x = new Array(4);
     const l = Math.hypot(
@@ -91,7 +102,7 @@ class Versor {
     };
   }
 
-  static interpolateLinear([a1, b1, c1, d1], [a2, b2, c2, d2]) {
+  static #interpolateLinear([a1, b1, c1, d1], [a2, b2, c2, d2]) {
     (a2 -= a1), (b2 -= b1), (c2 -= c1), (d2 -= d1);
     const x = new Array(4);
     return (t) => {
@@ -156,14 +167,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   const globe = svg
     .append("path")
     .attr("class", "sphere")
-    .attr("fill", getColorValue("--world-ocean-color"));
+    .attr("fill", colors.ocean);
 
   const graticule = svg
     .append("path")
     .datum(d3.geoGraticule())
     .attr("class", "graticule")
     .attr("fill", "none")
-    .attr("stroke", getColorValue("--world-graticule-color"))
+    .attr("stroke", colors.graticule)
     .attr("stroke-width", "0.5px");
 
   async function render() {
@@ -171,13 +182,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
     );
 
-    const land = topojson.feature(world, world.objects.land);
+    const countries = topojson.feature(world, world.objects.countries);
     const borders = topojson.mesh(
       world,
       world.objects.countries,
       (a, b) => a !== b
     );
-    const countries = topojson.feature(world, world.objects.countries);
 
     svg
       .selectAll(".country")
@@ -187,8 +197,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       .attr("class", "country")
       .attr("fill", (d) =>
         visitedCountries.includes(d.properties.name)
-          ? getColorValue("--world-visited-country-color")
-          : getColorValue("--world-land-color")
+          ? colors.visited
+          : colors.land
       )
       .attr("d", path);
 
@@ -197,7 +207,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       .datum(borders)
       .attr("class", "borders")
       .attr("fill", "none")
-      .attr("stroke", getColorValue("--world-border-color"))
+      .attr("stroke", colors.border)
       .attr("d", path);
 
     let p1,
@@ -250,7 +260,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             })
             .attr("d", path)
             .attr("fill", "none")
-            .attr("stroke", getColorValue("--world-flight-path-color"))
+            .attr("stroke", colors.flight)
             .attr("stroke-width", 2);
         })
         .end();

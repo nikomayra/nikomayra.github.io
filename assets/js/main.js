@@ -1,3 +1,16 @@
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
+// Initialize Fancybox
+Fancybox.bind("[data-fancybox]", {
+  // Your Fancybox options here
+});
+
+// Import other modules
+import "./worldTour.js";
+import "./skills.js";
+import "./usTour.js";
+
 (function ($) {
   var $window = $(window),
     $body = $("body"),
