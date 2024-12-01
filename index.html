@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-	Read Only by HTML5 UP (Modified)
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!-- Template by HMTL5 UP, modified for personal use -->
 <html>
   <head>
     <title>Nick Bassett</title>
@@ -13,6 +9,7 @@
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/skills.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.18/dist/fancybox.css"
@@ -85,7 +82,8 @@
         <!-- One -->
         <section id="one">
           <div class="image main" data-position="center">
-            <img src="images/banner_colorado-2.png" alt="" />
+            <img src="images/banner_oregon.png" alt="" />
+            <!-- images/banner_colorado-2.png -->
           </div>
           <div class="container">
             <header class="major">
@@ -118,24 +116,7 @@
         <section id="two">
           <div class="container">
             <h3>Skills</h3>
-            <ul class="feature-icons">
-              <li class="icon solid fa-code">
-                JS/TS | Python | VBA | C# | HTML/CSS
-              </li>
-              <li class="icon solid fa-cube">
-                React | Node | Express | Flask | Azure Function App
-              </li>
-              <li class="icon solid fa-database">
-                MongoDB | PostgreSQL | Azure Blob Storage
-              </li>
-              <li class="icon solid fa-sitemap">Jira | Confluence | SAP</li>
-              <li class="icon solid fa-vector-square">
-                Creo | Catia | Solidworks | Unity3D
-              </li>
-              <li class="icon solid fa-network-wired">
-                Windchill | Enovia | SmarTeam
-              </li>
-            </ul>
+            <div class="skills-container"></div>
           </div>
         </section>
 
@@ -411,7 +392,9 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="assets/js/skills.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.18/dist/fancybox.umd.js"></script>
     <script src="assets/js/jquery.scrollex.min.js"></script>
     <script src="assets/js/jquery.scrolly.min.js"></script>

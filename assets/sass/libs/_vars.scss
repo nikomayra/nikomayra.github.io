@@ -1,7 +1,8 @@
+@use "sass:color";
 // Misc.
 $misc: (
   z-index-base: 10000,
-  header-side: 'right',
+  header-side: "right",
 );
 
 // Duration.
@@ -22,11 +23,11 @@ $size: (
 // Font.
 $font: (
   family: (
-    'Lato',
+    "Lato",
     sans-serif,
   ),
   family-fixed: (
-    'Source Code Pro',
+    "Source Code Pro",
     monospace,
   ),
   weight: 400,
@@ -50,22 +51,62 @@ $palette: (
   accent1: (
     bg: #d69652,
     fg-bold: #ffffff,
-    fg: mix(#d69652, #ffffff, 25%),
-    fg-light: mix(#d69652, #ffffff, 40%),
+    fg: color.mix(#d69652, #ffffff, 25%),
+    fg-light: color.mix(#d69652, #ffffff, 40%),
   ),
 
   accent2: (
-    bg: #989898,
+    bg: #966939,
     fg-bold: #ffffff,
-    fg: mix(#989898, #ffffff, 25%),
-    fg-light: mix(#989898, #ffffff, 40%),
+    fg: color.mix(#966939, #ffffff, 25%),
+    fg-light: color.mix(#966939, #ffffff, 40%),
   ),
 
   header: (
     bg: #d69652,
     fg-bold: #ffffff,
-    fg: mix(#d69652, #ffffff, 25%),
-    fg-light: mix(#d69652, #ffffff, 40%),
-    border: mix(#d69652, #ffffff, 90%),
+    fg: color.mix(#d69652, #ffffff, 25%),
+    fg-light: color.mix(#d69652, #ffffff, 40%),
+    border: color.mix(#d69652, #ffffff, 90%),
+  ),
+
+  primary: (
+    bg: #2b2d42,
+  ),
+
+  secondary: (
+    bg: #8d99ae,
+  ),
+
+  tertiary: (
+    bg: #edf2f4,
+  ),
+
+  accent-1: (
+    bg: #ef233c,
+  ),
+
+  accent-2: (
+    bg: #d90429,
   ),
 );
+
+// Pallete Ideas:
+
+// Primary: #353535
+// Secondary: #3C6E71
+// Tertiary: #FFFFFF
+// Accent-1: #D9D9D9
+// Accent-2: #284B63
+
+// Primary: #335C67
+// Secondary: #FFF3B0
+// Tertiary: #E09F3E
+// Accent-1: #9E2A2B
+// Accent-2: #540B0E
+
+// Primary: #003049
+// Secondary: #D62828
+// Tertiary: #F77F00
+// Accent-1: #FCBF49
+// Accent-2: #EAE2B7

@@ -1,0 +1,99 @@
+:root {
+  --bubble-opacity: 0.95;
+  --hover-scale: 1.2;
+  --float-distance: 6px;
+  --float-duration: 7s;
+  --wiggle-duration: 0.4s;
+  --wiggle-rotation: 7deg;
+  --skill-base-color: #ef233c;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: white;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont;
+}
+
+.skills-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  overflow: hidden;
+  border: solid 5px black;
+}
+
+.skill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #edf2f4;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  opacity: var(--bubble-opacity);
+  padding: 0;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, color 0.2s ease;
+  animation: float var(--float-duration) ease-in-out infinite;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.skill:hover {
+  z-index: 10000;
+  border-color: rgba(255, 255, 255, 0.4);
+  animation: wiggle var(--wiggle-duration) ease infinite;
+}
+.skill a {
+  border: none;
+  text-decoration: none;
+}
+
+.skill .skill-name {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.2;
+  font-family: "Lato", sans-serif;
+  border: none;
+  text-decoration: none;
+  font-size: 1cqw;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, var(--float-distance));
+  }
+}
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg) scale(var(--hover-scale));
+  }
+  25% {
+    transform: rotate(calc(-1 * var(--wiggle-rotation))) scale(var(--hover-scale));
+  }
+  75% {
+    transform: rotate(var(--wiggle-rotation)) scale(var(--hover-scale));
+  }
+  100% {
+    transform: rotate(0deg) scale(var(--hover-scale));
+  }
+}
+
+/*# sourceMappingURL=skills.css.map */

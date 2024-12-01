@@ -1,11 +1,12 @@
-@import 'libs/vars';
-@import 'libs/functions';
-@import 'libs/mixins';
-@import 'libs/vendor';
-@import 'libs/breakpoints';
-@import 'libs/html-grid';
-@import url('fontawesome-all.min.css');
-@import url('https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400');
+@use "sass:color";
+@use "libs/vars";
+@use "libs/functions";
+@use "libs/mixins";
+@use "libs/vendor";
+@use "libs/breakpoints";
+@use "libs/html-grid";
+@import url("fontawesome-all.min.css");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
 
 /*
 	Read Only by HTML5 UP
@@ -15,7 +16,7 @@
 
 // Breakpoints.
 
-@include breakpoints(
+@include breakpoints.breakpoints(
   (
     xlarge: (
       1281px,
@@ -163,7 +164,7 @@ q {
 
   &:before,
   &:after {
-    content: '';
+    content: "";
     content: none;
   }
 }
@@ -211,15 +212,15 @@ html {
 }
 
 body {
-  background: _palette(bg);
+  background: functions.palette(bg);
 
   // Stops initial animations until page loads.
   &.is-preload {
     *,
     *:before,
     *:after {
-      @include vendor('animation', 'none !important');
-      @include vendor('transition', 'none !important');
+      @include vendor.vendor("animation", "none !important");
+      @include vendor.vendor("transition", "none !important");
     }
   }
 }
@@ -228,35 +229,35 @@ body,
 input,
 select,
 textarea {
-  color: _palette(fg);
-  font-family: _font(family);
+  color: functions.palette(fg);
+  font-family: functions.font(family);
   font-size: 16pt;
-  font-weight: _font(weight);
+  font-weight: functions.font(weight);
   line-height: 1.75em;
 }
 
 a {
-  @include vendor(
-    'transition',
+  @include vendor.vendor(
+    "transition",
     (
-      'color #{_duration(transition)} ease-in-out',
-      'border-color #{_duration(transition)} ease-in-out'
+      "color #{functions.duration(transition)} ease-in-out",
+      "border-color #{functions.duration(transition)} ease-in-out"
     )
   );
-  border-bottom: solid 1px _palette(border2);
+  border-bottom: solid 1px functions.palette(border2);
   color: inherit;
   text-decoration: none;
 
   &:hover {
     border-bottom-color: transparent;
-    color: _palette(accent1, bg) !important;
+    color: functions.palette(accent1, bg) !important;
   }
 }
 
 strong,
 b {
-  color: _palette(fg-bold);
-  font-weight: _font(weight-bold);
+  color: functions.palette(fg-bold);
+  font-weight: functions.font(weight-bold);
 }
 
 em,
@@ -265,7 +266,7 @@ i {
 }
 
 p {
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
 }
 
 h1,
@@ -274,10 +275,10 @@ h3,
 h4,
 h5,
 h6 {
-  color: _palette(fg-bold);
-  font-weight: _font(weight-bold);
+  color: functions.palette(fg-bold);
+  font-weight: functions.font(weight-bold);
   line-height: 1em;
-  margin: 0 0 (_size(element-margin) * 0.25) 0;
+  margin: 0 0 (functions.size(element-margin) * 0.25) 0;
 
   a {
     border: 0;
@@ -325,35 +326,36 @@ sup {
 
 hr {
   border: 0;
-  border-bottom: solid _size(border-width) _palette(border);
-  margin: _size(element-margin) 0;
+  border-bottom: solid functions.size(border-width) functions.palette(border);
+  margin: functions.size(element-margin) 0;
 
   &.major {
-    margin: (_size(element-margin) * 1.5) 0;
+    margin: (functions.size(element-margin) * 1.5) 0;
   }
 }
 
 blockquote {
-  border-left: solid (_size(border-width) * 4) _palette(border2);
+  border-left: solid (functions.size(border-width) * 4)
+    functions.palette(border2);
   font-style: italic;
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
   padding: 0.5em 0 0.5em 2em;
 }
 
 code {
   background: #555;
-  border-radius: _size(border-radius);
+  border-radius: functions.size(border-radius);
   color: #fff;
-  font-family: _font(family-fixed);
+  font-family: functions.font(family-fixed);
   font-size: 0.9em;
   margin: 0 0.25em;
   padding: 0.25em 0.65em;
 }
 
 pre {
-  font-family: _font(family-fixed);
+  font-family: functions.font(family-fixed);
   font-size: 0.9em;
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
 
   code {
     -webkit-overflow-scrolling: touch;
@@ -379,26 +381,26 @@ pre {
 /* Row */
 
 .row {
-  @include html-grid(2em);
+  @include html-grid.html-grid(2em);
 
-  @include breakpoint('<=xlarge') {
-    @include html-grid(2em, 'xlarge');
+  @include breakpoints.breakpoint("<=xlarge") {
+    @include html-grid.html-grid(2em, "xlarge");
   }
 
-  @include breakpoint('<=large') {
-    @include html-grid(1.5em, 'large');
+  @include breakpoints.breakpoint("<=large") {
+    @include html-grid.html-grid(1.5em, "large");
   }
 
-  @include breakpoint('<=medium') {
-    @include html-grid(1.5em, 'medium');
+  @include breakpoints.breakpoint("<=medium") {
+    @include html-grid.html-grid(1.5em, "medium");
   }
 
-  @include breakpoint('<=small') {
-    @include html-grid(1.25em, 'small');
+  @include breakpoints.breakpoint("<=small") {
+    @include html-grid.html-grid(1.25em, "small");
   }
 
-  @include breakpoint('<=xsmall') {
-    @include html-grid(1.25em, 'xsmall');
+  @include breakpoints.breakpoint("<=xsmall") {
+    @include html-grid.html-grid(1.25em, "xsmall");
   }
 }
 
@@ -406,39 +408,39 @@ pre {
 
 .container {
   margin: 0 auto;
-  max-width: calc(100% - #{_size(element-margin) * 2});
-  width: _size(container-width);
+  max-width: calc(100% - #{functions.size(element-margin) * 2});
+  width: functions.size(container-width);
 
   &.xsmall {
-    width: (_size(container-width) * 0.25);
+    width: (functions.size(container-width) * 0.25);
   }
 
   &.small {
-    width: (_size(container-width) * 0.5);
+    width: (functions.size(container-width) * 0.5);
   }
 
   &.medium {
-    width: (_size(container-width) * 0.75);
+    width: (functions.size(container-width) * 0.75);
   }
 
   &.large {
-    width: (_size(container-width) * 1.25);
+    width: (functions.size(container-width) * 1.25);
   }
 
   &.xlarge {
-    width: (_size(container-width) * 1.5);
+    width: (functions.size(container-width) * 1.5);
   }
 
   &.max {
     width: 100%;
   }
 
-  @include breakpoint('<=medium') {
+  @include breakpoints.breakpoint("<=medium") {
     width: 100% !important;
   }
 
-  @include breakpoint('<=xsmall') {
-    max-width: calc(100% - #{_size(element-margin) * 1.5});
+  @include breakpoints.breakpoint("<=xsmall") {
+    max-width: calc(100% - #{functions.size(element-margin) * 1.5});
   }
 }
 
@@ -453,9 +455,9 @@ article {
 
 header {
   p {
-    color: _palette(fg-light);
+    color: functions.palette(fg-light);
     position: relative;
-    margin: 0 0 (_size(element-margin) * 0.75) 0;
+    margin: 0 0 (functions.size(element-margin) * 0.75) 0;
   }
 
   h2 + p {
@@ -480,34 +482,34 @@ header {
 
   &.major {
     h2 {
-      color: _palette(accent1, bg);
+      color: functions.palette(accent1, bg);
       font-size: 3.5em;
 
       & + p {
-        color: _palette(fg-bold);
+        color: functions.palette(fg-bold);
         font-size: 1.75em;
-        font-weight: _font(weight-bold);
+        font-weight: functions.font(weight-bold);
         margin-top: -0.75em;
       }
     }
   }
 }
 
-footer {
-}
+// footer {
+// }
 
 /* Form */
 
 form {
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
 }
 
 label {
-  color: _palette(fg-bold);
+  color: functions.palette(fg-bold);
   display: block;
   font-size: 0.9em;
-  font-weight: _font(weight-bold);
-  margin: 0 0 (_size(element-margin) * 0.5) 0;
+  font-weight: functions.font(weight-bold);
+  margin: 0 0 (functions.size(element-margin) * 0.5) 0;
 }
 
 input::-moz-focus-inner {
@@ -515,15 +517,15 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
+input[type="text"],
+input[type="password"],
+input[type="email"],
 select,
 textarea {
-  @include vendor('appearance', 'none');
-  border-radius: _size(border-radius);
+  @include vendor.vendor("appearance", "none");
+  border-radius: functions.size(border-radius);
   border: none;
-  border: solid _size(border-width) _palette(border2);
+  border: solid functions.size(border-width) functions.palette(border2);
   color: inherit;
   display: block;
   outline: 0;
@@ -536,24 +538,24 @@ textarea {
   }
 
   &:focus {
-    border-color: _palette(accent1, bg);
+    border-color: functions.palette(accent1, bg);
   }
 }
 
 select {
-  background-image: svg-url(
-    "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'><path d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='#{_palette(border2)}' /></svg>"
+  background-image: mixins.svg-url(
+    "<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'><path d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='#{functions.palette(border2)}' /></svg>"
   );
   background-size: 1.25em;
   background-repeat: no-repeat;
   background-position: calc(100% - 1em) center;
-  height: _size(element-height);
-  padding-right: _size(element-height);
+  height: functions.size(element-height);
+  padding-right: functions.size(element-height);
   text-overflow: ellipsis;
 
   option {
-    color: _palette(fg-bold);
-    background: _palette(bg);
+    color: functions.palette(fg-bold);
+    background: functions.palette(bg);
   }
 
   &:focus {
@@ -567,20 +569,20 @@ select {
   }
 }
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
+input[type="text"],
+input[type="password"],
+input[type="email"],
 select {
-  height: _size(element-height);
+  height: functions.size(element-height);
 }
 
 textarea {
   padding: 0.75em 1em;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-  @include vendor('appearance', 'none');
+input[type="checkbox"],
+input[type="radio"] {
+  @include vendor.vendor("appearance", "none");
   display: block;
   float: left;
   margin-right: -2em;
@@ -589,58 +591,58 @@ input[type='radio'] {
   z-index: -1;
 
   & + label {
-    @include icon(false, solid);
-    color: _palette(fg);
+    @include mixins.icon(false, solid);
+    color: functions.palette(fg);
     cursor: pointer;
     display: inline-block;
     font-size: 1em;
-    font-weight: _font(weight);
-    padding-left: (_size(element-height) * 0.6) + 0.75em;
+    font-weight: functions.font(weight);
+    padding-left: (functions.size(element-height) * 0.6) + 0.75em;
     padding-right: 0.75em;
     position: relative;
 
     &:before {
-      background: _palette(border-bg);
-      border-radius: _size(border-radius);
-      border: solid _size(border-width) _palette(border2);
-      content: '';
+      background: functions.palette(border-bg);
+      border-radius: functions.size(border-radius);
+      border: solid functions.size(border-width) functions.palette(border2);
+      content: "";
       display: inline-block;
       font-size: 0.8em;
-      height: (_size(element-height) * 0.75);
+      height: (functions.size(element-height) * 0.75);
       left: 0;
-      line-height: (_size(element-height) * 0.75);
+      line-height: (functions.size(element-height) * 0.75);
       position: absolute;
       text-align: center;
       top: 0;
-      width: (_size(element-height) * 0.75);
+      width: (functions.size(element-height) * 0.75);
     }
   }
 
   &:checked + label {
     &:before {
-      background: _palette(accent2, bg);
-      border-color: _palette(accent2, bg);
-      color: _palette(accent2, fg-bold);
-      content: '\f00c';
+      background: functions.palette(accent2, bg);
+      border-color: functions.palette(accent2, bg);
+      color: functions.palette(accent2, fg-bold);
+      content: "\f00c";
     }
   }
 
   &:focus + label {
     &:before {
-      border-color: _palette(accent1, bg);
+      border-color: functions.palette(accent1, bg);
     }
   }
 }
 
-input[type='checkbox'] {
+input[type="checkbox"] {
   & + label {
     &:before {
-      border-radius: _size(border-radius);
+      border-radius: functions.size(border-radius);
     }
   }
 }
 
-input[type='radio'] {
+input[type="radio"] {
   & + label {
     &:before {
       border-radius: 100%;
@@ -649,25 +651,25 @@ input[type='radio'] {
 }
 
 ::-webkit-input-placeholder {
-  color: _palette(fg-light) !important;
+  color: functions.palette(fg-light) !important;
   font-style: italic;
   opacity: 1;
 }
 
 :-moz-placeholder {
-  color: _palette(fg-light) !important;
+  color: functions.palette(fg-light) !important;
   font-style: italic;
   opacity: 1;
 }
 
 ::-moz-placeholder {
-  color: _palette(fg-light) !important;
+  color: functions.palette(fg-light) !important;
   font-style: italic;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
-  color: _palette(fg-light) !important;
+  color: functions.palette(fg-light) !important;
   font-style: italic;
   opacity: 1;
 }
@@ -675,9 +677,9 @@ input[type='radio'] {
 /* Box */
 
 .box {
-  border-radius: _size(border-radius);
-  border: solid _size(border-width) _palette(border2);
-  margin-bottom: _size(element-margin);
+  border-radius: functions.size(border-radius);
+  border: solid functions.size(border-width) functions.palette(border2);
+  margin-bottom: functions.size(element-margin);
   padding: 1.5em;
 
   > :last-child,
@@ -696,7 +698,7 @@ input[type='radio'] {
 /* Icon */
 
 .icon {
-  @include icon;
+  @include mixins.icon;
   border-bottom: none;
   position: relative;
 
@@ -716,7 +718,7 @@ input[type='radio'] {
 
   &.brands {
     &:before {
-      font-family: 'Font Awesome 5 Brands';
+      font-family: "Font Awesome 5 Brands";
     }
   }
 }
@@ -724,14 +726,14 @@ input[type='radio'] {
 /* Image */
 
 .image {
-  border-radius: _size(border-radius);
+  border-radius: functions.size(border-radius);
   border: 0;
   display: inline-block;
   position: relative;
 
   &[data-position] {
     img {
-      @include vendor('object-fit', 'cover');
+      @include vendor.vendor("object-fit", "cover");
       display: block;
       position: absolute;
       top: 0;
@@ -741,86 +743,86 @@ input[type='radio'] {
     }
   }
 
-  &[data-position='top left'] {
+  &[data-position="top left"] {
     img {
-      @include vendor('object-position', 'top left');
+      @include vendor.vendor("object-position", "top left");
     }
   }
 
-  &[data-position='top'] {
+  &[data-position="top"] {
     img {
-      @include vendor('object-position', 'top');
+      @include vendor.vendor("object-position", "top");
     }
   }
 
-  &[data-position='top right'] {
+  &[data-position="top right"] {
     img {
-      @include vendor('object-position', 'top right');
+      @include vendor.vendor("object-position", "top right");
     }
   }
 
-  &[data-position='right'] {
+  &[data-position="right"] {
     img {
-      @include vendor('object-position', 'right');
+      @include vendor.vendor("object-position", "right");
     }
   }
 
-  &[data-position='bottom right'] {
+  &[data-position="bottom right"] {
     img {
-      @include vendor('object-position', 'bottom right');
+      @include vendor.vendor("object-position", "bottom right");
     }
   }
 
-  &[data-position='bottom'] {
+  &[data-position="bottom"] {
     img {
-      @include vendor('object-position', 'bottom');
+      @include vendor.vendor("object-position", "bottom");
     }
   }
 
-  &[data-position='bottom left'] {
+  &[data-position="bottom left"] {
     img {
-      @include vendor('object-position', 'bottom left');
+      @include vendor.vendor("object-position", "bottom left");
     }
   }
 
-  &[data-position='left'] {
+  &[data-position="left"] {
     img {
-      @include vendor('object-position', 'left');
+      @include vendor.vendor("object-position", "left");
     }
   }
 
-  &[data-position='center'] {
+  &[data-position="center"] {
     img {
-      @include vendor('object-position', 'center');
+      @include vendor.vendor("object-position", "center");
     }
   }
 
-  &[data-position='25% 25%'] {
+  &[data-position="25% 25%"] {
     img {
-      @include vendor('object-position', '25% 25%');
+      @include vendor.vendor("object-position", "25% 25%");
     }
   }
 
-  &[data-position='75% 25%'] {
+  &[data-position="75% 25%"] {
     img {
-      @include vendor('object-position', '75% 25%');
+      @include vendor.vendor("object-position", "75% 25%");
     }
   }
 
-  &[data-position='75% 75%'] {
+  &[data-position="75% 75%"] {
     img {
-      @include vendor('object-position', '75% 75%');
+      @include vendor.vendor("object-position", "75% 75%");
     }
   }
 
-  &[data-position='25% 75%'] {
+  &[data-position="25% 75%"] {
     img {
-      @include vendor('object-position', '25% 75%');
+      @include vendor.vendor("object-position", "25% 75%");
     }
   }
 
   img {
-    border-radius: _size(border-radius);
+    border-radius: functions.size(border-radius);
     display: block;
   }
 
@@ -838,7 +840,7 @@ input[type='radio'] {
 
   &.fit {
     display: block;
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
     width: 100%;
 
     img {
@@ -873,7 +875,7 @@ input[type='radio'] {
 
 ol {
   list-style: decimal;
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
   padding-left: 1.25em;
 
   li {
@@ -883,7 +885,7 @@ ol {
 
 ul {
   list-style: disc;
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
   padding-left: 1em;
 
   li {
@@ -895,7 +897,7 @@ ul {
     padding-left: 0;
 
     li {
-      border-top: solid _size(border-width) _palette(border);
+      border-top: solid functions.size(border-width) functions.palette(border);
       padding: 0.5em 0;
 
       &:first-child {
@@ -907,25 +909,25 @@ ul {
 }
 
 dl {
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
 }
 
 /* Actions */
 
 ul.actions {
-  @include vendor('display', 'flex');
+  @include vendor.vendor("display", "flex");
   cursor: default;
   list-style: none;
-  margin-left: (_size(element-margin) * -0.5);
+  margin-left: (functions.size(element-margin) * -0.5);
   padding-left: 0;
 
   li {
-    padding: 0 0 0 (_size(element-margin) * 0.5);
+    padding: 0 0 0 (functions.size(element-margin) * 0.5);
     vertical-align: middle;
   }
 
   &.special {
-    @include vendor('justify-content', 'center');
+    @include vendor.vendor("justify-content", "center");
     width: 100%;
     margin-left: 0;
 
@@ -937,11 +939,11 @@ ul.actions {
   }
 
   &.stacked {
-    @include vendor('flex-direction', 'column');
+    @include vendor.vendor("flex-direction", "column");
     margin-left: 0;
 
     li {
-      padding: (_size(element-margin) * 0.5) 0 0 0;
+      padding: (functions.size(element-margin) * 0.5) 0 0 0;
 
       &:first-child {
         padding-top: 0;
@@ -950,11 +952,11 @@ ul.actions {
   }
 
   &.fit {
-    width: calc(100% + #{_size(element-margin) * 0.5});
+    width: calc(100% + #{functions.size(element-margin) * 0.5});
 
     li {
-      @include vendor('flex-grow', '1');
-      @include vendor('flex-shrink', '1');
+      @include vendor.vendor("flex-grow", "1");
+      @include vendor.vendor("flex-shrink", "1");
       width: 100%;
 
       > * {
@@ -967,16 +969,16 @@ ul.actions {
     }
   }
 
-  @include breakpoint('<=xsmall') {
+  @include breakpoints.breakpoint("<=xsmall") {
     &:not(.fixed) {
-      @include vendor('flex-direction', 'column');
+      @include vendor.vendor("flex-direction", "column");
       margin-left: 0;
       width: 100% !important;
 
       li {
-        @include vendor('flex-grow', '1');
-        @include vendor('flex-shrink', '1');
-        padding: (_size(element-margin) * 0.5) 0 0 0;
+        @include vendor.vendor("flex-grow", "1");
+        @include vendor.vendor("flex-shrink", "1");
+        padding: (functions.size(element-margin) * 0.5) 0 0 0;
         text-align: center;
         width: 100%;
 
@@ -988,9 +990,9 @@ ul.actions {
           padding-top: 0;
         }
 
-        input[type='submit'],
-        input[type='reset'],
-        input[type='button'],
+        input[type="submit"],
+        input[type="reset"],
+        input[type="button"],
         button,
         .button {
           width: 100%;
@@ -1013,18 +1015,18 @@ ul.feature-icons {
   padding-left: 0;
 
   li {
-    @include icon;
+    @include mixins.icon;
     display: inline-block;
-    margin: 0 0 (_size(element-margin) * 0.75) 0;
+    margin: 0 0 (functions.size(element-margin) * 0.75) 0;
     padding: 0.35em 0 0 3.5em;
     position: relative;
     vertical-align: top;
     width: 48%;
 
     &:before {
-      background: _palette(accent1, bg);
+      background: functions.palette(accent1, bg);
       border-radius: 100%;
-      color: _palette(accent1, fg-bold);
+      color: functions.palette(accent1, fg-bold);
       display: block;
       height: 2.5em;
       left: 0;
@@ -1068,17 +1070,17 @@ ul.icons {
 }
 
 table {
-  margin: 0 0 _size(element-margin) 0;
+  margin: 0 0 functions.size(element-margin) 0;
   width: 100%;
 
   tbody {
     tr {
-      border: solid _size(border-width) _palette(border);
+      border: solid functions.size(border-width) functions.palette(border);
       border-left: 0;
       border-right: 0;
 
       &:nth-child(2n + 1) {
-        background-color: _palette(border-bg);
+        background-color: functions.palette(border-bg);
       }
     }
   }
@@ -1088,19 +1090,21 @@ table {
   }
 
   th {
-    color: _palette(fg-bold);
+    color: functions.palette(fg-bold);
     font-size: 0.9em;
-    font-weight: _font(weight-bold);
+    font-weight: functions.font(weight-bold);
     padding: 0 0.75em 0.75em 0.75em;
     text-align: left;
   }
 
   thead {
-    border-bottom: solid (_size(border-width) * 2) _palette(border2);
+    border-bottom: solid (functions.size(border-width) * 2)
+      functions.palette(border2);
   }
 
   tfoot {
-    border-top: solid (_size(border-width) * 2) _palette(border2);
+    border-top: solid (functions.size(border-width) * 2)
+      functions.palette(border2);
   }
 
   &.alt {
@@ -1109,18 +1113,18 @@ table {
     tbody {
       tr {
         td {
-          border: solid _size(border-width) _palette(border2);
+          border: solid functions.size(border-width) functions.palette(border2);
           border-left-width: 0;
           border-top-width: 0;
 
           &:first-child {
-            border-left-width: _size(border-width);
+            border-left-width: functions.size(border-width);
           }
         }
 
         &:first-child {
           td {
-            border-top-width: _size(border-width);
+            border-top-width: functions.size(border-width);
           }
         }
       }
@@ -1138,39 +1142,45 @@ table {
 
 /* Button */
 
-input[type='submit'],
-input[type='reset'],
-input[type='button'],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
 .button {
-  @include vendor('appearance', 'none');
-  @include vendor(
-    'transition',
+  @include vendor.vendor("appearance", "none");
+  @include vendor.vendor(
+    "transition",
     (
-      'background-color #{_duration(transition)} ease-in-out',
-      'color #{_duration(transition)} ease-in-out'
+      "background-color #{functions.duration(transition)} ease-in-out",
+      "color #{functions.duration(transition)} ease-in-out"
     )
   );
-  background-color: _palette(accent2, bg);
-  border-radius: _size(border-radius);
+  background-color: functions.palette(accent2, bg);
+  border-radius: functions.size(border-radius);
   border: 0;
-  color: _palette(accent2, fg-bold) !important;
+  color: functions.palette(accent2, fg-bold) !important;
   cursor: pointer;
   display: inline-block;
-  font-weight: _font(weight-bold);
-  height: _size(element-height);
-  line-height: _size(element-height);
+  font-weight: functions.font(weight-bold);
+  height: functions.size(element-height);
+  line-height: functions.size(element-height);
   padding: 0 1.5em;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
 
   &:hover {
-    background-color: lighten(_palette(accent2, bg), 5);
-    color: _palette(accent2, fg-bold) !important;
+    background-color: color.adjust(
+      functions.palette(accent2, bg),
+      $lightness: 5%
+    );
+    color: functions.palette(accent2, fg-bold) !important;
   }
 
   &:active {
-    background-color: darken(_palette(accent2, bg), 5);
+    background-color: color.adjust(
+      functions.palette(accent2, bg),
+      $lightness: -5%
+    );
   }
 
   &.icon {
@@ -1195,43 +1205,50 @@ input[type='button'],
 
   &.alt {
     background-color: transparent;
-    box-shadow: inset 0 0 0 _size(border-width) _palette(border2);
-    color: _palette(fg-bold) !important;
+    box-shadow: inset 0 0 0 functions.size(border-width)
+      functions.palette(border2);
+    color: functions.palette(fg-bold) !important;
 
     &:hover {
-      background-color: _palette(border2-bg);
-      color: _palette(fg-bold) !important;
+      background-color: functions.palette(border2-bg);
+      color: functions.palette(fg-bold) !important;
     }
 
     &:active {
-      background-color: _palette(border3-bg);
+      background-color: functions.palette(border3-bg);
     }
 
     &.icon {
       &:before {
-        color: _palette(fg-light);
+        color: functions.palette(fg-light);
       }
     }
   }
 
   &.primary {
-    background-color: _palette(accent1, bg);
-    color: _palette(accent1, fg-bold) !important;
+    background-color: functions.palette(accent1, bg);
+    color: functions.palette(accent1, fg-bold) !important;
 
     &:hover {
-      background-color: lighten(_palette(accent1, bg), 5);
+      background-color: color.adjust(
+        functions.palette(accent1, bg),
+        $lightness: 5%
+      );
     }
 
     &:active {
-      background-color: darken(_palette(accent1, bg), 5);
+      background-color: color.adjust(
+        functions.palette(accent1, bg),
+        $lightness: -5%
+      );
     }
   }
 
   &.disabled,
   &:disabled {
-    background-color: _palette(fg) !important;
+    background-color: functions.palette(fg) !important;
     box-shadow: inset 0 -0.15em 0 0 rgba(0, 0, 0, 0.15);
-    color: _palette(bg) !important;
+    color: functions.palette(bg) !important;
     cursor: default;
     opacity: 0.25;
   }
@@ -1241,9 +1258,10 @@ input[type='button'],
 
 .features {
   article {
-    border-top: solid (_size(border-width) * 1.5) _palette(border);
-    margin-bottom: _size(element-margin);
-    padding-top: _size(element-margin);
+    border-top: solid (functions.size(border-width) * 1.5)
+      functions.palette(border);
+    margin-bottom: functions.size(element-margin);
+    padding-top: functions.size(element-margin);
 
     &:first-child {
       border-top: 0;
@@ -1277,11 +1295,11 @@ input[type='button'],
 /* Header */
 
 #header {
-  @include vendor('display', 'flex');
-  @include vendor('flex-direction', 'column');
-  @include vendor('justify-content', 'space-between');
-  background: _palette(header, bg);
-  color: _palette(header, fg);
+  @include vendor.vendor("display", "flex");
+  @include vendor.vendor("flex-direction", "column");
+  @include vendor.vendor("justify-content", "space-between");
+  background: functions.palette(header, bg);
+  color: functions.palette(header, fg);
   height: 100%;
   overflow-y: auto;
   position: fixed;
@@ -1289,7 +1307,7 @@ input[type='button'],
   top: 0;
   width: $size-header;
 
-  @if _misc(header-side) == 'right' {
+  @if functions.misc(header-side) == "right" {
     right: 0;
   } @else {
     left: 0;
@@ -1301,34 +1319,34 @@ input[type='button'],
   h4,
   h5,
   h6 {
-    color: _palette(header, fg-bold);
+    color: functions.palette(header, fg-bold);
 
     a {
-      color: _palette(header, fg-bold);
+      color: functions.palette(header, fg-bold);
     }
   }
 
   header {
     p {
-      color: _palette(header, fg-light);
+      color: functions.palette(header, fg-light);
     }
   }
 
   a {
-    color: _palette(header, fg);
+    color: functions.palette(header, fg);
 
     &:hover {
-      color: _palette(header, fg-bold) !important;
+      color: functions.palette(header, fg-bold) !important;
     }
   }
 
   > header {
-    @include vendor('flex-shrink', '0');
+    @include vendor.vendor("flex-shrink", "0");
     padding: 3em;
 
     .avatar {
       display: block;
-      margin: 0 auto _size(element-margin) auto;
+      margin: 0 auto functions.size(element-margin) auto;
       width: 8em;
     }
 
@@ -1338,14 +1356,14 @@ input[type='button'],
     }
 
     p {
-      color: _palette(header, fg);
+      color: functions.palette(header, fg);
       font-style: italic;
       margin: 1em 0 0 0;
     }
   }
 
   > footer {
-    @include vendor('flex-shrink', '0');
+    @include vendor.vendor("flex-shrink", "0");
     bottom: 0;
     left: 0;
     padding: 2em;
@@ -1356,36 +1374,42 @@ input[type='button'],
 
       li {
         a {
-          color: _palette(header, fg-light);
+          color: functions.palette(header, fg-light);
         }
       }
     }
   }
 
   > nav {
-    @include vendor('flex-grow', '1');
+    @include vendor.vendor("flex-grow", "1");
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
 
     ul {
       list-style: none;
       margin: 0;
       padding: 0;
+      width: 100%;
 
       li {
-        border-top: solid _size(border-width) _palette(header, border);
+        border-top: solid functions.size(border-width)
+          functions.palette(header, border);
         display: block;
         padding: 0;
 
         a {
-          @include vendor('transition', 'none');
+          @include vendor.vendor("transition", "none");
           border: 0;
-          color: _palette(header, fg-bold) !important;
+          color: functions.palette(header, fg-bold) !important;
           display: block;
           padding: 0.85em 0;
           text-decoration: none;
 
           &.active {
-            background: _palette(bg);
-            color: _palette(header, bg) !important;
+            background: functions.palette(bg);
+            color: functions.palette(header, bg) !important;
           }
         }
 
@@ -1400,9 +1424,9 @@ input[type='button'],
 /* Wrapper */
 
 #wrapper {
-  background: _palette(bg-w);
+  background: functions.palette(bg-w);
 
-  @if _misc(header-side) == 'right' {
+  @if functions.misc(header-side) == "right" {
     padding-right: $size-header;
   } @else {
     padding-left: $size-header;
@@ -1413,7 +1437,8 @@ input[type='button'],
 
 #main {
   > section {
-    border-top: solid (_size(border-width) * 3) _palette(border);
+    border-top: solid (functions.size(border-width) * 3)
+      functions.palette(border);
 
     > .container {
       padding: 6em 0 4em 0;
@@ -1461,7 +1486,7 @@ input[type='button'],
 
 /* XLarge */
 
-@include breakpoint('<=xlarge') {
+@include breakpoints.breakpoint("<=xlarge") {
   $size-header: 21em;
 
   /* Basic */
@@ -1490,7 +1515,7 @@ input[type='button'],
   /* Wrapper */
 
   #wrapper {
-    @if _misc(header-side) == 'right' {
+    @if functions.misc(header-side) == "right" {
       padding-right: $size-header;
     } @else {
       padding-left: $size-header;
@@ -1510,10 +1535,16 @@ input[type='button'],
 
 /* Large */
 
-@include breakpoint('<=large') {
+@include breakpoints.breakpoint("<=large") {
   $size-header: 20em;
 
   /* Basic */
+
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 
   body,
   input,
@@ -1531,7 +1562,7 @@ input[type='button'],
   /* Wrapper */
 
   #wrapper {
-    @if _misc(header-side) == 'right' {
+    @if functions.misc(header-side) == "right" {
       padding-right: $size-header;
     } @else {
       padding-left: $size-header;
@@ -1545,7 +1576,7 @@ input[type='button'],
   display: none;
 }
 
-@include breakpoint('<=medium') {
+@include breakpoints.breakpoint("<=medium") {
   /* Basic */
 
   html,
@@ -1580,21 +1611,24 @@ input[type='button'],
   /* Header */
 
   #header {
-    @include vendor('backface-visibility', 'hidden');
-    @include vendor('transition', ('transform #{_duration(header)} ease'));
+    @include vendor.vendor("backface-visibility", "hidden");
+    @include vendor.vendor(
+      "transition",
+      ("transform #{functions.duration(header)} ease")
+    );
     display: block;
     height: 100%;
     overflow-y: auto;
     position: fixed;
     top: 0;
     width: $size-header;
-    z-index: _misc(z-index-base) + 2;
+    z-index: functions.misc(z-index-base) + 2;
 
-    @if _misc(header-side) == 'right' {
-      @include vendor('transform', 'translateX(#{$size-header})');
+    @if functions.misc(header-side) == "right" {
+      @include vendor.vendor("transform", "translateX(#{$size-header})");
       right: 0;
     } @else {
-      @include vendor('transform', 'translateX(#{$size-header * -1})');
+      @include vendor.vendor("transform", "translateX(#{$size-header * -1})");
       left: 0;
     }
 
@@ -1611,23 +1645,29 @@ input[type='button'],
   /* Wrapper */
 
   #wrapper {
-    @include vendor('backface-visibility', 'hidden');
-    @include vendor('transition', 'transform #{_duration(header)} ease');
+    @include vendor.vendor("backface-visibility", "hidden");
+    @include vendor.vendor(
+      "transition",
+      "transform #{functions.duration(header)} ease"
+    );
     padding: 44px 0 1px 0;
   }
 
   /* Header Panel */
 
   #titleBar {
-    @include vendor('backface-visibility', 'hidden');
-    @include vendor('transition', 'transform #{_duration(header)} ease');
+    @include vendor.vendor("backface-visibility", "hidden");
+    @include vendor.vendor(
+      "transition",
+      "transform #{functions.duration(header)} ease"
+    );
     display: block;
     height: 44px;
     left: 0;
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: _misc(z-index-base) + 1;
+    z-index: functions.misc(z-index-base) + 1;
     background: #222;
     color: #fff;
     min-width: 320px;
@@ -1635,13 +1675,13 @@ input[type='button'],
     .title {
       color: #fff;
       display: block;
-      font-weight: _font(weight-bold);
+      font-weight: functions.font(weight-bold);
       height: 44px;
       line-height: 44px;
       padding: 0 1em;
       width: 100%;
 
-      @if _misc(header-side) == 'right' {
+      @if functions.misc(header-side) == "right" {
         text-align: left;
       } @else {
         text-align: right;
@@ -1654,7 +1694,7 @@ input[type='button'],
     }
 
     .toggle {
-      @include icon(false, solid);
+      @include mixins.icon(false, solid);
       height: 4em;
       position: absolute;
       top: 0;
@@ -1662,16 +1702,16 @@ input[type='button'],
       border: 0;
       outline: 0;
 
-      @if _misc(header-side) == 'right' {
+      @if functions.misc(header-side) == "right" {
         right: 0;
       } @else {
         left: 0;
       }
 
       &:before {
-        background: _palette(accent1, bg);
-        color: _palette(accent1, fg-bold);
-        content: '\f0c9';
+        background: functions.palette(accent1, bg);
+        color: functions.palette(accent1, fg-bold);
+        content: "\f0c9";
         display: block;
         font-size: 18px;
         height: 44px;
@@ -1681,7 +1721,7 @@ input[type='button'],
         top: 0;
         width: 64px;
 
-        @if _misc(header-side) == 'right' {
+        @if functions.misc(header-side) == "right" {
           right: 0;
         } @else {
           left: 0;
@@ -1694,15 +1734,18 @@ input[type='button'],
     &.header-visible {
       #wrapper,
       #titleBar {
-        @if _misc(header-side) == 'right' {
-          @include vendor('transform', 'translateX(#{$size-header * -1})');
+        @if functions.misc(header-side) == "right" {
+          @include vendor.vendor(
+            "transform",
+            "translateX(#{$size-header * -1})"
+          );
         } @else {
-          @include vendor('transform', 'translateX(#{$size-header})');
+          @include vendor.vendor("transform", "translateX(#{$size-header})");
         }
       }
 
       #header {
-        @include vendor('transform', 'translateX(0)');
+        @include vendor.vendor("transform", "translateX(0)");
       }
     }
   }
@@ -1710,7 +1753,7 @@ input[type='button'],
 
 /* Small */
 
-@include breakpoint('<=small') {
+@include breakpoints.breakpoint("<=small") {
   $size-header: 17em;
 
   /* Basic */
@@ -1785,7 +1828,7 @@ input[type='button'],
     article {
       .image {
         display: block;
-        margin: 0 0 _size(element-margin) 0;
+        margin: 0 0 functions.size(element-margin) 0;
         padding-right: 0;
         width: 100%;
       }
@@ -1802,11 +1845,11 @@ input[type='button'],
   #header {
     width: $size-header;
 
-    @if _misc(header-side) == 'right' {
-      @include vendor('transform', 'translateX(#{$size-header})');
+    @if functions.misc(header-side) == "right" {
+      @include vendor.vendor("transform", "translateX(#{$size-header})");
       right: 0;
     } @else {
-      @include vendor('transform', 'translateX(#{$size-header * -1})');
+      @include vendor.vendor("transform", "translateX(#{$size-header * -1})");
       left: 0;
     }
 
@@ -1814,7 +1857,7 @@ input[type='button'],
       padding: 2em;
 
       .avatar {
-        margin: 0 auto (_size(element-margin) * 0.75) auto;
+        margin: 0 auto (functions.size(element-margin) * 0.75) auto;
         width: 6em;
       }
 
@@ -1880,10 +1923,13 @@ input[type='button'],
     &.header-visible {
       #wrapper,
       #titleBar {
-        @if _misc(header-side) == 'right' {
-          @include vendor('transform', 'translateX(#{$size-header * -1})');
+        @if functions.misc(header-side) == "right" {
+          @include vendor.vendor(
+            "transform",
+            "translateX(#{$size-header * -1})"
+          );
         } @else {
-          @include vendor('transform', 'translateX(#{$size-header})');
+          @include vendor.vendor("transform", "translateX(#{$size-header})");
         }
       }
     }
@@ -1892,7 +1938,7 @@ input[type='button'],
 
 /* XSmall */
 
-@include breakpoint('<=xsmall') {
+@include breakpoints.breakpoint("<=xsmall") {
   /* Basic */
 
   html,
@@ -1911,11 +1957,11 @@ input[type='button'],
 
   ul {
     &.actions {
-      margin: 0 0 _size(element-margin) 0;
+      margin: 0 0 functions.size(element-margin) 0;
 
       li {
         display: block;
-        padding: (_size(element-margin) * 0.5) 0 0 0;
+        padding: (functions.size(element-margin) * 0.5) 0 0 0;
         text-align: center;
         width: 100%;
 
@@ -1937,7 +1983,7 @@ input[type='button'],
 
       &.small {
         li {
-          padding: (_size(element-margin) * 0.25) 0 0 0;
+          padding: (functions.size(element-margin) * 0.25) 0 0 0;
 
           &:first-child {
             padding-top: 0;
@@ -1956,9 +2002,9 @@ input[type='button'],
 
   /* Button */
 
-  input[type='submit'],
-  input[type='reset'],
-  input[type='button'],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
   .button {
     padding: 0;
   }

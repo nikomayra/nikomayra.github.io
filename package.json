@@ -1,0 +1,15 @@
+{
+  "name": "nikomayra.github.io",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Personal Website / Online Resume",
+  "main": "index.js",
+  "scripts": {
+    "compile-sass": "sass ./assets/sass/components/_skills.scss ./assets/css/skills.css && sass ./assets/sass/main.scss ./assets/css/main.css",
+    "watch-sass": "sass --watch ./assets/sass/components/_skills.scss ./assets/css/skills.css && sass --watch ./assets/sass/main.scss ./assets/css/main.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
