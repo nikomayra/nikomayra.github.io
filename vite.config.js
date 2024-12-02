@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/nikomayra.github.io/",
+  base: "/",
   build: {
     outDir: "dist",
     rollupOptions: {
@@ -11,11 +11,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    resolve: {
-      alias: {
-        "@fancyapps/ui": "node_modules/@fancyapps/ui",
-      },
-    },
     include: ["d3", "@fancyapps/ui"],
   },
   server: {
