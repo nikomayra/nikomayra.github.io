@@ -1,24 +1,24 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: '/nikomayra.github.io/',
+  base: "/nikomayra.github.io/",
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     rollupOptions: {
       input: {
-        main: 'index.html'
-      }
-    }
-  },
-  resolve: {
-    alias: {
-      '@fancyapps/ui': '/node_modules/@fancyapps/ui'
-    }
+        main: "index.html",
+      },
+    },
   },
   optimizeDeps: {
-    include: ['d3']
+    resolve: {
+      alias: {
+        "@fancyapps/ui": "node_modules/@fancyapps/ui",
+      },
+    },
+    include: ["d3", "@fancyapps/ui"],
   },
   server: {
-    open: true
-  }
-})
+    open: true,
+  },
+});
