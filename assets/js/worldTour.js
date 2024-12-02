@@ -4,7 +4,7 @@ import * as topojson from "topojson-client";
 // Animation durations
 const ANIMATION = Object.freeze({
   FLIGHT: 1250,
-  PAUSE: 2000,
+  PAUSE: 1000,
 });
 
 const visitedCountries = [

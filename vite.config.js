@@ -10,14 +10,13 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          d3: ['d3'],
-          fancybox: ['@fancyapps/ui']
+          d3: ['d3']
         }
       }
     }
   },
   optimizeDeps: {
-    include: ['d3', '@fancyapps/ui']
+    include: ['d3', '@fancyapps/ui/dist/fancybox/fancybox.esm.js']
   },
   server: {
     open: true

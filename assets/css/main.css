@@ -102,7 +102,7 @@ body {
   --world-ocean-color: rgb(202, 202.5, 207.75);
   --world-graticule-color: rgb(226.5, 229.5, 234.75);
   --world-flight-path-color: rgb(251.25, 202, 207.75);
-  --world-transition-duration: 0.3s;
+  --world-transition-duration: 1.5s;
 }
 
 .world-tour-container {

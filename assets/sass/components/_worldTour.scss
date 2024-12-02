@@ -8,7 +8,7 @@
   --world-ocean-color: #{map.get($palette, primary, bg-light)};
   --world-graticule-color: #{map.get($palette, secondary, bg-light)};
   --world-flight-path-color: #{map.get($palette, accent-1, bg-light)};
-  --world-transition-duration: 0.3s;
+  --world-transition-duration: 1.5s;
 }
 
 .world-tour-container {
@@ -58,7 +58,7 @@
     color: #{map.get($palette, primary, bg)};
     transition: color var(--world-transition-duration) ease;
     padding: 10px;
-    
+
     &.highlight {
       color: #{map.get($palette, accent-1, bg)};
     }
