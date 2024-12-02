@@ -7,16 +7,16 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html'
-      },
-      output: {
-        manualChunks: {
-          d3: ['d3']
-        }
       }
     }
   },
+  resolve: {
+    alias: {
+      '@fancyapps/ui': '/node_modules/@fancyapps/ui'
+    }
+  },
   optimizeDeps: {
-    include: ['d3', '@fancyapps/ui/dist/fancybox/fancybox.esm.js']
+    include: ['d3']
   },
   server: {
     open: true

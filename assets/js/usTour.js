@@ -1,5 +1,5 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
-import * as topojson from "https://cdn.skypack.dev/topojson-client@3";
+import * as d3 from "d3";
+import * as topojson from "topojson-client";
 
 // Modified version of https://observablehq.com/@d3/us-state-choropleth/2
 // ISC License
