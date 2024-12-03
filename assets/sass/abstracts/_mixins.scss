@@ -1,0 +1,255 @@
+// ==========================================================================
+// Mixins Library
+// ==========================================================================
+//
+// This file contains all the mixins used throughout the application.
+// Mixins are organized by type (vendor prefixes, layout, typography, etc.)
+//
+// Usage:
+// @include mixins.vendor("transform", "translateX(10px)");
+// @include mixins.clearfix;
+// @include mixins.responsive("medium") { ... }
+
+@use "sass:list";
+@use "sass:math";
+@use "functions";
+@use "vendor";
+
+// ==========================================================================
+// Vendor Prefixes
+// ==========================================================================
+
+/// Add vendor prefixes to a property
+/// @param {string} $property - Property to prefix
+/// @param {string} $value - Value to apply
+/// @param {list} $prefixes [()] - List of prefixes to apply
+@mixin vendor($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    #{'-' + $prefix + '-' + $property}: #{$value};
+  }
+  #{$property}: #{$value};
+}
+
+// Common vendor prefix mixins
+@mixin transition($value...) {
+  @include vendor("transition", $value, ("webkit", "moz", "ms", "o"));
+}
+
+@mixin transform($value...) {
+  @include vendor("transform", $value, ("webkit", "moz", "ms", "o"));
+}
+
+@mixin animation($value...) {
+  @include vendor("animation", $value, ("webkit", "moz", "ms", "o"));
+}
+
+// ==========================================================================
+// Layout Mixins
+// ==========================================================================
+
+/// Flexbox
+/// @param {string} $direction [row] - Flex direction
+/// @param {string} $justify [flex-start] - Justify content
+/// @param {string} $align [stretch] - Align items
+/// @param {string} $wrap [nowrap] - Flex wrap
+@mixin flex(
+  $direction: row,
+  $justify: flex-start,
+  $align: stretch,
+  $wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+/// Grid
+/// @param {number} $columns [12] - Number of grid columns
+/// @param {string} $gap [functions.spacing('medium')] - Grid gap
+@mixin grid($columns: 12, $gap: functions.spacing("medium")) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+/// Clearfix
+/// @description Ensures that a container includes all floated children
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/// Center block
+/// @description Centers a block element within its container
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/// Absolute Position
+/// @param {number} $top [null] - Top position
+/// @param {number} $right [null] - Right position
+/// @param {number} $bottom [null] - Bottom position
+/// @param {number} $left [null] - Left position
+@mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+/// Absolute Center
+/// @description Absolutely positions an element at the center of its container
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/// Fixed Center
+/// @description Fixes an element at the center of the viewport
+@mixin fixed-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// ==========================================================================
+// Icon Mixins
+// ==========================================================================
+
+/// Icon
+/// @param {string} $content [false] - Icon content
+/// @param {string} $category [regular] - Icon category
+/// @param {string} $where [before] - Icon position
+@mixin icon($content: false, $category: regular, $where: before) {
+  text-decoration: none;
+
+  &:#{$where} {
+    @if $content {
+      content: $content;
+    }
+
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    text-transform: none !important;
+
+    @if ($category == brands) {
+      font-family: "Font Awesome 5 Brands";
+    } @else if ($category == solid) {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+    } @else {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 400;
+    }
+  }
+}
+
+// ==========================================================================
+// Button Mixins
+// ==========================================================================
+
+/// Button Base
+/// @description Styles a basic button
+@mixin button-base {
+  display: inline-block;
+  padding: functions.spacing("small") functions.spacing("medium");
+  border: none;
+  border-radius: functions.layout("border", "radius");
+  font-family: functions.font-family("primary");
+  font-weight: functions.font-weight("bold");
+  text-decoration: none;
+  cursor: pointer;
+  transition: all functions.transition("standard") ease-in-out;
+}
+
+// ==========================================================================
+// Spacing Mixins
+// ==========================================================================
+
+/// Padding
+/// @param {number} $tb [0] - Top and bottom padding
+/// @param {number} $lr [0] - Left and right padding
+/// @param {list} $pad [(0, 0, 0, 0)] - Individual padding values
+/// @param {boolean} $important [false] - Whether to add !important
+@mixin padding($tb, $lr, $pad: (0, 0, 0, 0), $important: null) {
+  @if $important {
+    $important: "!important";
+  }
+
+  $x: 0.1em;
+
+  @if math.unit(functions.spacing("element", "margin")) == "rem" {
+    $x: 0.1rem;
+  }
+
+  padding: ($tb + list.nth($pad, 1)) ($lr + list.nth($pad, 2))
+    max($x, $tb - functions.spacing("element", "margin") + list.nth($pad, 3))
+    ($lr + list.nth($pad, 4)) #{$important};
+}
+
+// ==========================================================================
+// SVG URL Encoder
+// ==========================================================================
+
+/// SVG URL Encoder
+/// @param {string} $svg - SVG content to encode
+@function svg-url($svg) {
+  $svg: vendor.str-replace($svg, '"', "'");
+  $svg: vendor.str-replace($svg, "%", "%25");
+  $svg: vendor.str-replace($svg, "<", "%3C");
+  $svg: vendor.str-replace($svg, ">", "%3E");
+  $svg: vendor.str-replace($svg, "&", "%26");
+  $svg: vendor.str-replace($svg, "#", "%23");
+  $svg: vendor.str-replace($svg, "{", "%7B");
+  $svg: vendor.str-replace($svg, "}", "%7D");
+  $svg: vendor.str-replace($svg, ";", "%3B");
+
+  @return url("data:image/svg+xml;charset=utf8,#{$svg}");
+}
+
+// ==========================================================================
+// Header Styles
+// ==========================================================================
+
+/// Header Styles
+/// @param {number} $size-header [null] - Header size
+/// @param {string} $header-side [null] - Header side
+/// @param {string} $translate-value [null] - Translate value
+@mixin headerStyles($size-header, $header-side, $translate-value) {
+  @include vendor.vendor("backface-visibility", "hidden");
+  @include vendor.vendor(
+    "transition",
+    'transform #{functions.transition("header")} ease'
+  );
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  width: $size-header;
+  z-index: functions.z("header");
+
+  @if $header-side == "right" {
+    @include vendor.vendor("transform", $translate-value);
+    right: 0;
+  } @else {
+    @include vendor.vendor("transform", $translate-value);
+    left: 0;
+  }
+}

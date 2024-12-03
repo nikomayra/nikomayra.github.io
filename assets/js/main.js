@@ -1,142 +1,154 @@
-import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.esm.js';
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
+import { createNavList, createPanel } from './modules/navigation.js';
+import { applyPlaceholderPolyfill, prioritizeElements } from './modules/forms.js';
+import { scrolly } from './modules/scrolly.js';
+import { scrollex } from './modules/scrollex.js';
+import breakpointInstance from './modules/breakpoints.js';
 
 // Initialize Fancybox
-Fancybox.bind("[data-fancybox]", {
+Fancybox.bind('[data-fancybox]', {
   // Your Fancybox options here
 });
 
-// Import other modules
-import "./worldTour.js";
-import "./skills.js";
-import "./usTour.js";
+// Import other visualization modules
+import './worldTour.js';
+import './skills.js';
+import './usTour.js';
 
-(function ($) {
-  var $window = $(window),
-    $body = $("body"),
-    $header = $("#header"),
-    $titleBar = null,
-    $nav = $("#nav"),
-    $wrapper = $("#wrapper");
+// DOM Elements
+const $window = window;
+const $body = document.body;
+const $header = document.getElementById('header');
 
-  // Breakpoints.
-  breakpoints({
-    xlarge: ["1281px", "1680px"],
-    large: ["1025px", "1280px"],
-    medium: ["737px", "1024px"],
-    small: ["481px", "736px"],
-    xsmall: [null, "480px"],
+// Initialize navigation
+document.querySelectorAll('.nav').forEach((nav) => {
+  nav.innerHTML = createNavList(nav);
+});
+
+// Initialize panels
+document.querySelectorAll('.panel').forEach((panel) => {
+  createPanel(panel);
+});
+
+// Apply form polyfills
+document.querySelectorAll('form').forEach((form) => {
+  applyPlaceholderPolyfill(form);
+});
+
+// Play initial animations on page load
+$window.addEventListener('load', () => {
+  setTimeout(() => {
+    $body.classList.remove('is-preload');
+  }, 100);
+});
+
+// Create Title Bar
+const titleBar = document.createElement('div');
+titleBar.id = 'titleBar';
+titleBar.innerHTML = `
+  <a href="#" class="toggle"></a>
+  <span class="title">${document.getElementById('logo').innerHTML}</span>
+`;
+$body.appendChild(titleBar);
+
+// Handle side panel toggle
+function toggleNavPanel() {
+  $header.classList.toggle('header-visible');
+  $body.classList.toggle('header-visible');
+}
+
+// Event listener for the toggle button
+const $titleBarToggle = titleBar.querySelector('.toggle');
+if ($titleBarToggle) {
+  $titleBarToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleNavPanel();
   });
+}
 
-  // Play initial animations on page load.
-  $window.on("load", function () {
-    window.setTimeout(function () {
-      $body.removeClass("is-preload");
-    }, 100);
-  });
+// Function to check and set header visibility based on breakpoints
+function checkHeaderVisibility() {
+  const currentBreakpoint = breakpointInstance.getCurrent();
 
-  // Tweaks/fixes.
+  if (currentBreakpoint === 'medium' || currentBreakpoint === 'small') {
+    $header.classList.remove('header-visible'); // Hide header on medium and small screens
+  } else {
+    $header.classList.add('header-visible'); // Show header on large and xlarge screens
+  }
+}
 
-  // Polyfill: Object fit.
-  if (!browser.canUse("object-fit")) {
-    $(".image[data-position]").each(function () {
-      var $this = $(this),
-        $img = $this.children("img");
+// Check visibility on load and resize
+$window.addEventListener('load', checkHeaderVisibility);
+$window.addEventListener('resize', checkHeaderVisibility);
 
-      // Apply img as background.
-      $this
-        .css("background-image", 'url("' + $img.attr("src") + '")')
-        .css("background-position", $this.data("position"))
-        .css("background-size", "cover")
-        .css("background-repeat", "no-repeat");
+// Smooth scrolling for navigation links
+scrolly('#nav a', {
+  speed: 1000,
+  offset: function () {
+    if (breakpoints.active('<=medium')) return titleBar.offsetHeight;
+    return 0;
+  },
+});
 
-      // Hide img.
-      $img.css("opacity", "0");
+// Initialize Scrollex for each navigation link
+const $navLinks = document.querySelectorAll('#nav a');
+
+$navLinks.forEach((link) => {
+  const href = link.getAttribute('href');
+  const section = document.querySelector(href);
+
+  if (section) {
+    scrollex([section], {
+      mode: 'middle',
+      top: '5vh',
+      bottom: '5vh',
+      initialize: function () {
+        section.classList.add('inactive');
+      },
+      enter: function () {
+        section.classList.remove('inactive');
+
+        // Check if any link is locked
+        if (!document.querySelector('.active-locked')) {
+          $navLinks.forEach((navLink) => navLink.classList.remove('active'));
+          link.classList.add('active');
+        } else if (link.classList.contains('active-locked')) {
+          link.classList.remove('active-locked');
+        }
+      },
+    });
+
+    // Add click event to the link
+    link.addEventListener('click', function (e) {
+      if (href.charAt(0) !== '#') return; // External link
+      e.preventDefault();
+
+      // Remove active class from all links
+      $navLinks.forEach((navLink) => navLink.classList.remove('active'));
+      link.classList.add('active');
+      link.classList.add('active-locked'); // Lock the link
+
+      // Smooth scroll to section
+      section.scrollIntoView({ behavior: 'smooth' });
     });
   }
+});
 
-  // Header Panel.
+// Highlight active section on scroll
+$window.addEventListener('scroll', () => {
+  let scrollPosition = $window.scrollY + 50; // Adjust offset as needed
 
-  // Nav.
-  var $nav_a = $nav.find("a");
+  $navLinks.forEach((link) => {
+    const section = document.querySelector(link.getAttribute('href'));
+    if (section) {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
 
-  $nav_a
-    .addClass("scrolly")
-    .on("click", function () {
-      var $this = $(this);
-
-      // External link? Bail.
-      if ($this.attr("href").charAt(0) != "#") return;
-
-      // Deactivate all links.
-      $nav_a.removeClass("active");
-
-      // Activate link *and* lock it (so Scrollex doesn't try to activate other links as we're scrolling to this one's section).
-      $this.addClass("active").addClass("active-locked");
-    })
-    .each(function () {
-      var $this = $(this),
-        id = $this.attr("href"),
-        $section = $(id);
-
-      // No section for this link? Bail.
-      if ($section.length < 1) return;
-
-      // Scrollex.
-      $section.scrollex({
-        mode: "middle",
-        top: "5vh",
-        bottom: "5vh",
-        initialize: function () {
-          // Deactivate section.
-          $section.addClass("inactive");
-        },
-        enter: function () {
-          // Activate section.
-          $section.removeClass("inactive");
-
-          // No locked links? Deactivate all links and activate this section's one.
-          if ($nav_a.filter(".active-locked").length == 0) {
-            $nav_a.removeClass("active");
-            $this.addClass("active");
-          }
-
-          // Otherwise, if this section's link is the one that's locked, unlock it.
-          else if ($this.hasClass("active-locked"))
-            $this.removeClass("active-locked");
-        },
-      });
-    });
-
-  // Title Bar.
-  $titleBar = $(
-    '<div id="titleBar">' +
-      '<a href="#header" class="toggle"></a>' +
-      '<span class="title">' +
-      $("#logo").html() +
-      "</span>" +
-      "</div>"
-  ).appendTo($body);
-
-  // Panel.
-  $header.panel({
-    delay: 500,
-    hideOnClick: true,
-    hideOnSwipe: true,
-    resetScroll: true,
-    resetForms: true,
-    side: "right",
-    target: $body,
-    visibleClass: "header-visible",
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        $navLinks.forEach((navLink) => navLink.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
   });
-
-  // Scrolly.
-  $(".scrolly").scrolly({
-    speed: 1000,
-    offset: function () {
-      if (breakpoints.active("<=medium")) return $titleBar.height();
-
-      return 0;
-    },
-  });
-})(jQuery);
+});

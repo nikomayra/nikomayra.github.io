@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Random shit
+ORIGINAL/
+
 # Build output
 dist/
 build/

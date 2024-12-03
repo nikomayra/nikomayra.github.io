@@ -1,5 +1,5 @@
-@use "../libs/vars" as *;
-@use "sass:map";
+@use '../libs/vars' as *;
+@use 'sass:map';
 
 :root {
   --world-land-color: #{map.get($palette, secondary, bg)};
@@ -8,7 +8,7 @@
   --world-ocean-color: #{map.get($palette, primary, bg-light)};
   --world-graticule-color: #{map.get($palette, secondary, bg-light)};
   --world-flight-path-color: #{map.get($palette, accent-1, bg-light)};
-  --world-transition-duration: 1.5s;
+  --world-transition-duration: 0.3s;
 }
 
 .world-tour-container {

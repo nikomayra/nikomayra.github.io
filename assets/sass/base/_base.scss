@@ -1,0 +1,389 @@
+// ==========================================================================
+// Base Styles
+// ==========================================================================
+//
+// This file contains base styles that are applied to HTML elements directly.
+// It includes resets, box-sizing rules, and basic element styling.
+//
+// Usage:
+// @use "base/base";
+
+@use "sass:color";
+@use "../abstracts/functions" as fn;
+@use "../abstracts/mixins" as mx;
+@use "../abstracts/variables" as vars;
+
+// ==========================================================================
+// Box Model
+// ==========================================================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// ==========================================================================
+// HTML & Body Base
+// ==========================================================================
+
+html {
+  font-size: 100%; // 16px by default
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  background-color: fn.color("background");
+  overflow-x: hidden;
+  
+  &.no-scroll {
+    overflow: hidden;
+  }
+
+  &.is-preload {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+// ==========================================================================
+// Container
+// ==========================================================================
+
+.container {
+  margin: 0 auto;
+  max-width: fn.layout("container-width", "default");
+  padding: 0 fn.spacing("medium");
+  width: 100%;
+
+  @include mx.breakpoint("<=medium") {
+    max-width: 100%;
+    padding: 0 fn.spacing("small");
+  }
+}
+
+// ==========================================================================
+// Section
+// ==========================================================================
+
+section {
+  border-top: solid fn.size("border-width") fn.color("border");
+  margin-top: fn.spacing("section");
+  padding-top: fn.spacing("section");
+
+  &:first-of-type {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
+// ==========================================================================
+// Interactive Elements
+// ==========================================================================
+
+button,
+.button {
+  appearance: none;
+  transition: background-color 0.2s ease-in-out,
+              color 0.2s ease-in-out,
+              border-color 0.2s ease-in-out;
+  
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// ==========================================================================
+// Media Elements
+// ==========================================================================
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+// ==========================================================================
+// Form Elements
+// ==========================================================================
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+// ==========================================================================
+// Links
+// ==========================================================================
+
+a {
+  color: fn.color("primary");
+  text-decoration: none;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: fn.color("primary-dark");
+  }
+  
+  &:focus {
+    outline: 2px solid fn.color("primary");
+    outline-offset: 2px;
+  }
+  
+  &:active {
+    color: fn.color("primary-darker");
+  }
+}
+
+// ==========================================================================
+// Lists
+// ==========================================================================
+
+ul,
+ol {
+  list-style-position: inside;
+  margin: 0 0 fn.spacing("medium") 0;
+  padding-left: 1em;
+  
+  li {
+    padding-left: 0.5em;
+  }
+}
+
+// ==========================================================================
+// Tables
+// ==========================================================================
+
+table {
+  border-collapse: collapse;
+  margin: 0 0 fn.spacing("medium") 0;
+  width: 100%;
+  
+  tbody {
+    tr {
+      border: solid fn.size("border-width") fn.color("border");
+      border-left: 0;
+      border-right: 0;
+      
+      &:nth-child(2n + 1) {
+        background-color: fn.color("background-alt");
+      }
+    }
+  }
+  
+  td {
+    padding: fn.spacing("small");
+  }
+  
+  th {
+    color: fn.color("heading");
+    font-size: 0.9em;
+    font-weight: fn.font-weight("bold");
+    padding: 0 0.75em 0.75em 0.75em;
+    text-align: left;
+  }
+}
+
+// ==========================================================================
+// Utility Classes
+// ==========================================================================
+
+.clearfix {
+  &::after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
+
+.align {
+  &-left {
+    text-align: left;
+  }
+  
+  &-center {
+    text-align: center;
+  }
+  
+  &-right {
+    text-align: right;
+  }
+}
+
+// ==========================================================================
+// Selection
+// ==========================================================================
+
+::selection {
+  background-color: fn.color("primary");
+  color: fn.color("white");
+}
+
+// ==========================================================================
+// Scrollbar
+// ==========================================================================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: fn.color("background-alt");
+}
+
+::-webkit-scrollbar-thumb {
+  background: fn.color("primary");
+  border-radius: 4px;
+  
+  &:hover {
+    background: fn.color("primary-dark");
+  }
+}
+
+// ==========================================================================
+// Focus Outline
+// ==========================================================================
+
+:focus {
+  outline: 2px solid fn.color("primary");
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid fn.color("primary");
+  outline-offset: 2px;
+}
+
+// ==========================================================================
+// Print Styles
+// ==========================================================================
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+  
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+  
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+// ==========================================================================
+// Code Elements
+// ==========================================================================
+
+code,
+kbd,
+pre,
+samp {
+  font-family: fn.font-family("monospace");
+  font-size: 0.9em;
+}
+
+pre {
+  margin: 0 0 fn.spacing("medium") 0;
+  overflow-x: auto;
+  padding: fn.spacing("medium");
+  background: fn.color("code-bg");
+  border-radius: fn.size("border-radius");
+
+  code {
+    background: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+code {
+  background: fn.color("code-bg");
+  border-radius: fn.size("border-radius");
+  color: fn.color("code-text");
+  padding: 0.2em 0.4em;
+}
+
+// ==========================================================================
+// Utility Classes
+// ==========================================================================
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.text-align {
+  &-left { text-align: left; }
+  &-center { text-align: center; }
+  &-right { text-align: right; }
+  &-justify { text-align: justify; }
+}

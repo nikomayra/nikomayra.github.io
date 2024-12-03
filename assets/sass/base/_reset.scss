@@ -1,0 +1,304 @@
+@use "../abstracts/functions" as fn;
+
+// ==========================================================================
+// Modern CSS Reset
+// ==========================================================================
+//
+// A modern CSS reset that:
+// 1. Uses modern best practices
+// 2. Removes default margins and paddings
+// 3. Improves accessibility
+// 4. Fixes common browser inconsistencies
+//
+// Inspired by:
+// - modern-css-reset (https://github.com/andy-piccalilli/modern-css-reset)
+// - normalize.css (https://github.com/necolas/normalize.css)
+//
+// Usage:
+// @use "base/reset";
+
+// ==========================================================================
+// Box Sizing
+// ==========================================================================
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// ==========================================================================
+// Document
+// ==========================================================================
+
+/* Remove default margin and padding */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Improve text rendering */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// ==========================================================================
+// Sections
+// ==========================================================================
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ==========================================================================
+// Lists
+// ==========================================================================
+
+/* Remove default list styles */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+// ==========================================================================
+// Forms
+// ==========================================================================
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Remove default fieldset styles */
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+/* Remove default legend styles */
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-size: calc(1.275rem + 0.3vw);
+  line-height: inherit;
+}
+
+// ==========================================================================
+// Tables
+// ==========================================================================
+
+/* Remove default table spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// ==========================================================================
+// Links
+// ==========================================================================
+
+/* Remove the gray background on active links in IE 10 */
+a {
+  background-color: transparent;
+}
+
+// ==========================================================================
+// Media
+// ==========================================================================
+
+/* Add the correct vertical alignment in Chrome, Firefox, and Opera */
+progress {
+  vertical-align: baseline;
+}
+
+/* Add the correct display in IE 10+ */
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+// ==========================================================================
+// Accessibility
+// ==========================================================================
+
+/* Remove the outline on focused elements when they are also active/hovered */
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: 0 !important;
+}
+
+/* Make sure users can't select text in interactive elements */
+[role="button"],
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+// ==========================================================================
+// Touch Action
+// ==========================================================================
+
+/* Remove delays and behavior modifications in browsers that add them */
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea,
+[tabindex] {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+// ==========================================================================
+// Print
+// ==========================================================================
+
+@media print {
+  /* Add visible URL after links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+  }
+
+  /* Don't show links for images */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  /* Hide unnecessary elements */
+  nav,
+  aside {
+    display: none;
+  }
+
+  /* Break inside avoidance */
+  pre,
+  blockquote,
+  tr,
+  img,
+  h2,
+  h3 {
+    page-break-inside: avoid;
+  }
+
+  /* Orphans and widows */
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Always start headings on a new page */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    page-break-after: avoid;
+  }
+}
+
+// Set core body defaults
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: fn.font-family("primary");
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Modern anchor reset
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Remove list styles
+ul,
+ol {
+  list-style: none;
+}
+
+// Set default focus styles
+:focus-visible {
+  outline: 2px solid fn.color("primary");
+  outline-offset: 2px;
+}
+
+// Remove details marker
+details summary {
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+// Modern dialog reset
+dialog {
+  background-color: white;
+  border: none;
+  border-radius: fn.layout("border", "radius");
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
+  padding: fn.spacing("large");
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}

@@ -1,0 +1,150 @@
+// ==========================================================================
+// Grid System
+// ==========================================================================
+//
+// This file contains the grid system used throughout the application.
+// It provides a flexible and responsive grid layout system using CSS Grid.
+//
+// Usage:
+// <div class="grid">
+//   <div class="col-6">Half width on all screens</div>
+//   <div class="col-6 col-md-12">Half width, full on medium screens</div>
+// </div>
+
+@use "sass:math";
+@use "../abstracts/functions" as fn;
+@use "../abstracts/mixins" as mx;
+@use "../abstracts/variables" as vars;
+
+/// Grid configuration
+/// @type Map
+$grid-config: (
+  "columns": 12,
+  "gap": 2rem,
+  "container": (
+    "padding": 1rem,
+    "max-width": (
+      "sm": 540px,
+      "md": 720px,
+      "lg": 960px,
+      "xl": 1140px
+    )
+  )
+);
+
+// ==========================================================================
+// Container Classes
+// ==========================================================================
+
+/// Main container class
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: map.get($grid-config, "container", "padding");
+  padding-left: map.get($grid-config, "container", "padding");
+
+  @each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
+    @include mx.breakpoint(">=#{$breakpoint}") {
+      max-width: $width;
+    }
+  }
+
+  &-fluid {
+    width: 100%;
+    padding-right: map.get($grid-config, "container", "padding");
+    padding-left: map.get($grid-config, "container", "padding");
+  }
+}
+
+// ==========================================================================
+// Grid Classes
+// ==========================================================================
+
+/// Grid wrapper
+.grid {
+  display: grid;
+  grid-template-columns: repeat(map.get($grid-config, "columns"), 1fr);
+  gap: map.get($grid-config, "gap");
+  width: 100%;
+
+  // Responsive gap
+  @include mx.breakpoint("<=medium") {
+    gap: math.div(map.get($grid-config, "gap"), 2);
+  }
+
+  // No gap modifier
+  &.no-gap {
+    gap: 0;
+  }
+}
+
+// Generate column classes for each breakpoint
+@each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
+  $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
+
+  @include mx.breakpoint(">=#{$breakpoint}") {
+    @for $i from 1 through map.get($grid-config, "columns") {
+      .col#{$infix}-#{$i} {
+        grid-column: span $i;
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Grid Utilities
+// ==========================================================================
+
+/// Grid alignment classes
+.grid-align {
+  &-start { align-items: start; }
+  &-center { align-items: center; }
+  &-end { align-items: end; }
+}
+
+/// Grid justify classes
+.grid-justify {
+  &-start { justify-content: start; }
+  &-center { justify-content: center; }
+  &-end { justify-content: end; }
+  &-between { justify-content: space-between; }
+  &-around { justify-content: space-around; }
+}
+
+/// Grid order classes
+@for $i from -1 through 12 {
+  .order-#{$i} {
+    order: $i;
+  }
+}
+
+// ==========================================================================
+// Legacy Support
+// ==========================================================================
+
+/// For browsers that don't support CSS Grid
+.no-grid {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: math.div(map.get($grid-config, "gap"), -2);
+
+    > * {
+      padding: math.div(map.get($grid-config, "gap"), 2);
+    }
+  }
+
+  @each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
+    $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
+
+    @include mx.breakpoint(">=#{$breakpoint}") {
+      @for $i from 1 through map.get($grid-config, "columns") {
+        .col#{$infix}-#{$i} {
+          flex: 0 0 percentage(math.div($i, map.get($grid-config, "columns")));
+          max-width: percentage(math.div($i, map.get($grid-config, "columns")));
+        }
+      }
+    }
+  }
+}

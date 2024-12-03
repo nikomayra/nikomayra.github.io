@@ -1,0 +1,89 @@
+// ==========================================================================
+// Color System
+// ==========================================================================
+//
+// This file defines the color palette for the entire application.
+// Colors are organized by semantic purpose and can include variations.
+//
+// Usage:
+// color: fn.color("primary");
+// background: fn.color("background", "light");
+
+/// Color Palette
+/// @type Map
+$colors: (
+  // Base colors
+  "background": #fdf0d5,
+  "text": #0d0a0b,
+  "text-light": #454955,
+
+  // Primary colors
+  "primary": #669bbc,
+  "primary-light": #7eabc6,
+  "primary-dark": #4d7a96,
+
+  // Secondary colors
+  "secondary": #003049,
+  "secondary-light": #0a4565,
+  "secondary-dark": #001f30,
+
+  // Accent colors
+  "accent": #c1121f,
+  "accent-light": #d42836,
+  "accent-dark": #990e18,
+
+  // UI Elements
+  "header-bg": #0d0a0b,
+  "header-text": #f3eff5,
+  "border": #ddd,
+  "border-light": #eee,
+  "border-dark": #ccc,
+
+  // State colors
+  "success": #72b01d,
+  "warning": #fdf0d5,
+  "error": #780000,
+
+  // Link colors
+  "link": #3f7d20,
+  "link-hover": #7eabc6
+);
+
+// Color function
+/// @function color($key, $variant: null)
+/// @return color
+/// @description Returns a color from the color palette.
+/// @example color: fn.color("primary");
+/// @example background: fn.color("background", "light");
+@function color($key, $variant: null) {
+  @if $variant {
+    $color-key: "#{$key}-#{$variant}";
+    @return map.get($colors, $color-key);
+  }
+  @return map.get($colors, $key);
+}
+
+// Color modification functions
+/// @function lighten-color($color, $percentage: 10%)
+/// @return color
+/// @description Lightens a color by a specified percentage.
+/// @example color: lighten-color(#4acaa8, 20%);
+@function lighten-color($color, $percentage: 10%) {
+  @return color.scale($color, $lightness: $percentage);
+}
+
+/// @function darken-color($color, $percentage: 10%)
+/// @return color
+/// @description Darkens a color by a specified percentage.
+/// @example color: darken-color(#4acaa8, 20%);
+@function darken-color($color, $percentage: 10%) {
+  @return color.scale($color, $lightness: -$percentage);
+}
+
+/// @function alpha-color($color, $opacity: 0.5)
+/// @return color
+/// @description Sets the alpha channel of a color.
+/// @example color: alpha-color(#4acaa8, 0.8);
+@function alpha-color($color, $opacity: 0.5) {
+  @return color.change($color, $alpha: $opacity);
+}

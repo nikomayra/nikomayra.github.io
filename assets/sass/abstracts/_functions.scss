@@ -1,0 +1,221 @@
+// ==========================================================================
+// Function Library
+// ==========================================================================
+//
+// This file contains all the utility functions used throughout the application.
+// Functions are organized by type (color, typography, layout, etc.)
+//
+// Usage:
+// font-size: fn.font-size("base");
+// color: fn.color("primary");
+// spacing: fn.spacing("medium");
+
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+@use "sass:string";
+@use "variables" as vars;
+@use "colors" as colors;
+
+// ==========================================================================
+// Color Functions
+// ==========================================================================
+
+/// Get a color from the color palette
+/// @param {string} $key - Color name
+/// @param {string} $variant [null] - Color variant (if any)
+/// @return {color} The requested color
+@function color($key, $variant: null) {
+  @if $variant {
+    $color-key: "#{$key}-#{$variant}";
+    @return map.get(colors.$colors, $color-key);
+  }
+  @return map.get(colors.$colors, $key);
+}
+
+/// Lighten a color by a specified percentage
+/// @param {color} $color - Color to lighten
+/// @param {number} $percentage [10%] - Percentage to lighten by
+/// @return {color} Lightened color
+@function lighten-color($color, $percentage: 10%) {
+  @return color.scale($color, $lightness: $percentage);
+}
+
+/// Darken a color by a specified percentage
+/// @param {color} $color - Color to darken
+/// @param {number} $percentage [10%] - Percentage to darken by
+/// @return {color} Darkened color
+@function darken-color($color, $percentage: 10%) {
+  @return color.scale($color, $lightness: -$percentage);
+}
+
+/// Set the alpha channel of a color
+/// @param {color} $color - Color to modify
+/// @param {number} $opacity [0.5] - Alpha channel value
+/// @return {color} Color with modified alpha channel
+@function alpha-color($color, $opacity: 0.5) {
+  @return color.change($color, $alpha: $opacity);
+}
+
+// ==========================================================================
+// Typography Functions
+// ==========================================================================
+
+/// Get a typography value
+/// @param {string} $type - Type of typography value (family, weight, size)
+/// @param {string} $key - Specific key to retrieve
+/// @return {*} The typography value
+@function typography($type, $key) {
+  @return map.get(map.get(vars.$typography, $type), $key);
+}
+
+/// Get a font family
+/// @param {string} $type - Font family type
+/// @return {string} Font family value
+@function font-family($type) {
+  @return typography("family", $type);
+}
+
+/// Get a font weight
+/// @param {string} $weight - Weight name
+/// @return {number} Font weight value
+@function font-weight($weight) {
+  @return typography("weights", $weight);
+}
+
+/// Get a font size
+/// @param {string} $size - Size name
+/// @return {string} Font size value
+@function font-size($size) {
+  @return typography("sizes", $size);
+}
+
+// ==========================================================================
+// Spacing Functions
+// ==========================================================================
+
+/// Get a spacing value
+/// @param {string} $key - Spacing key
+/// @param {string} $subkey [null] - Nested spacing key
+/// @return {string} Spacing value
+@function spacing($key, $subkey: null) {
+  @if $subkey {
+    @return map.get(map.get(vars.$spacing, $key), $subkey);
+  }
+  @return map.get(vars.$spacing, $key);
+}
+
+// ==========================================================================
+// Layout Functions
+// ==========================================================================
+
+/// Get a layout value
+/// @param {string} $key - Layout key
+/// @param {string} $subkey [null] - Nested layout key
+/// @return {*} Layout value
+@function layout($key, $subkey: null) {
+  @if $subkey {
+    @return map.get(map.get(vars.$layout, $key), $subkey);
+  }
+  @return map.get(vars.$layout, $key);
+}
+
+// ==========================================================================
+// Z-index Functions
+// ==========================================================================
+
+/// Get a z-index value
+/// @param {string} $key - Z-index key
+/// @return {number} Z-index value
+@function z($key) {
+  @return map.get(vars.$z-layers, $key);
+}
+
+// ==========================================================================
+// Transition Functions
+// ==========================================================================
+
+/// Get a transition value
+/// @param {string} $key - Transition key
+/// @return {string} Transition value
+@function transition($key) {
+  @return map.get(vars.$transitions, $key);
+}
+
+// ==========================================================================
+// Breakpoint Functions
+// ==========================================================================
+
+/// Get a breakpoint value
+/// @param {string} $key - Breakpoint key
+/// @return {string} Breakpoint value
+@function breakpoint($key) {
+  @return map.get(vars.$breakpoints, $key);
+}
+
+// ==========================================================================
+// SVG Functions
+// ==========================================================================
+
+/// Get an SVG URL
+/// @param {string} $svg - SVG string
+/// @return {string} SVG URL
+@function svg-url($svg) {
+  // Replace quotes with apostrophes
+  $svg: string.replace($svg, '"', "'");
+
+  // Encode special characters
+  $symbols: (
+    "%": "%25",
+    "<": "%3C",
+    ">": "%3E",
+    "&": "%26",
+    "#": "%23",
+    "{": "%7B",
+    "}": "%7D",
+    "|": "%7C",
+    "^": "%5E",
+    "`": "%60",
+    "@": "%40",
+    ";": "%3B",
+  );
+
+  @each $symbol, $encoded in $symbols {
+    $svg: string.replace($svg, $symbol, $encoded);
+  }
+
+  @return url("data:image/svg+xml;charset=utf8,#{$svg}");
+}
+
+// ==========================================================================
+// Unit Conversion Functions
+// ==========================================================================
+
+/// Remove units from a number
+/// @param {number} $value - Number to strip units from
+/// @return {number} Number without units
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}
+
+/// Convert px to rem
+/// @param {number} $px - Pixel value to convert
+/// @return {string} Rem value
+@function rem($px) {
+  @if meta.type-of($px) == "number" {
+    @return math.div($px, 16px) * 1rem;
+  }
+  @return $px;
+}
+
+/// Convert px to em
+/// @param {number} $px - Pixel value to convert
+/// @param {number} $base [16px] - Base font size
+/// @return {string} Em value
+@function em($px, $base: 16px) {
+  @if meta.type-of($px) == "number" {
+    @return math.div($px, $base) * 1em;
+  }
+  @return $px;
+}
