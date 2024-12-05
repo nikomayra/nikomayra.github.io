@@ -1,4 +1,6 @@
 @use "../abstracts/functions" as fn;
+@use "../abstracts/mixins" as mx;
+@use "../vendor/vendor";
 
 // ==========================================================================
 // Modern CSS Reset
@@ -9,13 +11,6 @@
 // 2. Removes default margins and paddings
 // 3. Improves accessibility
 // 4. Fixes common browser inconsistencies
-//
-// Inspired by:
-// - modern-css-reset (https://github.com/andy-piccalilli/modern-css-reset)
-// - normalize.css (https://github.com/necolas/normalize.css)
-//
-// Usage:
-// @use "base/reset";
 
 // ==========================================================================
 // Box Sizing
@@ -43,9 +38,8 @@ body {
 
 /* Improve text rendering */
 html {
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @include vendor.vendor("text-size-adjust", "100%");
+  @include vendor.vendor("font-smoothing", "antialiased");
   text-rendering: optimizeLegibility;
 }
 
@@ -72,7 +66,7 @@ select {
 // Typography
 // ==========================================================================
 
-/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+/* Remove all animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
@@ -123,8 +117,8 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 0.5rem;
-  font-size: calc(1.275rem + 0.3vw);
+  margin-bottom: fn.spacing("small");
+  font-size: fn.font-size("large");
   line-height: inherit;
 }
 
@@ -151,16 +145,12 @@ a {
 // Media
 // ==========================================================================
 
-/* Add the correct vertical alignment in Chrome, Firefox, and Opera */
+/* Add the correct vertical alignment */
 progress {
   vertical-align: baseline;
 }
 
-/* Add the correct display in IE 10+ */
-template {
-  display: none;
-}
-
+template,
 [hidden] {
   display: none;
 }
@@ -169,26 +159,25 @@ template {
 // Accessibility
 // ==========================================================================
 
-/* Remove the outline on focused elements when they are also active/hovered */
+/* Remove outline on non-keyboard focus */
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
 
-/* Make sure users can't select text in interactive elements */
+/* Prevent text selection in interactive elements */
 [role="button"],
 button,
 input[type="submit"],
 input[type="reset"],
 input[type="button"] {
-  -webkit-user-select: none;
-  user-select: none;
+  @include vendor.vendor("user-select", "none");
 }
 
 // ==========================================================================
 // Touch Action
 // ==========================================================================
 
-/* Remove delays and behavior modifications in browsers that add them */
+/* Remove delays and behavior modifications */
 a,
 area,
 button,
@@ -198,8 +187,7 @@ select,
 summary,
 textarea,
 [tabindex] {
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
+  @include vendor.vendor("touch-action", "manipulation");
 }
 
 // ==========================================================================

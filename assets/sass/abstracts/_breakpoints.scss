@@ -6,9 +6,9 @@
 // It uses a mobile-first approach with min-width breakpoints.
 //
 // Usage:
-// @include bp.breakpoint("<=medium") { ... }
-// @include bp.breakpoint(">=large") { ... }
-// @include bp.breakpoint(">small", "<large") { ... }
+// @include bp.breakpoint("<=md") { ... }
+// @include bp.breakpoint(">=lg") { ... }
+// @include bp.breakpoint(">sm", "<lg") { ... }
 
 @use "sass:string";
 @use "sass:map";
@@ -19,16 +19,14 @@
 /// @type Map
 $breakpoints: (
   // Mobile breakpoints
-  "xxsmall": "(max-width: 320px)",
-  "xsmall": "(max-width: 480px)",
-  "small": "(max-width: 736px)",
+  "xs": 320px,
+  "sm": 576px,
+  "md": 768px,
   
-  // Tablet breakpoints
-  "medium": "(max-width: 980px)",
-  
-  // Desktop breakpoints
-  "large": "(max-width: 1280px)",
-  "xlarge": "(max-width: 1680px)",
+  // Tablet/Desktop breakpoints
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
   
   // Special cases
   "short": "(max-height: 896px)",
@@ -49,61 +47,54 @@ $breakpoint-ops: (
 /// Processes a breakpoint value
 /// @param {string} $str - Breakpoint string to process
 /// @return {number} Processed value in pixels
-@function breakpoint-parse($str) {
-  $op: "";
-  $bp: $str;
-  $index: string.index($str, " ");
-
-  // Extract operation and breakpoint if present
-  @if $index {
-    $op: string.slice($str, 1, $index - 1);
-    $bp: string.slice($str, $index + 1);
+@function process-bp($str) {
+  @if map.has-key($breakpoints, $str) {
+    $value: map.get($breakpoints, $str);
+    @if meta.type-of($value) == "string" {
+      @return $value;
+    }
+    @return $value * 1px;
   }
-
-  // Return processed value
-  @return if(
-    map.has-key($breakpoints, $bp),
-    map.get($breakpoints, $bp),
-    $bp
-  );
+  @return $str;
 }
 
-/// Creates a media query based on breakpoint(s)
-/// @param {string...} $points - Breakpoint string(s)
-/// @content - Styles to include within the media query
-@mixin breakpoint($point...) {
-  $query: "";
-  $ops: "";
-  $media: "";
-  $first: true;
-
-  // Process each breakpoint
-  @each $point in $point {
-    $prefix: if($first, "", " and ");
-    $first: false;
-    $op: "";
-    $str: "";
-
-    // Handle operation prefixes
-    @if string.index($point, ">") {
-      $op: if(string.index($point, "="), ">=", ">");
-      $str: string.slice($point, string.length($op) + 1);
-    } @else if string.index($point, "<") {
-      $op: if(string.index($point, "="), "<=", "<");
-      $str: string.slice($point, string.length($op) + 1);
-    } @else {
-      $op: "=";
-      $str: $point;
-    }
-
-    // Build media query
-    $bp: breakpoint-parse(fn.trim($str));
-    $mediaOp: map.get($breakpoint-ops, $op);
-    $query: $query + $prefix + "(" + $mediaOp + ": " + $bp + ")";
+/// Creates a media query string
+/// @param {string} $op - Operation (>, >=, =, <=, <)
+/// @param {string} $bp - Breakpoint name or value
+/// @return {string} Media query string
+@function create-media-query($op, $bp) {
+  $processed-bp: process-bp($bp);
+  @if string.index($processed-bp, "max-height") {
+    @return $processed-bp;
   }
+  @return "(#{map.get($breakpoint-ops, $op)}: #{$processed-bp})";
+}
 
-  // Output media query with content
-  @media #{$query} {
+/// Breakpoint mixin
+/// @param {string} $from [null] - Lower bound breakpoint
+/// @param {string} $until [null] - Upper bound breakpoint
+@mixin breakpoint($from: null, $until: null) {
+  @if $from and $until {
+    @media #{create-media-query(">", $from)} and #{create-media-query("<", $until)} {
+      @content;
+    }
+  } @else if $from {
+    @if string.index($from, ">") or string.index($from, ">=") or string.index($from, "<") or string.index($from, "<=") {
+      $op: string.slice($from, 1, string.index($from, string.slice($from, -1)) - 1);
+      $bp: string.slice($from, string.index($from, string.slice($from, -1)));
+      @media #{create-media-query($op, $bp)} {
+        @content;
+      }
+    } @else {
+      @media #{create-media-query(">=", $from)} {
+        @content;
+      }
+    }
+  } @else if $until {
+    @media #{create-media-query("<", $until)} {
+      @content;
+    }
+  } @else {
     @content;
   }
 }

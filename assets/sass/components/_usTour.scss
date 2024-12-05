@@ -1,18 +1,35 @@
-@use "../libs/vars" as *;
+// ==========================================================================
+// US Tour Component
+// ==========================================================================
+//
+// This file contains styles for the interactive US map showing visited states.
+//
+// Usage:
+// <div class="us-tour-container">
+//   <svg>...</svg>
+//   <div class="tooltip">State info</div>
+// </div>
+
+@use "../abstracts/variables" as vars;
+@use "../abstracts/functions" as fn;
+@use "../abstracts/mixins" as mx;
+@use "../abstracts/breakpoints" as bp;
 @use "sass:map";
+
+// ==========================================================================
+// Container Layout
+// ==========================================================================
 
 .travels-container {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: fn.spacing("medium");
   width: 100%;
-  // margin: 2rem 0;
 }
 
 .us-tour-container {
   flex: 40%;
   position: relative;
-  // min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,29 +39,45 @@
     height: 100%;
     aspect-ratio: 975/610;
   }
+}
 
-  .tooltip {
-    position: fixed;
-    padding: 0.5rem;
-    background: #{map.get($palette, secondary, bg-light)};
-    color: #{map.get($palette, primary, gg)};
-    border: 1px solid #{map.get($palette, border)};
-    border-radius: 4px;
-    pointer-events: none;
-    font-size: 0.9em;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    transform: translate(-50%, -100%);
+// ==========================================================================
+// Tooltip
+// ==========================================================================
 
-    &.visible {
-      opacity: 1;
-    }
+.tooltip {
+  position: fixed;
+  padding: fn.spacing("small");
+  background: fn.color("primary-light");
+  color: fn.color("text");
+  border: fn.layout("border", "width") solid fn.color("border");
+  border-radius: fn.layout("border", "radius");
+  pointer-events: none;
+  font-size: fn.font-size("small");
+  opacity: 0;
+  transition: opacity fn.transition("fast") ease;
+  transform: translate(-50%, -100%);
+
+  &.visible {
+    opacity: 1;
   }
 }
 
-:root {
-  --visited-state-color: #{map.get($palette, accent-1, bg)};
-  --unvisited-state-color: #{map.get($palette, secondary, bg)};
-  --hover-state-color: #{map.get($palette, accent-1, bg-light)};
-  --state-border-color: #{map.get($palette, tertiary, bg)};
+// ==========================================================================
+// State Styling
+// ==========================================================================
+
+.state {
+  fill: var(--us-tour-state-unvisited);
+  stroke: var(--us-tour-state-border);
+  stroke-width: 1;
+  transition: fill fn.transition("fast") ease;
+
+  &.visited {
+    fill: var(--us-tour-state-visited);
+  }
+
+  &:hover {
+    fill: var(--us-tour-state-hover);
+  }
 }

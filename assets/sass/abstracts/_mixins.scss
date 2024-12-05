@@ -4,16 +4,12 @@
 //
 // This file contains all the mixins used throughout the application.
 // Mixins are organized by type (vendor prefixes, layout, typography, etc.)
-//
-// Usage:
-// @include mixins.vendor("transform", "translateX(10px)");
-// @include mixins.clearfix;
-// @include mixins.responsive("medium") { ... }
 
 @use "sass:list";
 @use "sass:math";
-@use "functions";
-@use "vendor";
+@use "functions" as fn;
+@use "breakpoints" as bp;
+@use "../vendor/vendor";
 
 // ==========================================================================
 // Vendor Prefixes
@@ -22,25 +18,37 @@
 /// Add vendor prefixes to a property
 /// @param {string} $property - Property to prefix
 /// @param {string} $value - Value to apply
-/// @param {list} $prefixes [()] - List of prefixes to apply
-@mixin vendor($property, $value, $prefixes: ()) {
-  @each $prefix in $prefixes {
-    #{'-' + $prefix + '-' + $property}: #{$value};
-  }
-  #{$property}: #{$value};
+@mixin vendor($property, $value) {
+  @include vendor.vendor($property, $value);
 }
 
 // Common vendor prefix mixins
 @mixin transition($value...) {
-  @include vendor("transition", $value, ("webkit", "moz", "ms", "o"));
+  @include vendor("transition", $value);
 }
 
 @mixin transform($value...) {
-  @include vendor("transform", $value, ("webkit", "moz", "ms", "o"));
+  @include vendor("transform", $value);
 }
 
 @mixin animation($value...) {
-  @include vendor("animation", $value, ("webkit", "moz", "ms", "o"));
+  @include vendor("animation", $value);
+}
+
+// ==========================================================================
+// Visual Mixins
+// ==========================================================================
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 // ==========================================================================
@@ -52,12 +60,7 @@
 /// @param {string} $justify [flex-start] - Justify content
 /// @param {string} $align [stretch] - Align items
 /// @param {string} $wrap [nowrap] - Flex wrap
-@mixin flex(
-  $direction: row,
-  $justify: flex-start,
-  $align: stretch,
-  $wrap: nowrap
-) {
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
@@ -67,8 +70,8 @@
 
 /// Grid
 /// @param {number} $columns [12] - Number of grid columns
-/// @param {string} $gap [functions.spacing('medium')] - Grid gap
-@mixin grid($columns: 12, $gap: functions.spacing("medium")) {
+/// @param {string} $gap [fn.spacing('medium')] - Grid gap
+@mixin grid($columns: 12, $gap: fn.spacing("medium")) {
   display: grid;
   grid-template-columns: repeat($columns, 1fr);
   gap: $gap;
@@ -124,6 +127,18 @@
 }
 
 // ==========================================================================
+// Text Mixins
+// ==========================================================================
+
+/// Text truncation with ellipsis
+/// @description Truncates text with an ellipsis if it exceeds one line
+@mixin truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ==========================================================================
 // Icon Mixins
 // ==========================================================================
 
@@ -168,14 +183,14 @@
 /// @description Styles a basic button
 @mixin button-base {
   display: inline-block;
-  padding: functions.spacing("small") functions.spacing("medium");
+  padding: fn.spacing("small") fn.spacing("medium");
   border: none;
-  border-radius: functions.layout("border", "radius");
-  font-family: functions.font-family("primary");
-  font-weight: functions.font-weight("bold");
+  border-radius: fn.layout("border", "radius");
+  font-family: fn.font-family("primary");
+  font-weight: fn.font-weight("bold");
   text-decoration: none;
   cursor: pointer;
-  transition: all functions.transition("standard") ease-in-out;
+  @include transition(all fn.duration("standard") ease-in-out);
 }
 
 // ==========================================================================
@@ -194,33 +209,12 @@
 
   $x: 0.1em;
 
-  @if math.unit(functions.spacing("element", "margin")) == "rem" {
+  @if math.unit(fn.spacing("element", "margin")) == "rem" {
     $x: 0.1rem;
   }
 
   padding: ($tb + list.nth($pad, 1)) ($lr + list.nth($pad, 2))
-    max($x, $tb - functions.spacing("element", "margin") + list.nth($pad, 3))
-    ($lr + list.nth($pad, 4)) #{$important};
-}
-
-// ==========================================================================
-// SVG URL Encoder
-// ==========================================================================
-
-/// SVG URL Encoder
-/// @param {string} $svg - SVG content to encode
-@function svg-url($svg) {
-  $svg: vendor.str-replace($svg, '"', "'");
-  $svg: vendor.str-replace($svg, "%", "%25");
-  $svg: vendor.str-replace($svg, "<", "%3C");
-  $svg: vendor.str-replace($svg, ">", "%3E");
-  $svg: vendor.str-replace($svg, "&", "%26");
-  $svg: vendor.str-replace($svg, "#", "%23");
-  $svg: vendor.str-replace($svg, "{", "%7B");
-  $svg: vendor.str-replace($svg, "}", "%7D");
-  $svg: vendor.str-replace($svg, ";", "%3B");
-
-  @return url("data:image/svg+xml;charset=utf8,#{$svg}");
+    max($x, $tb - fn.spacing("element", "margin") + list.nth($pad, 3)) ($lr + list.nth($pad, 4)) #{$important};
 }
 
 // ==========================================================================
@@ -232,24 +226,34 @@
 /// @param {string} $header-side [null] - Header side
 /// @param {string} $translate-value [null] - Translate value
 @mixin headerStyles($size-header, $header-side, $translate-value) {
-  @include vendor.vendor("backface-visibility", "hidden");
-  @include vendor.vendor(
-    "transition",
-    'transform #{functions.transition("header")} ease'
-  );
+  @include vendor("backface-visibility", "hidden");
+  @include vendor("transition", "transform #{fn.duration('header')} ease");
   display: block;
   height: 100%;
   overflow-y: auto;
   position: fixed;
   top: 0;
   width: $size-header;
-  z-index: functions.z("header");
+  z-index: fn.z("header");
 
   @if $header-side == "right" {
-    @include vendor.vendor("transform", $translate-value);
+    @include vendor("transform", $translate-value);
     right: 0;
   } @else {
-    @include vendor.vendor("transform", $translate-value);
+    @include vendor("transform", $translate-value);
     left: 0;
+  }
+}
+
+// ==========================================================================
+// Responsive Mixins
+// ==========================================================================
+
+/// Responsive breakpoint manager
+/// @param {string} $breakpoint - Breakpoint name
+/// @content styling within the media query
+@mixin responsive($breakpoint) {
+  @include bp.breakpoint($breakpoint) {
+    @content;
   }
 }

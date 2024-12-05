@@ -4,7 +4,7 @@
 //
 // This is the main entry point for all styles in the application.
 //
-// 1. Abstracts/   - Variables, functions, mixins, and placeholders
+// 1. Abstracts/   - Variables, fn, mixins, and placeholders
 // 2. Vendors/     - Third-party styles
 // 3. Base/        - Base styles, typography, and utilities
 // 4. Layout/      - Major layout components
@@ -22,12 +22,12 @@
 @use "abstracts/functions" as fn;
 @use "abstracts/mixins" as mx;
 @use "abstracts/breakpoints" as bp;
-@use "abstracts/colors" as colors;
+@use "abstracts/colors" as c;
 
 // ==========================================================================
 // Vendor
 // ==========================================================================
-@use "vendor/normalize";
+@use "vendor/vendor";
 
 // ==========================================================================
 // Base
@@ -100,7 +100,7 @@ a {
   @include mx.transition("color");
 
   &:hover {
-    color: fn.color("link-hover");
+    color: fn.color("link-light");
     text-decoration: underline;
   }
 
@@ -169,20 +169,41 @@ textarea {
 // Buttons
 // ==========================================================================
 
-button,
 .button {
   @include mx.button-base;
-  background: fn.color("primary");
-  color: fn.color("background");
+  background: fn.color("accent");
+  color: fn.color("text");
+  text-align: center;
+  @include mx.transition("background-color");
 
   &:hover {
-    background: fn.color("primary-dark");
+    background: fn.color("accent-light");
+  }
+
+  &:active {
+    background: fn.color("accent-dark");
+  }
+
+  &.primary {
+    background: fn.color("primary");
+
+    &:hover {
+      background: fn.color("primary-light");
+    }
+
+    &:active {
+      background: fn.color("primary-dark");
+    }
   }
 
   &.secondary {
     background: fn.color("secondary");
 
     &:hover {
+      background: fn.color("secondary-light");
+    }
+
+    &:active {
       background: fn.color("secondary-dark");
     }
   }
@@ -258,17 +279,17 @@ button,
 // ==========================================================================
 
 #header {
-  @include mixins.vendor("display", "flex");
-  @include mixins.vendor("flex-direction", "column");
-  @include mixins.vendor("justify-content", "space-between");
-  background: fn.color("header-bg");
-  color: fn.color("header-text");
+  @include mx.vendor("display", "flex");
+  @include mx.vendor("flex-direction", "column");
+  @include mx.vendor("justify-content", "space-between");
+  background: fn.color("primary");
+  color: fn.color("text");
   height: 100%;
   overflow-y: auto;
   position: fixed;
   text-align: center;
   top: 0;
-  width: $size-header;
+  width: fn.layout("header", "width");
 
   @if fn.layout("header", "side") == "right" {
     right: 0;
@@ -292,7 +313,7 @@ button,
   }
 
   nav {
-    @include mixins.vendor("flex-grow", "1");
+    @include mx.vendor("flex-grow", "1");
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -306,17 +327,14 @@ button,
         border-top: solid fn.layout("border", "width") fn.color("border");
 
         a {
-          @include mixins.vendor(
-            "transition",
-            "color #{fn.transition('standard')} ease-in-out"
-          );
+          @include mx.vendor("transition", "color #{fn.transition("standard")} ease-in-out");
           color: fn.color("link");
           display: block;
           padding: fn.spacing("medium") 0;
           text-decoration: none;
 
           &:hover {
-            color: fn.color("link-hover");
+            color: fn.color("accent");
           }
 
           &.active {
@@ -337,7 +355,7 @@ button,
 // ==========================================================================
 
 #main {
-  margin-left: $size-header;
+  margin-left: fn.layout("header", "width");
   max-width: fn.layout("container", "width");
   padding: fn.spacing("large");
 
@@ -364,9 +382,9 @@ button,
 // ==========================================================================
 
 #footer {
-  @include mixins.vendor("display", "flex");
-  @include mixins.vendor("flex-direction", "column");
-  @include mixins.vendor("align-items", "center");
+  @include mx.vendor("display", "flex");
+  @include mx.vendor("flex-direction", "column");
+  @include mx.vendor("align-items", "center");
   background: fn.color("background");
   border-top: solid fn.layout("border", "width") fn.color("border");
   padding: fn.spacing("large");
@@ -456,26 +474,26 @@ button,
 // ==========================================================================
 
 .row {
-  @include html-grid.html-grid(2em);
+  @include mx.grid(2em);
 
   @include bp.breakpoint("<=xlarge") {
-    @include html-grid.html-grid(2em, "xlarge");
+    @include mx.grid(2em, "xlarge");
   }
 
   @include bp.breakpoint("<=large") {
-    @include html-grid.html-grid(1.5em, "large");
+    @include mx.grid(1.5em, "large");
   }
 
   @include bp.breakpoint("<=medium") {
-    @include html-grid.html-grid(1.5em, "medium");
+    @include mx.grid(1.5em, "medium");
   }
 
   @include bp.breakpoint("<=small") {
-    @include html-grid.html-grid(1.25em, "small");
+    @include mx.grid(1.25em, "small");
   }
 
   @include bp.breakpoint("<=xsmall") {
-    @include html-grid.html-grid(1.25em, "xsmall");
+    @include mx.grid(1.25em, "xsmall");
   }
 }
 
@@ -485,27 +503,27 @@ button,
 
 .container {
   margin: 0 auto;
-  max-width: calc(100% - #{functions.size(element-margin) * 2});
-  width: functions.size(container-width);
+  max-width: calc(100% - #{fn.layout("container", "padding") * 2});
+  width: fn.layout("container", "width");
 
   &.xsmall {
-    width: (functions.size(container-width) * 0.25);
+    width: (fn.layout("container", "width") * 0.25);
   }
 
   &.small {
-    width: (functions.size(container-width) * 0.5);
+    width: (fn.layout("container", "width") * 0.5);
   }
 
   &.medium {
-    width: (functions.size(container-width) * 0.75);
+    width: (fn.layout("container", "width") * 0.75);
   }
 
   &.large {
-    width: (functions.size(container-width) * 1.25);
+    width: (fn.layout("container", "width") * 1.25);
   }
 
   &.xlarge {
-    width: (functions.size(container-width) * 1.5);
+    width: (fn.layout("container", "width") * 1.5);
   }
 
   &.max {
@@ -517,7 +535,7 @@ button,
   }
 
   @include bp.breakpoint("<=xsmall") {
-    max-width: calc(100% - #{functions.size(element-margin) * 1.5});
+    max-width: calc(100% - (fn.layout("container", "width") * 1.5));
   }
 }
 
@@ -534,9 +552,9 @@ article {
 
 header {
   p {
-    color: functions.palette(fg-light);
+    color: fn.color("text-light");
     position: relative;
-    margin: 0 0 (functions.size(element-margin) * 0.75) 0;
+    margin: 0 0 (fn.layout("header", "margin") * 0.75) 0;
   }
 
   h2 + p {
@@ -561,13 +579,13 @@ header {
 
   &.major {
     h2 {
-      color: functions.palette(accent1, bg);
+      color: fn.color("accent");
       font-size: 3.5em;
 
       & + p {
-        color: functions.palette(fg-bold);
+        color: fn.color("text");
         font-size: 1.75em;
-        font-weight: functions.font(weight-bold);
+        font-weight: fn.font-weight("bold");
         margin-top: -0.75em;
       }
     }
@@ -579,15 +597,15 @@ header {
 // ==========================================================================
 
 form {
-  margin: 0 0 functions.size(element-margin) 0;
+  margin: 0 0 fn.size(element-margin) 0;
 }
 
 label {
-  color: map.get($palette, primary, bg);
+  color: fn.color("text");
   display: block;
   font-size: 0.9em;
-  font-weight: functions.font(weight-bold);
-  margin: 0 0 (functions.size(element-margin) * 0.5) 0;
+  font-weight: fn.font-weight("bold");
+  margin: 0 0 (fn.size(element-margin) * 0.5) 0;
 }
 
 input::-moz-focus-inner {
@@ -599,7 +617,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 select {
-  height: functions.size(element-height);
+  height: fn.size(element-height);
 }
 
 textarea {
@@ -612,12 +630,11 @@ input[type="email"],
 select,
 textarea {
   @include vendor.vendor("appearance", "none");
-  border-radius: functions.size(border-radius);
+  border-radius: fn.layout("border", "radius");
   border: none;
-  border: solid functions.size(border-width)
-    map.get($palette, secondary, bg-light);
-  color: map.get($palette, primary, bg) !important;
-  background: map.get($palette, secondary, bg);
+  border: solid fn.layout("border", "width") fn.color("border");
+  color: fn.color("text") !important;
+  background: fn.color("input");
   display: block;
   outline: 0;
   padding: 0 1em;
@@ -627,32 +644,28 @@ textarea {
   &:invalid {
     box-shadow: none;
   }
-
-  // &:focus {
-  // border-color: map.get($palette, accent-3, bg);
-  // }
 }
 
 ::-webkit-input-placeholder {
-  color: map.get($palette, primary, bg) !important;
+  color: fn.color("text") !important;
   font-style: italic;
   opacity: 1;
 }
 
 :-moz-placeholder {
-  color: map.get($palette, primary, bg) !important;
+  color: fn.color("text") !important;
   font-style: italic;
   opacity: 1;
 }
 
 ::-moz-placeholder {
-  color: map.get($palette, primary, bg) !important;
+  color: fn.color("text") !important;
   font-style: italic;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
-  color: map.get($palette, primary, bg) !important;
+  color: fn.color("text") !important;
   font-style: italic;
   opacity: 1;
 }
@@ -662,9 +675,9 @@ textarea {
 // ==========================================================================
 
 .box {
-  border-radius: functions.size(border-radius);
-  border: solid functions.size(border-width) functions.palette(border2);
-  margin-bottom: functions.size(element-margin);
+  border-radius: fn.size(border-radius);
+  border: solid fn.size(border-width) fn.color("border");
+  margin-bottom: fn.size(element-margin);
   padding: 1.5em;
 
   > :last-child,
@@ -715,7 +728,7 @@ textarea {
 // ==========================================================================
 
 .image {
-  border-radius: functions.size(border-radius);
+  border-radius: fn.size(border-radius);
   border: 0;
   display: inline-block;
   position: relative;
@@ -811,7 +824,7 @@ textarea {
   }
 
   img {
-    border-radius: functions.size(border-radius);
+    border-radius: fn.size(border-radius);
     display: block;
   }
 
@@ -829,7 +842,7 @@ textarea {
 
   &.fit {
     display: block;
-    margin: 0 0 functions.size(element-margin) 0;
+    margin: 0 0 fn.size(element-margin) 0;
     width: 100%;
 
     img {
@@ -866,7 +879,7 @@ textarea {
 
 ol {
   list-style: decimal;
-  margin: 0 0 functions.size(element-margin) 0;
+  margin: 0 0 fn.size(element-margin) 0;
   padding-left: 1.25em;
 
   li {
@@ -876,7 +889,7 @@ ol {
 
 ul {
   list-style: disc;
-  margin: 0 0 functions.size(element-margin) 0;
+  margin: 0 0 fn.size(element-margin) 0;
   padding-left: 1em;
 
   li {
@@ -888,7 +901,7 @@ ul {
     padding-left: 0;
 
     li {
-      border-top: solid functions.size(border-width) functions.palette(border);
+      border-top: solid fn.size(border-width) fn.color("border");
       padding: 0.5em 0;
 
       &:first-child {
@@ -900,7 +913,7 @@ ul {
 }
 
 dl {
-  margin: 0 0 functions.size(element-margin) 0;
+  margin: 0 0 fn.size(element-margin) 0;
 }
 
 // ==========================================================================
@@ -911,11 +924,11 @@ ul.actions {
   @include vendor.vendor("display", "flex");
   cursor: default;
   list-style: none;
-  margin-left: (functions.size(element-margin) * -0.5);
+  margin-left: (fn.size(element-margin) * -0.5);
   padding-left: 0;
 
   li {
-    padding: 0 0 0 (functions.size(element-margin) * 0.5);
+    padding: 0 0 0 (fn.size(element-margin) * 0.5);
     vertical-align: middle;
   }
 
@@ -936,7 +949,7 @@ ul.actions {
     margin-left: 0;
 
     li {
-      padding: (functions.size(element-margin) * 0.5) 0 0 0;
+      padding: (fn.size(element-margin) * 0.5) 0 0 0;
 
       &:first-child {
         padding-top: 0;
@@ -945,7 +958,7 @@ ul.actions {
   }
 
   &.fit {
-    width: calc(100% + #{functions.size(element-margin) * 0.5});
+    width: calc(100% + #{fn.size(element-margin) * 0.5});
 
     li {
       @include vendor.vendor("flex-grow", "1");
@@ -971,7 +984,7 @@ ul.actions {
       li {
         @include vendor.vendor("flex-grow", "1");
         @include vendor.vendor("flex-shrink", "1");
-        padding: (functions.size(element-margin) * 0.5) 0 0 0;
+        padding: (fn.size(element-margin) * 0.5) 0 0 0;
         text-align: center;
         width: 100%;
 
@@ -1036,17 +1049,17 @@ ul.icons {
 }
 
 table {
-  margin: 0 0 functions.size(element-margin) 0;
+  margin: 0 0 fn.size(element-margin) 0;
   width: 100%;
 
   tbody {
     tr {
-      border: solid functions.size(border-width) functions.palette(border);
+      border: solid fn.size(border-width) fn.color("border");
       border-left: 0;
       border-right: 0;
 
       &:nth-child(2n + 1) {
-        background-color: functions.palette(border-bg);
+        background-color: fn.color("border");
       }
     }
   }
@@ -1056,21 +1069,19 @@ table {
   }
 
   th {
-    color: functions.palette(fg-bold);
+    color: fn.color("text");
     font-size: 0.9em;
-    font-weight: functions.font(weight-bold);
+    font-weight: fn.font-weight("bold");
     padding: 0 0.75em 0.75em 0.75em;
     text-align: left;
   }
 
   thead {
-    border-bottom: solid (functions.size(border-width) * 2)
-      functions.palette(border2);
+    border-bottom: solid (fn.size(border-width) * 2) fn.color("border");
   }
 
   tfoot {
-    border-top: solid (functions.size(border-width) * 2)
-      functions.palette(border2);
+    border-top: solid (fn.size(border-width) * 2) fn.color("border");
   }
 
   &.alt {
@@ -1079,18 +1090,18 @@ table {
     tbody {
       tr {
         td {
-          border: solid functions.size(border-width) functions.palette(border2);
+          border: solid fn.size(border-width) fn.color("border");
           border-left-width: 0;
           border-top-width: 0;
 
           &:first-child {
-            border-left-width: functions.size(border-width);
+            border-left-width: fn.size(border-width);
           }
         }
 
         &:first-child {
           td {
-            border-top-width: functions.size(border-width);
+            border-top-width: fn.size(border-width);
           }
         }
       }
@@ -1117,38 +1128,29 @@ input[type="button"],
   @include vendor.vendor("appearance", "none");
   @include vendor.vendor(
     "transition",
-    (
-      "background-color #{functions.duration(transition)} ease-in-out",
-      "color #{functions.duration(transition)} ease-in-out"
-    )
+    ("background-color #{fn.duration(transition)} ease-in-out", "color #{fn.duration(transition)} ease-in-out")
   );
-  background-color: map.get($palette, secondary, bg);
-  border-radius: functions.size(border-radius);
+  background-color: fn.color("secondary");
+  border-radius: fn.size(border-radius);
   border: 0;
-  color: map.get($palette, primary, bg) !important;
+  color: fn.color("text") !important;
   cursor: pointer;
   display: inline-block;
-  font-weight: functions.font(weight-bold);
-  height: functions.size(element-height);
-  line-height: functions.size(element-height);
+  font-weight: fn.font-weight("bold");
+  height: fn.size(element-height);
+  line-height: fn.size(element-height);
   padding: 0 1.5em;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
 
   &:hover {
-    background-color: color.adjust(
-      map.get($palette, secondary, bg),
-      $lightness: 5%
-    );
-    color: functions.palette(accent2, fg-bold) !important;
+    background-color: fn.color("secondary-light");
+    color: fn.color("accent-alt") !important;
   }
 
   &:active {
-    background-color: color.adjust(
-      map.get($palette, secondary, bg),
-      $lightness: -5%
-    );
+    background-color: fn.color("secondary-dark");
   }
 
   &.icon {
@@ -1173,51 +1175,44 @@ input[type="button"],
 
   &.alt {
     background-color: transparent;
-    box-shadow: inset 0 0 0 functions.size(border-width)
-      functions.palette(border2);
-    color: functions.palette(fg-bold) !important;
+    box-shadow: inset 0 0 0 fn.size(border-width) fn.color("border");
+    color: fn.color("text") !important;
 
     &:hover {
-      background-color: functions.palette(border2-bg);
-      color: functions.palette(fg-bold) !important;
+      background-color: fn.color("border");
+      color: fn.color("text") !important;
     }
 
     &:active {
-      background-color: functions.palette(border3-bg);
+      background-color: fn.color("border");
     }
 
     &.icon {
       &:before {
-        color: functions.palette(fg-light);
+        color: fn.color("text");
       }
     }
   }
 
   &.primary {
-    background-color: map.get($palette, secondary, bg);
-    color: map.get($palette, primary, bg) !important;
+    background-color: fn.color("primary");
+    color: fn.color("text") !important;
 
     &:hover {
-      background-color: color.adjust(
-        map.get($palette, accent-3, bg),
-        $lightness: 5%
-      );
-      color: map.get($palette, tertiary, bg) !important;
+      background-color: fn.color("primary-light");
+      color: fn.color("text") !important;
     }
 
     &:active {
-      background-color: color.adjust(
-        map.get($palette, accent-3, bg),
-        $lightness: -5%
-      );
+      background-color: fn.color("primary-dark");
     }
   }
 
   &.disabled,
   &:disabled {
-    background-color: functions.palette(fg) !important;
+    background-color: fn.color("text") !important;
     box-shadow: inset 0 -0.15em 0 0 rgba(0, 0, 0, 0.15);
-    color: functions.palette(bg) !important;
+    color: fn.color("background") !important;
     cursor: default;
     opacity: 0.25;
   }
@@ -1229,10 +1224,9 @@ input[type="button"],
 
 .features {
   article {
-    border-top: solid (functions.size(border-width) * 1.5)
-      functions.palette(border);
-    margin-bottom: functions.size(element-margin);
-    padding-top: functions.size(element-margin);
+    border-top: solid (fn.size(border-width) * 1.5) fn.color("border");
+    margin-bottom: fn.size(element-margin);
+    padding-top: fn.size(element-margin);
 
     &:first-child {
       border-top: 0;
@@ -1268,9 +1262,9 @@ input[type="button"],
 // ==========================================================================
 
 #wrapper {
-  background: fn.color("bg-w");
+  background: fn.color("background");
 
-  //   @if functions.misc(header-side) == "right" {
+  //   @if fn.misc(header-side) == "right" {
   //     padding-right: $size-header;
   //   } @else {
   //     padding-left: $size-header;
@@ -1400,7 +1394,7 @@ input[type="button"],
     /* Wrapper */
 
     #wrapper {
-      @if functions.misc(header-side) == "right" {
+      @if fn.misc(header-side) == "right" {
         padding-right: $size-header;
       } @else {
         padding-left: $size-header;
@@ -1442,17 +1436,13 @@ input[type="button"],
 
     #header {
       // width: $size-header;
-      @include mixins.headerStyles(
-        $size-header,
-        functions.misc(header-side),
-        "translateX(0)"
-      ); // Visible
+      @include mixins.headerStyles($size-header, fn.misc(header-side), "translateX(0)"); // Visible
     }
 
     /* Wrapper */
 
     #wrapper {
-      @if functions.misc(header-side) == "right" {
+      @if fn.misc(header-side) == "right" {
         padding-right: $size-header;
       } @else {
         padding-left: $size-header;
@@ -1501,11 +1491,7 @@ input[type="button"],
     /* Header */
 
     #header {
-      @include mixins.headerStyles(
-        $size-header,
-        functions.misc(header-side),
-        "translateX(#{$size-header})"
-      ); // Visible
+      @include mixins.headerStyles($size-header, fn.misc(header-side), "translateX(#{$size-header})"); // Visible
 
       > footer {
         bottom: auto;
@@ -1521,10 +1507,7 @@ input[type="button"],
 
     #wrapper {
       @include vendor.vendor("backface-visibility", "hidden");
-      @include vendor.vendor(
-        "transition",
-        "transform #{functions.duration(header)} ease"
-      );
+      @include vendor.vendor("transition", "transform #{fn.duration(header)} ease");
       padding: 44px 0 1px 0;
     }
 
@@ -1532,31 +1515,28 @@ input[type="button"],
 
     #titleBar {
       @include vendor.vendor("backface-visibility", "hidden");
-      @include vendor.vendor(
-        "transition",
-        "transform #{functions.duration(header)} ease"
-      );
+      @include vendor.vendor("transition", "transform #{fn.duration(header)} ease");
       display: block;
       height: 44px;
       left: 0;
       position: fixed;
       top: 0;
       width: 100%;
-      z-index: functions.misc(z-index-base) + 1;
-      background: map.get($palette, primary, bg);
-      color: map.get($palette, tertiary, bg);
+      z-index: fn.misc(z-index-base) + 1;
+      background: fn.color("primary");
+      color: fn.color("text");
       min-width: 320px;
 
       .title {
-        color: map.get($palette, tertiary, bg);
+        color: fn.color("text");
         display: block;
-        font-weight: functions.font(weight-bold);
+        font-weight: fn.font-weight("bold");
         height: 44px;
         line-height: 44px;
         padding: 0 1em;
         width: 100%;
 
-        @if functions.misc(header-side) == "right" {
+        @if fn.misc(header-side) == "right" {
           text-align: left;
         } @else {
           text-align: right;
@@ -1577,15 +1557,15 @@ input[type="button"],
         border: 0;
         outline: 0;
 
-        @if functions.misc(header-side) == "right" {
+        @if fn.misc(header-side) == "right" {
           right: 0;
         } @else {
           left: 0;
         }
 
         &:before {
-          background: map.get($palette, secondary, bg);
-          color: map.get($palette, tertiary, bg);
+          background: fn.color("secondary");
+          color: fn.color("text");
           content: "\f0c9";
           display: block;
           font-size: 18px;
@@ -1596,7 +1576,7 @@ input[type="button"],
           top: 0;
           width: 64px;
 
-          @if functions.misc(header-side) == "right" {
+          @if fn.misc(header-side) == "right" {
             right: 0;
           } @else {
             left: 0;
@@ -1609,11 +1589,8 @@ input[type="button"],
       &.header-visible {
         #wrapper,
         #titleBar {
-          @if functions.misc(header-side) == "right" {
-            @include vendor.vendor(
-              "transform",
-              "translateX(#{$size-header * -1})"
-            );
+          @if fn.misc(header-side) == "right" {
+            @include vendor.vendor("transform", "translateX(#{$size-header * -1})");
           } @else {
             @include vendor.vendor("transform", "translateX(#{$size-header})");
           }
@@ -1638,7 +1615,7 @@ input[type="button"],
         flex-direction: column;
 
         .world-tour-container {
-          border-top: 1px solid map.get($palette, tertiary, bg);
+          border-top: 1px solid fn.color("text");
         }
       }
     }
@@ -1711,7 +1688,7 @@ input[type="button"],
       article {
         .image {
           display: block;
-          margin: 0 0 functions.size(element-margin) 0;
+          margin: 0 0 fn.size(element-margin) 0;
           padding-right: 0;
           width: 100%;
         }
@@ -1732,7 +1709,7 @@ input[type="button"],
         padding: 2em;
 
         .avatar {
-          margin: 0 auto (functions.size(element-margin) * 0.75) auto;
+          margin: 0 auto (fn.size(element-margin) * 0.75) auto;
           width: 6em;
         }
 
@@ -1798,11 +1775,8 @@ input[type="button"],
       &.header-visible {
         #wrapper,
         #titleBar {
-          @if functions.misc(header-side) == "right" {
-            @include vendor.vendor(
-              "transform",
-              "translateX(#{$size-header * -1})"
-            );
+          @if fn.misc(header-side) == "right" {
+            @include vendor.vendor("transform", "translateX(#{$size-header * -1})");
           } @else {
             @include vendor.vendor("transform", "translateX(#{$size-header})");
           }
@@ -1832,11 +1806,11 @@ input[type="button"],
 
     ul {
       &.actions {
-        margin: 0 0 functions.size(element-margin) 0;
+        margin: 0 0 fn.size(element-margin) 0;
 
         li {
           display: block;
-          padding: (functions.size(element-margin) * 0.5) 0 0 0;
+          padding: (fn.size(element-margin) * 0.5) 0 0 0;
           text-align: center;
           width: 100%;
 
@@ -1858,7 +1832,7 @@ input[type="button"],
 
         &.small {
           li {
-            padding: (functions.size(element-margin) * 0.25) 0 0 0;
+            padding: (fn.size(element-margin) * 0.25) 0 0 0;
 
             &:first-child {
               padding-top: 0;
@@ -1903,7 +1877,7 @@ input[type="button"],
 //   top: 0;
 //   width: $size-header;
 
-//   @if functions.misc(header-side) == "right" {
+//   @if fn.misc(header-side) == "right" {
 //     right: 0;
 //   } @else {
 //     left: 0;
@@ -1942,7 +1916,7 @@ input[type="button"],
 
 //     .avatar {
 //       display: block;
-//       margin: 0 auto functions.size(element-margin) auto;
+//       margin: 0 auto fn.size(element-margin) auto;
 //       width: 8em;
 //     }
 
@@ -1990,8 +1964,8 @@ input[type="button"],
 //       width: 100%;
 
 //       li {
-//         border-top: solid functions.size(border-width)
-//           functions.palette(header, border);
+//         border-top: solid fn.size(border-width)
+//           fn.palette(header, border);
 //         display: block;
 //         padding: 0;
 

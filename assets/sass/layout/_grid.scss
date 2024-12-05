@@ -11,10 +11,12 @@
 //   <div class="col-6 col-md-12">Half width, full on medium screens</div>
 // </div>
 
+@use "sass:map";
 @use "sass:math";
 @use "../abstracts/functions" as fn;
 @use "../abstracts/mixins" as mx;
 @use "../abstracts/variables" as vars;
+@use "../abstracts/breakpoints" as bp;
 
 /// Grid configuration
 /// @type Map
@@ -24,12 +26,14 @@ $grid-config: (
   "container": (
     "padding": 1rem,
     "max-width": (
+      "xs": 100%,
       "sm": 540px,
       "md": 720px,
       "lg": 960px,
-      "xl": 1140px
-    )
-  )
+      "xl": 1140px,
+      "xxl": 1320px
+    ),
+  ),
 );
 
 // ==========================================================================
@@ -45,104 +49,39 @@ $grid-config: (
   padding-left: map.get($grid-config, "container", "padding");
 
   @each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
-    @include mx.breakpoint(">=#{$breakpoint}") {
+    @include bp.breakpoint(">=#{$breakpoint}") {
       max-width: $width;
     }
   }
+}
 
-  &-fluid {
-    width: 100%;
-    padding-right: map.get($grid-config, "container", "padding");
-    padding-left: map.get($grid-config, "container", "padding");
-  }
+/// Fluid container
+.container-fluid {
+  width: 100%;
+  padding-right: map.get($grid-config, "container", "padding");
+  padding-left: map.get($grid-config, "container", "padding");
+  margin-right: auto;
+  margin-left: auto;
 }
 
 // ==========================================================================
 // Grid Classes
 // ==========================================================================
 
-/// Grid wrapper
+/// Base grid container
 .grid {
   display: grid;
-  grid-template-columns: repeat(map.get($grid-config, "columns"), 1fr);
+  grid-template-columns: repeat(#{map.get($grid-config, "columns")}, 1fr);
   gap: map.get($grid-config, "gap");
-  width: 100%;
-
-  // Responsive gap
-  @include mx.breakpoint("<=medium") {
-    gap: math.div(map.get($grid-config, "gap"), 2);
-  }
-
-  // No gap modifier
-  &.no-gap {
-    gap: 0;
-  }
-}
-
-// Generate column classes for each breakpoint
-@each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
-  $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
-
-  @include mx.breakpoint(">=#{$breakpoint}") {
-    @for $i from 1 through map.get($grid-config, "columns") {
-      .col#{$infix}-#{$i} {
-        grid-column: span $i;
-      }
-    }
-  }
-}
-
-// ==========================================================================
-// Grid Utilities
-// ==========================================================================
-
-/// Grid alignment classes
-.grid-align {
-  &-start { align-items: start; }
-  &-center { align-items: center; }
-  &-end { align-items: end; }
-}
-
-/// Grid justify classes
-.grid-justify {
-  &-start { justify-content: start; }
-  &-center { justify-content: center; }
-  &-end { justify-content: end; }
-  &-between { justify-content: space-between; }
-  &-around { justify-content: space-around; }
-}
-
-/// Grid order classes
-@for $i from -1 through 12 {
-  .order-#{$i} {
-    order: $i;
-  }
-}
-
-// ==========================================================================
-// Legacy Support
-// ==========================================================================
-
-/// For browsers that don't support CSS Grid
-.no-grid {
-  .grid {
-    display: flex;
-    flex-wrap: wrap;
-    margin: math.div(map.get($grid-config, "gap"), -2);
-
-    > * {
-      padding: math.div(map.get($grid-config, "gap"), 2);
-    }
-  }
-
+  
+  // Responsive column classes
   @each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
     $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
-
-    @include mx.breakpoint(">=#{$breakpoint}") {
+    
+    @include bp.breakpoint(">=#{$breakpoint}") {
       @for $i from 1 through map.get($grid-config, "columns") {
         .col#{$infix}-#{$i} {
-          flex: 0 0 percentage(math.div($i, map.get($grid-config, "columns")));
-          max-width: percentage(math.div($i, map.get($grid-config, "columns")));
+          grid-column: span #{$i};
         }
       }
     }

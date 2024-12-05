@@ -1,10 +1,11 @@
-/* Error: expected ")".
+/* Error: Undefined variable.
  *    ,
- * 46 |   header:
- *    |         ^
+ * 80 |   @return map.get(c.$semantic-colors, $key);
+ *    |                   ^^^^^^^^^^^^^^^^^^
  *    '
- *   assets\sass\libs\_vars.scss 46:9  @use
- *   assets\sass\main.scss 3:1         root stylesheet */
+ *   assets\sass\abstracts\_functions.scss 80:19  color()
+ *   assets\sass\base\_reset.scss 268:22          @use
+ *   assets\sass\main.scss 35:1                   root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -14,5 +15,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: 'Error: expected ")".\a    \2577 \a 46 \2502    header:\d\a    \2502          ^\a    \2575 \a   assets\\sass\\libs\\_vars.scss 46:9  @use\a   assets\\sass\\main.scss 3:1         root stylesheet';
+  content: "Error: Undefined variable.\a    \2577 \a 80 \2502    @return map.get(c.$semantic-colors, $key);\a    \2502                    ^^^^^^^^^^^^^^^^^^\a    \2575 \a   assets\\sass\\abstracts\\_functions.scss 80:19  color()\a   assets\\sass\\base\\_reset.scss 268:22          @use\a   assets\\sass\\main.scss 35:1                   root stylesheet";
 }

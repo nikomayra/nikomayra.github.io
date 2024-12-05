@@ -1,89 +1,80 @@
 // ==========================================================================
 // Color System
 // ==========================================================================
-//
-// This file defines the color palette for the entire application.
-// Colors are organized by semantic purpose and can include variations.
-//
-// Usage:
-// color: fn.color("primary");
-// background: fn.color("background", "light");
 
-/// Color Palette
-/// @type Map
-$colors: (
+@use "sass:color";
+@use "sass:map";
+
+// Core color definitions
+$base-colors: (
+  // Core colors
+  "primary": #5e42a6,
+  "secondary": #b74e91,
+  "accent": #00ffcc,
+  "accent-alt": #ff3366,
+
   // Base colors
-  "background": #fdf0d5,
-  "text": #0d0a0b,
-  "text-light": #454955,
-
-  // Primary colors
-  "primary": #669bbc,
-  "primary-light": #7eabc6,
-  "primary-dark": #4d7a96,
-
-  // Secondary colors
-  "secondary": #003049,
-  "secondary-light": #0a4565,
-  "secondary-dark": #001f30,
-
-  // Accent colors
-  "accent": #c1121f,
-  "accent-light": #d42836,
-  "accent-dark": #990e18,
-
-  // UI Elements
-  "header-bg": #0d0a0b,
-  "header-text": #f3eff5,
-  "border": #ddd,
-  "border-light": #eee,
-  "border-dark": #ccc,
-
-  // State colors
-  "success": #72b01d,
-  "warning": #fdf0d5,
-  "error": #780000,
-
-  // Link colors
-  "link": #3f7d20,
-  "link-hover": #7eabc6
+  "background": #312450,
+  "text": #ffffff
 );
 
-// Color function
-/// @function color($key, $variant: null)
-/// @return color
-/// @description Returns a color from the color palette.
-/// @example color: fn.color("primary");
-/// @example background: fn.color("background", "light");
-@function color($key, $variant: null) {
-  @if $variant {
-    $color-key: "#{$key}-#{$variant}";
-    @return map.get($colors, $color-key);
+// Generate color map with variants
+$colors: ();
+
+@each $name, $color in $base-colors {
+  // Base color
+  $colors: map.set($colors, $name, $color);
+
+  // Light/dark variants
+  $colors: map.set($colors, "#{$name}-light", color.scale($color, $lightness: 10%));
+  $colors: map.set($colors, "#{$name}-dark", color.scale($color, $lightness: -10%));
+}
+
+// Add semantic color aliases
+$colors: map.merge(
+  $colors,
+  (
+    "link": map.get($colors, "accent"),
+    "border": color.change(map.get($colors, "text"), $alpha: 0.1),
+    "input": color.scale(map.get($colors, "background"), $lightness: 15%),
+  )
+);
+
+// Color functions
+// ==========================================================================
+
+/// Get a color value
+/// @param {String} $key - Key of the color
+/// @return {Color} The color value
+@function color($key) {
+  @if map.has-key($colors, $key) {
+    @return map.get($colors, $key);
   }
-  @return map.get($colors, $key);
+  
+  @error "Color `#{$key}` not found in $colors map.";
+  @return null;
 }
 
-// Color modification functions
-/// @function lighten-color($color, $percentage: 10%)
-/// @return color
-/// @description Lightens a color by a specified percentage.
-/// @example color: lighten-color(#4acaa8, 20%);
-@function lighten-color($color, $percentage: 10%) {
-  @return color.scale($color, $lightness: $percentage);
+/// Lighten a color
+/// @param {String} $key - Key of the color
+/// @param {Number} $amount - Amount to lighten by
+/// @return {Color} Lightened color
+@function lighten($key, $amount) {
+  @return color.scale(color($key), $lightness: $amount);
 }
 
-/// @function darken-color($color, $percentage: 10%)
-/// @return color
-/// @description Darkens a color by a specified percentage.
-/// @example color: darken-color(#4acaa8, 20%);
-@function darken-color($color, $percentage: 10%) {
-  @return color.scale($color, $lightness: -$percentage);
+/// Darken a color
+/// @param {String} $key - Key of the color
+/// @param {Number} $amount - Amount to darken by
+/// @return {Color} Darkened color
+@function darken($key, $amount) {
+  @return color.scale(color($key), $lightness: -$amount);
 }
 
-/// @function alpha-color($color, $opacity: 0.5)
-/// @return color
-/// @description Sets the alpha channel of a color.
-/// @example color: alpha-color(#4acaa8, 0.8);
-@function alpha-color($color, $opacity: 0.5) {
-  @return color.change($color, $alpha: $opacity);
+/// Adjust color opacity
+/// @param {String} $key - Key of the color
+/// @param {Number} $amount - Opacity value (0-1)
+/// @return {Color} Color with adjusted opacity
+@function alpha($key, $amount) {
+  @return color.change(color($key), $alpha: $amount);
 }

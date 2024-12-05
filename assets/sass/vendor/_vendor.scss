@@ -1,20 +1,41 @@
+// ==========================================================================
+// Vendor Prefix Management System
+// ==========================================================================
+//
+// This file provides a comprehensive system for managing vendor prefixes and
+// browser-specific CSS properties. It handles:
+// 1. Automatic vendor prefixing for properties and values
+// 2. String manipulation utilities for CSS value processing
+// 3. List management for vendor-specific features
+//
+// Usage:
+// @use "vendor";
+// @include vendor.vendor("transform", "scale(2)");
+// @include vendor.vendor("display", "flex");
+
 @use "sass:list";
 @use "sass:math";
 @use "sass:meta";
 @use "sass:string";
-// vendor.scss v1.0 | @ajlkn | MIT licensed */
 
-// Vars.
+// ==========================================================================
+// Configuration
+// ==========================================================================
 
-/// Vendor prefixes.
-/// @var {list}
-$vendor-prefixes: ("-moz-", "-webkit-", "-ms-", "");
+/// List of vendor prefixes to apply
+/// @type List
+$vendor-prefixes: (
+  "-moz-",     // Firefox
+  "-webkit-",  // Chrome, Safari, newer versions of Opera
+  "-ms-",      // Internet Explorer
+  ""           // Standard (no prefix)
+);
 
-/// Properties that should be vendorized.
-/// Data via caniuse.com, github.com/postcss/autoprefixer, and developer.mozilla.org
-/// @var {list}
+/// Properties that require vendor prefixing
+/// @type List
+/// Data sourced from caniuse.com and MDN
 $vendor-properties: (
-  // Animation.
+  // Animation
   "animation",
   "animation-delay",
   "animation-direction",
@@ -24,26 +45,26 @@ $vendor-properties: (
   "animation-name",
   "animation-play-state",
   "animation-timing-function",
-  // Appearance.
+
+  // Appearance
   "appearance",
 
-  // Backdrop filter.
+  // Backdrop filter
   "backdrop-filter",
 
-  // Background image options.
+  // Background
   "background-clip",
   "background-origin",
   "background-size",
-  // Box sizing.
-  "box-sizing",
 
-  // Clip path.
+  // Box model
+  "box-sizing",
   "clip-path",
 
-  // Filter effects.
+  // Filter effects
   "filter",
 
-  // Flexbox.
+  // Flexbox
   "align-content",
   "align-items",
   "align-self",
@@ -56,179 +77,89 @@ $vendor-properties: (
   "flex-wrap",
   "justify-content",
   "order",
-  // Font feature.
-  "font-feature-settings",
-  "font-language-override",
-  "font-variant-ligatures",
-  // Font kerning.
-  "font-kerning",
 
-  // Fragmented borders and backgrounds.
-  "box-decoration-break",
-
-  // Grid layout.
+  // Grid
+  "grid",
+  "grid-area",
+  "grid-auto-columns",
+  "grid-auto-flow",
+  "grid-auto-rows",
   "grid-column",
-  "grid-column-align",
   "grid-column-end",
+  "grid-column-gap",
   "grid-column-start",
+  "grid-gap",
   "grid-row",
-  "grid-row-align",
   "grid-row-end",
+  "grid-row-gap",
   "grid-row-start",
+  "grid-template",
+  "grid-template-areas",
   "grid-template-columns",
   "grid-template-rows",
-  // Hyphens.
-  "hyphens",
-  "word-break",
-  // Masks.
-  "mask",
-  "mask-border",
-  "mask-border-outset",
-  "mask-border-repeat",
-  "mask-border-slice",
-  "mask-border-source",
-  "mask-border-width",
-  "mask-clip",
-  "mask-composite",
-  "mask-image",
-  "mask-origin",
-  "mask-position",
-  "mask-repeat",
-  "mask-size",
-  // Multicolumn.
-  "break-after",
-  "break-before",
-  "break-inside",
-  "column-count",
-  "column-fill",
-  "column-gap",
-  "column-rule",
-  "column-rule-color",
-  "column-rule-style",
-  "column-rule-width",
-  "column-span",
-  "column-width",
-  "columns",
-  // Object fit.
-  "object-fit",
-  "object-position",
-  // Regions.
-  "flow-from",
-  "flow-into",
-  "region-fragment",
-  // Scroll snap points.
-  "scroll-snap-coordinate",
-  "scroll-snap-destination",
-  "scroll-snap-points-x",
-  "scroll-snap-points-y",
-  "scroll-snap-type",
-  // Shapes.
-  "shape-image-threshold",
-  "shape-margin",
-  "shape-outside",
-  // Tab size.
-  "tab-size",
 
-  // Text align last.
-  "text-align-last",
-
-  // Text decoration.
-  "text-decoration-color",
-  "text-decoration-line",
-  "text-decoration-skip",
-  "text-decoration-style",
-  // Text emphasis.
-  "text-emphasis",
-  "text-emphasis-color",
-  "text-emphasis-position",
-  "text-emphasis-style",
-  // Text size adjust.
-  "text-size-adjust",
-
-  // Text spacing.
-  "text-spacing",
-
-  // Transform.
+  // Transform
   "transform",
   "transform-origin",
-  // Transform 3D.
+  "transform-style",
   "backface-visibility",
   "perspective",
   "perspective-origin",
-  "transform-style",
-  // Transition.
+
+  // Transition
   "transition",
   "transition-delay",
   "transition-duration",
   "transition-property",
   "transition-timing-function",
-  // Unicode bidi.
-  "unicode-bidi",
 
-  // User select.
+  // Other
+  "font-smoothing",
   "user-select",
-
-  // Writing mode.
-  "writing-mode"
+  "touch-action"
 );
 
-/// Values that should be vendorized.
-/// Data via caniuse.com, github.com/postcss/autoprefixer, and developer.mozilla.org
-/// @var {list}
+/// CSS values that require vendor prefixing
+/// @type List
 $vendor-values: (
-  // Cross fade.
-  "cross-fade",
-
-  // Element function.
-  "element",
-
-  // Filter function.
-  "filter",
-
-  // Flexbox.
+  // Display modes
   "flex",
   "inline-flex",
-  // Grab cursors.
-  "grab",
-  "grabbing",
-  // Gradients.
-  "linear-gradient",
-  "repeating-linear-gradient",
-  "radial-gradient",
-  "repeating-radial-gradient",
-  // Grid layout.
   "grid",
   "inline-grid",
-  // Image set.
+
+  // Image handling
   "image-set",
 
-  // Intrinsic width.
+  // Intrinsic sizing
   "max-content",
   "min-content",
   "fit-content",
   "fill",
   "fill-available",
   "stretch",
-  // Sticky position.
+
+  // Position
   "sticky",
 
-  // Transform.
+  // Transform
   "transform",
 
-  // Zoom cursors.
+  // Cursors
   "zoom-in",
   "zoom-out"
 );
 
-// Functions.
+// ==========================================================================
+// String Utilities
+// ==========================================================================
 
-/// Removes a specific item from a list.
-/// @author Hugo Giraudel
-/// @param {list} $list List.
-/// @param {integer} $index Index.
-/// @return {list} Updated list.
+/// Remove an item from a list at a specific index
+/// @param {List} $list - The list to modify
+/// @param {Number} $index - The position to remove
+/// @return {List} The modified list
 @function remove-nth($list, $index) {
-  $result: null;
+  $result: ();
 
   @if meta.type-of($index) != number {
     @warn "$index: #{string.quote($index)} is not a number for `remove-nth`.";
@@ -250,73 +181,58 @@ $vendor-values: (
   @return $result;
 }
 
-/// Replaces a substring within another string.
-/// @author Hugo Giraudel
-/// @param {string} $string String.
-/// @param {string} $search Substring.
-/// @param {string} $replace Replacement.
-/// @return {string} Updated string.
+/// Replace a substring within a string
+/// @param {String} $string - The original string
+/// @param {String} $search - The substring to find
+/// @param {String} $replace - The replacement string
+/// @return {String} The modified string
 @function str-replace($string, $search, $replace: "") {
   $index: string.index($string, $search);
 
   @if $index {
     @return string.slice($string, 1, $index - 1) + $replace +
-      str-replace(
-        string.slice($string, $index + string.length($search)),
-        $search,
-        $replace
-      );
+      str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
   }
 
   @return $string;
 }
 
-/// Replaces a substring within each string in a list.
-/// @param {list} $strings List of strings.
-/// @param {string} $search Substring.
-/// @param {string} $replace Replacement.
-/// @return {list} Updated list of strings.
+/// Replace a substring in all strings in a list
+/// @param {List} $strings - List of strings to process
+/// @param {String} $search - The substring to find
+/// @param {String} $replace - The replacement string
+/// @return {List} The modified list of strings
 @function str-replace-all($strings, $search, $replace: "") {
   @each $string in $strings {
-    $strings: list.set-nth(
-      $strings,
-      list.index($strings, $string),
-      str-replace($string, $search, $replace)
-    );
+    $strings: list.set-nth($strings, list.index($strings, $string), str-replace($string, $search, $replace));
   }
 
   @return $strings;
 }
 
-// Mixins.
+// ==========================================================================
+// Vendor Prefix Mixins
+// ==========================================================================
 
-/// Wraps @content in vendorized keyframe blocks.
-/// @param {string} $name Name.
+/// Generate keyframe animations with vendor prefixes
+/// @param {String} $name - The name of the keyframe animation
+/// @content The keyframe rules
 @mixin keyframes($name) {
-  @-moz-keyframes #{$name} {
-    @content;
-  }
-  @-webkit-keyframes #{$name} {
-    @content;
-  }
-  @-ms-keyframes #{$name} {
-    @content;
-  }
-  @keyframes #{$name} {
-    @content;
-  }
+  @-moz-keyframes #{$name} { @content; }
+  @-webkit-keyframes #{$name} { @content; }
+  @-ms-keyframes #{$name} { @content; }
+  @keyframes #{$name} { @content; }
 }
 
-/// Vendorizes a declaration's property and/or value(s).
-/// @param {string} $property Property.
-/// @param {mixed} $value String/list of value(s).
+/// Apply vendor prefixes to a property and/or its values
+/// @param {String} $property - The CSS property to prefix
+/// @param {String|List} $value - The value(s) to apply
 @mixin vendor($property, $value) {
-  // Determine if property should expand.
+  // Check if property needs vendor prefixes
   $expandProperty: list.index($vendor-properties, $property);
 
-  // Determine if value should expand (and if so, add '-prefix-' placeholder).
+  // Check if value needs vendor prefixes
   $expandValue: false;
-
   @each $x in $value {
     @each $y in $vendor-values {
       @if $y == string.slice($x, 1, string.length($y)) {
@@ -326,22 +242,16 @@ $vendor-values: (
     }
   }
 
-  // Expand property?
+  // Apply prefixes based on what needs expansion
   @if $expandProperty {
     @each $vendor in $vendor-prefixes {
       #{$vendor}#{$property}: #{str-replace-all($value, "-prefix-", $vendor)};
     }
-  }
-
-  // Expand just the value?
-  @else if $expandValue {
+  } @else if $expandValue {
     @each $vendor in $vendor-prefixes {
       #{$property}: #{str-replace-all($value, "-prefix-", $vendor)};
     }
-  }
-
-  // Neither? Treat them as a normal declaration.
-  @else {
+  } @else {
     #{$property}: #{$value};
   }
 }

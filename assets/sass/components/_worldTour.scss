@@ -1,15 +1,22 @@
-@use '../libs/vars' as *;
-@use 'sass:map';
+// ==========================================================================
+// World Tour Component
+// ==========================================================================
+//
+// This file contains styles for the interactive world map showing visited countries
+// and flight paths. It creates an animated display of travel history using D3.js.
+//
+// Usage:
+// <div class="world-tour-container">
+//   <svg>...</svg>
+//   <div class="world-title">Title</div>
+// </div>
 
-:root {
-  --world-land-color: #{map.get($palette, secondary, bg)};
-  --world-visited-country-color: #{map.get($palette, accent-1, bg)};
-  --world-border-color: #{map.get($palette, tertiary, bg)};
-  --world-ocean-color: #{map.get($palette, primary, bg-light)};
-  --world-graticule-color: #{map.get($palette, secondary, bg-light)};
-  --world-flight-path-color: #{map.get($palette, accent-1, bg-light)};
-  --world-transition-duration: 0.3s;
-}
+@use "../abstracts/functions" as fn;
+@use "sass:map";
+
+// ==========================================================================
+// Container Layout
+// ==========================================================================
 
 .world-tour-container {
   flex: 60%;
@@ -55,12 +62,12 @@
     right: 0;
     text-align: center;
     font-size: 1.2em;
-    color: #{map.get($palette, primary, bg)};
+    color: fn.color("primary");
     transition: color var(--world-transition-duration) ease;
     padding: 10px;
 
     &.highlight {
-      color: #{map.get($palette, accent-1, bg)};
+      color: fn.color("accent");
     }
   }
 }
