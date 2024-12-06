@@ -1,0 +1,121 @@
+// ==========================================================================
+// Layout Component
+// ==========================================================================
+
+@use "../abstracts/functions" as fn;
+@use "../abstracts/mixins" as mx;
+@use "../abstracts/colors" as c;
+@use "../abstracts/breakpoints" as bp;
+
+// ==========================================================================
+// Core Layout
+// ==========================================================================
+
+#wrapper {
+  background: c.color("background");
+  padding-right: fn.layout("header-width");
+  transition: opacity fn.duration("standard") ease;
+
+  #main {
+    margin-left: fn.layout("header-width");
+    max-width: fn.layout("container-width");
+    padding: fn.spacing("large");
+
+    > section {
+      margin: fn.spacing("large") 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+// Grid System
+.row {
+  @include mx.grid(2em);
+
+  @include bp.breakpoint("<=xlarge") {
+    @include mx.grid(2em, "xlarge");
+  }
+
+  @include bp.breakpoint("<=large") {
+    @include mx.grid(1.5em, "large");
+  }
+
+  @include bp.breakpoint("<=medium") {
+    @include mx.grid(1.5em, "medium");
+  }
+
+  @include bp.breakpoint("<=small") {
+    @include mx.grid(1.25em, "small");
+  }
+
+  @include bp.breakpoint("<=xsmall") {
+    @include mx.grid(1.25em, "xsmall");
+  }
+}
+
+// Container Utilities
+.container {
+  margin: 0 auto;
+  max-width: calc(100% - (fn.spacing("medium") * 2));
+  width: fn.layout("container-width");
+
+  &.xsmall { width: (fn.layout("container-width") * 0.25); }
+  &.small { width: (fn.layout("container-width") * 0.5); }
+  &.medium { width: (fn.layout("container-width") * 0.75); }
+  &.large { width: (fn.layout("container-width") * 1.25); }
+  &.xlarge { width: (fn.layout("container-width") * 1.5); }
+}
+
+// ==========================================================================
+// Responsive Layout
+// ==========================================================================
+
+// Large Screens (<=xlarge)
+@include bp.breakpoint("<=xlarge") {
+  #wrapper {
+    padding-right: fn.layout("header-width") * 0.9;
+  }
+  #main {
+    margin-left: fn.layout("header-width") * 0.9;
+    padding: fn.spacing("medium");
+  }
+}
+
+// Medium Screens (<=medium)
+@include bp.breakpoint("<=medium") {
+  #wrapper {
+    padding-right: fn.layout("header-width") * 0.8;
+  }
+  #main {
+    margin-left: fn.layout("header-width") * 0.8;
+    padding: fn.spacing("medium");
+  }
+}
+
+// Small Screens (<=small)
+@include bp.breakpoint("<=small") {
+  body .travels-container {
+    flex-direction: column;
+  }
+  #wrapper {
+    padding-right: fn.layout("header-width") * 0.7;
+  }
+  #main {
+    margin-left: fn.layout("header-width") * 0.7;
+    padding: fn.spacing("small");
+  }
+}
+
+// Extra Small Screens (<=xsmall)
+@include bp.breakpoint("<=xsmall") {
+  #wrapper {
+    padding-right: fn.layout("header-width") * 0.5;
+  }
+  #main {
+    margin-left: fn.layout("header-width") * 0.5;
+    padding: fn.spacing("xsmall");
+  }
+}

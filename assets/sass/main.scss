@@ -1,22 +1,6 @@
 // ==========================================================================
 // Main Stylesheet
 // ==========================================================================
-//
-// This is the main entry point for all styles in the application.
-//
-// 1. Abstracts/   - Variables, fn, mixins, and placeholders
-// 2. Vendors/     - Third-party styles
-// 3. Base/        - Base styles, typography, and utilities
-// 4. Layout/      - Major layout components
-// 5. Components/  - Reusable UI components
-
-// External Dependencies
-// @import url("fontawesome-all.min.css");
-// @import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
-
-// ==========================================================================
-// Abstracts
-// ==========================================================================
 
 @use "abstracts/variables" as vars;
 @use "abstracts/functions" as fn;
@@ -24,42 +8,25 @@
 @use "abstracts/breakpoints" as bp;
 @use "abstracts/colors" as c;
 
-// ==========================================================================
-// Vendor
-// ==========================================================================
-@use "vendor/vendor";
-
-// ==========================================================================
-// Base
-// ==========================================================================
 @use "base/reset";
-@use "base/typography";
 @use "base/base";
 
-// ==========================================================================
-// Layout
-// ==========================================================================
-@use "layout/grid";
-
-// ==========================================================================
-// Components
-// ==========================================================================
+@use "components/header";
+@use "components/layout";
+@use "components/footer";
+@use "components/icons";
+@use "components/images";
 @use "components/skills";
 @use "components/usTour";
 @use "components/worldTour";
 
 // ==========================================================================
-// Page-specific styles
+// 2. Base Page Structure
 // ==========================================================================
 
-/// Base page styles
 html {
+  height: 100%;
   box-sizing: border-box;
-  font-size: 16px;
-
-  @include bp.breakpoint("<=medium") {
-    font-size: 14px;
-  }
 }
 
 *,
@@ -69,209 +36,61 @@ html {
 }
 
 body {
-  background: fn.color("background");
-  color: fn.color("text");
+  margin: 0;
+  overflow: hidden;
+  background: c.color("background");
+  color: c.color("text");
   font-family: fn.font-family("primary");
-  font-size: fn.font-size("base");
-  font-weight: fn.font-weight("regular");
-  line-height: 1.65;
-
-  @include bp.breakpoint("<=small") {
-    line-height: 1.5;
-  }
 
   &.is-loading {
     *,
     *:before,
     *:after {
-      @include mx.animation(none !important);
-      @include mx.transition(none !important);
+      animation: none !important;
+      transition: none !important;
     }
   }
 }
 
-// ==========================================================================
-// Links
-// ==========================================================================
-
-a {
-  color: fn.color("link");
-  text-decoration: none;
-  @include mx.transition("color");
-
-  &:hover {
-    color: fn.color("link-light");
-    text-decoration: underline;
+// Core Layout & Responsive Design
+@include bp.breakpoint("<=xlarge") {
+  #header {
+    width: fn.layout("header-width") * 0.9;
   }
-
-  &:active,
-  &:focus {
-    outline: none;
+  #main {
+    margin-left: fn.layout("header-width") * 0.9;
+    padding: fn.spacing("medium");
   }
 }
 
-// ==========================================================================
-// Lists
-// ==========================================================================
-
-ul,
-ol {
-  margin: 0 0 fn.spacing("medium");
-  padding-left: 1.25em;
-
-  &.unstyled {
-    list-style: none;
-    padding-left: 0;
+@include bp.breakpoint("<=medium") {
+  #header {
+    width: fn.layout("header-width") * 0.8;
   }
-
-  &.inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: fn.spacing("small");
-    list-style: none;
-    padding-left: 0;
+  #main {
+    margin-left: fn.layout("header-width") * 0.8;
+    padding: fn.spacing("medium");
   }
 }
 
-// ==========================================================================
-// Images
-// ==========================================================================
-
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-// ==========================================================================
-// Forms
-// ==========================================================================
-
-input,
-select,
-textarea {
-  background: fn.color("input-bg");
-  border: fn.layout("border", "width") solid fn.color("border");
-  border-radius: fn.layout("border", "radius");
-  color: fn.color("text");
-  font-family: fn.font-family("primary");
-  font-size: fn.font-size("base");
-  padding: fn.spacing("small");
-  width: 100%;
-
-  &:focus {
-    border-color: fn.color("primary");
-    outline: none;
+@include bp.breakpoint("<=small") {
+  #header {
+    width: fn.layout("header-width") * 0.7;
+  }
+  #main {
+    margin-left: fn.layout("header-width") * 0.7;
+    padding: fn.spacing("small");
   }
 }
 
-// ==========================================================================
-// Buttons
-// ==========================================================================
-
-.button {
-  @include mx.button-base;
-  background: fn.color("accent");
-  color: fn.color("text");
-  text-align: center;
-  @include mx.transition("background-color");
-
-  &:hover {
-    background: fn.color("accent-light");
+@include bp.breakpoint("<=xsmall") {
+  #header {
+    width: fn.layout("header-width") * 0.5;
   }
-
-  &:active {
-    background: fn.color("accent-dark");
+  #main {
+    margin-left: fn.layout("header-width") * 0.5;
+    padding: fn.spacing("xsmall");
   }
-
-  &.primary {
-    background: fn.color("primary");
-
-    &:hover {
-      background: fn.color("primary-light");
-    }
-
-    &:active {
-      background: fn.color("primary-dark");
-    }
-  }
-
-  &.secondary {
-    background: fn.color("secondary");
-
-    &:hover {
-      background: fn.color("secondary-light");
-    }
-
-    &:active {
-      background: fn.color("secondary-dark");
-    }
-  }
-
-  &.outline {
-    background: transparent;
-    border: fn.layout("border", "width") solid currentColor;
-    color: fn.color("primary");
-
-    &:hover {
-      background: fn.color("primary");
-      color: fn.color("background");
-    }
-  }
-}
-
-// ==========================================================================
-// Utilities
-// ==========================================================================
-
-.text {
-  &-center {
-    text-align: center;
-  }
-  &-left {
-    text-align: left;
-  }
-  &-right {
-    text-align: right;
-  }
-}
-
-.margin {
-  &-top {
-    margin-top: fn.spacing("medium");
-  }
-  &-bottom {
-    margin-bottom: fn.spacing("medium");
-  }
-  &-left {
-    margin-left: fn.spacing("medium");
-  }
-  &-right {
-    margin-right: fn.spacing("medium");
-  }
-}
-
-.padding {
-  &-top {
-    padding-top: fn.spacing("medium");
-  }
-  &-bottom {
-    padding-bottom: fn.spacing("medium");
-  }
-  &-left {
-    padding-left: fn.spacing("medium");
-  }
-  &-right {
-    padding-right: fn.spacing("medium");
-  }
-}
-
-.hidden {
-  display: none !important;
-}
-
-.visually-hidden {
-  @include mx.visually-hidden;
 }
 
 // ==========================================================================
@@ -279,19 +98,16 @@ textarea {
 // ==========================================================================
 
 #header {
-  @include mx.vendor("display", "flex");
-  @include mx.vendor("flex-direction", "column");
-  @include mx.vendor("justify-content", "space-between");
-  background: fn.color("primary");
-  color: fn.color("text");
+  background: c.color("primary");
+  color: c.color("text");
   height: 100%;
   overflow-y: auto;
   position: fixed;
   text-align: center;
   top: 0;
-  width: fn.layout("header", "width");
+  width: fn.layout("header-width");
 
-  @if fn.layout("header", "side") == "right" {
+  @if fn.layout("header-side") == "right" {
     right: 0;
   } @else {
     left: 0;
@@ -313,7 +129,7 @@ textarea {
   }
 
   nav {
-    @include mx.vendor("flex-grow", "1");
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -324,21 +140,21 @@ textarea {
       padding: 0;
 
       li {
-        border-top: solid fn.layout("border", "width") fn.color("border");
+        border-top: solid fn.layout("border-width") c.color("border");
 
         a {
-          @include mx.vendor("transition", "color #{fn.transition("standard")} ease-in-out");
-          color: fn.color("link");
+          transition: color fn.duration(transition) ease-in-out;
+          color: c.color("link");
           display: block;
           padding: fn.spacing("medium") 0;
           text-decoration: none;
 
           &:hover {
-            color: fn.color("accent");
+            color: c.color("accent");
           }
 
           &.active {
-            color: fn.color("accent");
+            color: c.color("accent");
           }
         }
 
@@ -355,24 +171,21 @@ textarea {
 // ==========================================================================
 
 #main {
-  margin-left: fn.layout("header", "width");
-  max-width: fn.layout("container", "width");
-  padding: fn.spacing("large");
+  // margin-left: fn.layout("header-width");
+  // max-width: fn.layout("container-width");
+  // padding: fn.spacing("large");
 
-  section {
-    border-top: solid fn.layout("border", "width") fn.color("border");
-    margin: fn.spacing("large") 0;
-    padding: fn.spacing("large") 0;
+  > section {
+    border-top: solid fn.layout("border-width") c.color("border");
+    // margin: fn.spacing("large") 0;
+    // padding: fn.spacing("large") 0;
+
+    > .container {
+      padding: fn.spacing("xxlarge") 0 fn.spacing("xlarge") 0;
+    }
 
     &:first-child {
       border-top: 0;
-      margin-top: 0;
-      padding-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
     }
   }
 }
@@ -382,21 +195,21 @@ textarea {
 // ==========================================================================
 
 #footer {
-  @include mx.vendor("display", "flex");
-  @include mx.vendor("flex-direction", "column");
-  @include mx.vendor("align-items", "center");
-  background: fn.color("background");
-  border-top: solid fn.layout("border", "width") fn.color("border");
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: c.color("background");
+  border-top: solid fn.layout("border-width") c.color("border");
   padding: fn.spacing("large");
 
   .copyright {
-    color: fn.color("text-light");
+    color: c.color("text-light");
     font-size: fn.font-size("small");
     list-style: none;
     padding: 0;
 
     li {
-      border-left: solid fn.layout("border", "width") fn.color("border");
+      border-left: solid fn.layout("border-width") c.color("border");
       display: inline-block;
       line-height: 1;
       margin: 0 0 0 fn.spacing("small");
@@ -412,60 +225,55 @@ textarea {
 }
 
 // ==========================================================================
-// Responsive
+// 6. Responsive Design
 // ==========================================================================
+// Core responsive rules that affect layout structure
+// Component-specific responsive styles should be in their respective files
 
+// Large Screens
 @include bp.breakpoint("<=xlarge") {
-  $size-header: fn.layout("header", "width") * 0.8;
-
   #header {
-    width: $size-header;
+    width: fn.layout("header-width") * 0.9;
   }
 
   #main {
-    margin-left: $size-header;
+    margin-left: fn.layout("header-width") * 0.9;
   }
 }
 
-@include bp.breakpoint("<=large") {
-  $size-header: fn.layout("header", "width") * 0.7;
-
-  #header {
-    width: $size-header;
-
-    h1 {
-      font-size: fn.font-size("h3");
-    }
-  }
-
-  #main {
-    margin-left: $size-header;
-  }
-}
-
+// Medium Screens
 @include bp.breakpoint("<=medium") {
-  $size-header: fn.layout("header", "width") * 0.6;
-
   #header {
-    width: $size-header;
+    width: fn.layout("header-width") * 0.8;
   }
 
   #main {
-    margin-left: $size-header;
+    margin-left: fn.layout("header-width") * 0.8;
     padding: fn.spacing("medium");
   }
 }
 
+// Small Screens
 @include bp.breakpoint("<=small") {
-  $size-header: fn.layout("header", "width") * 0.5;
-
   #header {
-    width: $size-header;
+    width: fn.layout("header-width") * 0.7;
   }
 
   #main {
-    margin-left: $size-header;
+    margin-left: fn.layout("header-width") * 0.7;
     padding: fn.spacing("small");
+  }
+}
+
+// Extra Small Screens
+@include bp.breakpoint("<=xsmall") {
+  #header {
+    width: fn.layout("header-width") * 0.5;
+  }
+
+  #main {
+    margin-left: fn.layout("header-width") * 0.5;
+    padding: fn.spacing("xsmall");
   }
 }
 
@@ -503,27 +311,27 @@ textarea {
 
 .container {
   margin: 0 auto;
-  max-width: calc(100% - #{fn.layout("container", "padding") * 2});
-  width: fn.layout("container", "width");
+  max-width: calc(100% - (fn.spacing("medium") * 2));
+  width: fn.layout("container-width");
 
   &.xsmall {
-    width: (fn.layout("container", "width") * 0.25);
+    width: (fn.layout("container-width") * 0.25);
   }
 
   &.small {
-    width: (fn.layout("container", "width") * 0.5);
+    width: (fn.layout("container-width") * 0.5);
   }
 
   &.medium {
-    width: (fn.layout("container", "width") * 0.75);
+    width: (fn.layout("container-width") * 0.75);
   }
 
   &.large {
-    width: (fn.layout("container", "width") * 1.25);
+    width: (fn.layout("container-width") * 1.25);
   }
 
   &.xlarge {
-    width: (fn.layout("container", "width") * 1.5);
+    width: (fn.layout("container-width") * 1.5);
   }
 
   &.max {
@@ -535,7 +343,7 @@ textarea {
   }
 
   @include bp.breakpoint("<=xsmall") {
-    max-width: calc(100% - (fn.layout("container", "width") * 1.5));
+    max-width: calc(100% - (fn.layout("container-width") * 1.5));
   }
 }
 
@@ -552,9 +360,9 @@ article {
 
 header {
   p {
-    color: fn.color("text-light");
+    color: c.color("text-light");
     position: relative;
-    margin: 0 0 (fn.layout("header", "margin") * 0.75) 0;
+    margin: 0 0 (fn.spacing("medium") * 0.75) 0;
   }
 
   h2 + p {
@@ -579,679 +387,14 @@ header {
 
   &.major {
     h2 {
-      color: fn.color("accent");
+      color: c.color("accent");
       font-size: 3.5em;
 
       & + p {
-        color: fn.color("text");
+        color: c.color("text");
         font-size: 1.75em;
         font-weight: fn.font-weight("bold");
         margin-top: -0.75em;
-      }
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Form
-// ==========================================================================
-
-form {
-  margin: 0 0 fn.size(element-margin) 0;
-}
-
-label {
-  color: fn.color("text");
-  display: block;
-  font-size: 0.9em;
-  font-weight: fn.font-weight("bold");
-  margin: 0 0 (fn.size(element-margin) * 0.5) 0;
-}
-
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-select {
-  height: fn.size(element-height);
-}
-
-textarea {
-  padding: 0.75em 1em;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-select,
-textarea {
-  @include vendor.vendor("appearance", "none");
-  border-radius: fn.layout("border", "radius");
-  border: none;
-  border: solid fn.layout("border", "width") fn.color("border");
-  color: fn.color("text") !important;
-  background: fn.color("input");
-  display: block;
-  outline: 0;
-  padding: 0 1em;
-  text-decoration: none;
-  width: 100%;
-
-  &:invalid {
-    box-shadow: none;
-  }
-}
-
-::-webkit-input-placeholder {
-  color: fn.color("text") !important;
-  font-style: italic;
-  opacity: 1;
-}
-
-:-moz-placeholder {
-  color: fn.color("text") !important;
-  font-style: italic;
-  opacity: 1;
-}
-
-::-moz-placeholder {
-  color: fn.color("text") !important;
-  font-style: italic;
-  opacity: 1;
-}
-
-:-ms-input-placeholder {
-  color: fn.color("text") !important;
-  font-style: italic;
-  opacity: 1;
-}
-
-// ==========================================================================
-// MAIN - Box
-// ==========================================================================
-
-.box {
-  border-radius: fn.size(border-radius);
-  border: solid fn.size(border-width) fn.color("border");
-  margin-bottom: fn.size(element-margin);
-  padding: 1.5em;
-
-  > :last-child,
-  > :last-child > :last-child,
-  > :last-child > :last-child > :last-child {
-    margin-bottom: 0;
-  }
-
-  &.alt {
-    border: 0;
-    border-radius: 0;
-    padding: 0;
-  }
-}
-
-// ==========================================================================
-// Icon
-// ==========================================================================
-
-.icon {
-  @include mixins.icon;
-  border-bottom: none;
-  position: relative;
-
-  > .label {
-    display: none;
-  }
-
-  &:before {
-    line-height: inherit;
-  }
-
-  &.solid {
-    &:before {
-      font-weight: 900;
-    }
-  }
-
-  &.brands {
-    &:before {
-      font-family: "Font Awesome 5 Brands";
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Image
-// ==========================================================================
-
-.image {
-  border-radius: fn.size(border-radius);
-  border: 0;
-  display: inline-block;
-  position: relative;
-
-  &[data-position] {
-    img {
-      @include vendor.vendor("object-fit", "cover");
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  &[data-position="top left"] {
-    img {
-      @include vendor.vendor("object-position", "top left");
-    }
-  }
-
-  &[data-position="top"] {
-    img {
-      @include vendor.vendor("object-position", "top");
-    }
-  }
-
-  &[data-position="top right"] {
-    img {
-      @include vendor.vendor("object-position", "top right");
-    }
-  }
-
-  &[data-position="right"] {
-    img {
-      @include vendor.vendor("object-position", "right");
-    }
-  }
-
-  &[data-position="bottom right"] {
-    img {
-      @include vendor.vendor("object-position", "bottom right");
-    }
-  }
-
-  &[data-position="bottom"] {
-    img {
-      @include vendor.vendor("object-position", "bottom");
-    }
-  }
-
-  &[data-position="bottom left"] {
-    img {
-      @include vendor.vendor("object-position", "bottom left");
-    }
-  }
-
-  &[data-position="left"] {
-    img {
-      @include vendor.vendor("object-position", "left");
-    }
-  }
-
-  &[data-position="center"] {
-    img {
-      @include vendor.vendor("object-position", "center");
-    }
-  }
-
-  &[data-position="25% 25%"] {
-    img {
-      @include vendor.vendor("object-position", "25% 25%");
-    }
-  }
-
-  &[data-position="75% 25%"] {
-    img {
-      @include vendor.vendor("object-position", "75% 25%");
-    }
-  }
-
-  &[data-position="75% 75%"] {
-    img {
-      @include vendor.vendor("object-position", "75% 75%");
-    }
-  }
-
-  &[data-position="25% 75%"] {
-    img {
-      @include vendor.vendor("object-position", "25% 75%");
-    }
-  }
-
-  img {
-    border-radius: fn.size(border-radius);
-    display: block;
-  }
-
-  &.left {
-    float: left;
-    margin: 0 2.5em 2em 0;
-    top: 0.25em;
-  }
-
-  &.right {
-    float: right;
-    margin: 0 0 2em 2.5em;
-    top: 0.25em;
-  }
-
-  &.fit {
-    display: block;
-    margin: 0 0 fn.size(element-margin) 0;
-    width: 100%;
-
-    img {
-      display: block;
-      width: 100%;
-    }
-  }
-
-  &.avatar {
-    border-radius: 100%;
-    overflow: hidden;
-
-    img {
-      border-radius: 100%;
-      display: block;
-      width: 100%;
-    }
-  }
-
-  &.main {
-    display: block;
-    height: 20em;
-    border-radius: 0;
-
-    img {
-      border-radius: 0;
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - List
-// ==========================================================================
-
-ol {
-  list-style: decimal;
-  margin: 0 0 fn.size(element-margin) 0;
-  padding-left: 1.25em;
-
-  li {
-    padding-left: 0.25em;
-  }
-}
-
-ul {
-  list-style: disc;
-  margin: 0 0 fn.size(element-margin) 0;
-  padding-left: 1em;
-
-  li {
-    padding-left: 0.5em;
-  }
-
-  &.alt {
-    list-style: none;
-    padding-left: 0;
-
-    li {
-      border-top: solid fn.size(border-width) fn.color("border");
-      padding: 0.5em 0;
-
-      &:first-child {
-        border-top: 0;
-        padding-top: 0;
-      }
-    }
-  }
-}
-
-dl {
-  margin: 0 0 fn.size(element-margin) 0;
-}
-
-// ==========================================================================
-// MAIN - Actions
-// ==========================================================================
-
-ul.actions {
-  @include vendor.vendor("display", "flex");
-  cursor: default;
-  list-style: none;
-  margin-left: (fn.size(element-margin) * -0.5);
-  padding-left: 0;
-
-  li {
-    padding: 0 0 0 (fn.size(element-margin) * 0.5);
-    vertical-align: middle;
-  }
-
-  &.special {
-    @include vendor.vendor("justify-content", "center");
-    width: 100%;
-    margin-left: 0;
-
-    li {
-      &:first-child {
-        padding-left: 0;
-      }
-    }
-  }
-
-  &.stacked {
-    @include vendor.vendor("flex-direction", "column");
-    margin-left: 0;
-
-    li {
-      padding: (fn.size(element-margin) * 0.5) 0 0 0;
-
-      &:first-child {
-        padding-top: 0;
-      }
-    }
-  }
-
-  &.fit {
-    width: calc(100% + #{fn.size(element-margin) * 0.5});
-
-    li {
-      @include vendor.vendor("flex-grow", "1");
-      @include vendor.vendor("flex-shrink", "1");
-      width: 100%;
-
-      > * {
-        width: 100%;
-      }
-    }
-
-    &.stacked {
-      width: 100%;
-    }
-  }
-
-  @include bp.breakpoint("<=xsmall") {
-    &:not(.fixed) {
-      @include vendor.vendor("flex-direction", "column");
-      margin-left: 0;
-      width: 100% !important;
-
-      li {
-        @include vendor.vendor("flex-grow", "1");
-        @include vendor.vendor("flex-shrink", "1");
-        padding: (fn.size(element-margin) * 0.5) 0 0 0;
-        text-align: center;
-        width: 100%;
-
-        > * {
-          width: 100%;
-        }
-
-        &:first-child {
-          padding-top: 0;
-        }
-
-        input[type="submit"],
-        input[type="reset"],
-        input[type="button"],
-        button,
-        .button {
-          width: 100%;
-
-          &.icon {
-            &:before {
-              margin-left: -0.5rem;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Icons
-// ==========================================================================
-
-ul.icons {
-  cursor: default;
-  list-style: none;
-  padding-left: 0;
-
-  li {
-    display: inline-block;
-    padding: 0 1em 0 0;
-
-    &:last-child {
-      padding-right: 0 !important;
-    }
-
-    .icon {
-      &:before {
-        font-size: 2em;
-      }
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Table
-// ==========================================================================
-
-.table-wrapper {
-  -webkit-overflow-scrolling: touch;
-  overflow-x: auto;
-}
-
-table {
-  margin: 0 0 fn.size(element-margin) 0;
-  width: 100%;
-
-  tbody {
-    tr {
-      border: solid fn.size(border-width) fn.color("border");
-      border-left: 0;
-      border-right: 0;
-
-      &:nth-child(2n + 1) {
-        background-color: fn.color("border");
-      }
-    }
-  }
-
-  td {
-    padding: 0.75em 0.75em;
-  }
-
-  th {
-    color: fn.color("text");
-    font-size: 0.9em;
-    font-weight: fn.font-weight("bold");
-    padding: 0 0.75em 0.75em 0.75em;
-    text-align: left;
-  }
-
-  thead {
-    border-bottom: solid (fn.size(border-width) * 2) fn.color("border");
-  }
-
-  tfoot {
-    border-top: solid (fn.size(border-width) * 2) fn.color("border");
-  }
-
-  &.alt {
-    border-collapse: separate;
-
-    tbody {
-      tr {
-        td {
-          border: solid fn.size(border-width) fn.color("border");
-          border-left-width: 0;
-          border-top-width: 0;
-
-          &:first-child {
-            border-left-width: fn.size(border-width);
-          }
-        }
-
-        &:first-child {
-          td {
-            border-top-width: fn.size(border-width);
-          }
-        }
-      }
-    }
-
-    thead {
-      border-bottom: 0;
-    }
-
-    tfoot {
-      border-top: 0;
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Button
-// ==========================================================================
-
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-.button {
-  @include vendor.vendor("appearance", "none");
-  @include vendor.vendor(
-    "transition",
-    ("background-color #{fn.duration(transition)} ease-in-out", "color #{fn.duration(transition)} ease-in-out")
-  );
-  background-color: fn.color("secondary");
-  border-radius: fn.size(border-radius);
-  border: 0;
-  color: fn.color("text") !important;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: fn.font-weight("bold");
-  height: fn.size(element-height);
-  line-height: fn.size(element-height);
-  padding: 0 1.5em;
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-
-  &:hover {
-    background-color: fn.color("secondary-light");
-    color: fn.color("accent-alt") !important;
-  }
-
-  &:active {
-    background-color: fn.color("secondary-dark");
-  }
-
-  &.icon {
-    padding-left: 1.35em;
-
-    &:before {
-      margin-right: 0.5em;
-    }
-  }
-
-  &.fit {
-    width: 100%;
-  }
-
-  &.small {
-    font-size: 0.8em;
-  }
-
-  &.large {
-    font-size: 1.35em;
-  }
-
-  &.alt {
-    background-color: transparent;
-    box-shadow: inset 0 0 0 fn.size(border-width) fn.color("border");
-    color: fn.color("text") !important;
-
-    &:hover {
-      background-color: fn.color("border");
-      color: fn.color("text") !important;
-    }
-
-    &:active {
-      background-color: fn.color("border");
-    }
-
-    &.icon {
-      &:before {
-        color: fn.color("text");
-      }
-    }
-  }
-
-  &.primary {
-    background-color: fn.color("primary");
-    color: fn.color("text") !important;
-
-    &:hover {
-      background-color: fn.color("primary-light");
-      color: fn.color("text") !important;
-    }
-
-    &:active {
-      background-color: fn.color("primary-dark");
-    }
-  }
-
-  &.disabled,
-  &:disabled {
-    background-color: fn.color("text") !important;
-    box-shadow: inset 0 -0.15em 0 0 rgba(0, 0, 0, 0.15);
-    color: fn.color("background") !important;
-    cursor: default;
-    opacity: 0.25;
-  }
-}
-
-// ==========================================================================
-// MAIN - Features
-// ==========================================================================
-
-.features {
-  article {
-    border-top: solid (fn.size(border-width) * 1.5) fn.color("border");
-    margin-bottom: fn.size(element-margin);
-    padding-top: fn.size(element-margin);
-
-    &:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .image {
-      display: inline-block;
-      padding-right: 2.5em;
-      vertical-align: middle;
-      width: 48%;
-
-      img {
-        display: block;
-        width: 100%;
-      }
-    }
-
-    .inner {
-      display: inline-block;
-      vertical-align: middle;
-      width: 50%;
-
-      > :last-child {
-        margin-bottom: 0;
       }
     }
   }
@@ -1262,20 +405,13 @@ input[type="button"],
 // ==========================================================================
 
 #wrapper {
-  background: fn.color("background");
-
-  //   @if fn.misc(header-side) == "right" {
-  //     padding-right: $size-header;
-  //   } @else {
-  //     padding-left: $size-header;
-  //   }
-  // }
+  background: c.color("background");
 
   /* Main */
 
   #main {
-    margin-left: $size-header;
-    max-width: fn.layout("container", "width");
+    margin-left: fn.layout("header-width");
+    max-width: fn.layout("container-width");
     padding: fn.spacing("large");
 
     > section {
@@ -1290,11 +426,11 @@ input[type="button"],
   /* Footer */
 
   #footer {
-    @include mixins.vendor("display", "flex");
-    @include mixins.vendor("flex-direction", "column");
-    @include mixins.vendor("align-items", "center");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: fn.spacing("large");
-    color: fn.color("text-light");
+    color: c.color("text-light");
 
     .copyright {
       font-size: fn.font-size("small");
@@ -1302,7 +438,7 @@ input[type="button"],
       margin: fn.spacing("medium") 0;
 
       li {
-        border-left: solid 1px fn.color("border");
+        border-left: solid 1px c.color("border");
         display: inline-block;
         margin: 0 0 0 fn.spacing("small");
         padding: 0 0 0 fn.spacing("small");
@@ -1318,7 +454,7 @@ input[type="button"],
 
   /* Responsive */
   @include bp.breakpoint("<=large") {
-    $size-header: fn.layout("header", "width") * 0.8;
+    $size-header: fn.layout("header-width") * 0.9;
 
     #header {
       width: $size-header;
@@ -1330,7 +466,7 @@ input[type="button"],
   }
 
   @include bp.breakpoint("<=medium") {
-    $size-header: fn.layout("header", "width") * 0.7;
+    $size-header: fn.layout("header-width") * 0.8;
 
     #header {
       width: $size-header;
@@ -1346,7 +482,7 @@ input[type="button"],
   }
 
   @include bp.breakpoint("<=small") {
-    $size-header: fn.layout("header", "width") * 0.6;
+    $size-header: fn.layout("header-width") * 0.7;
 
     #header {
       width: $size-header;
@@ -1361,7 +497,7 @@ input[type="button"],
   /* XLarge */
 
   @include bp.breakpoint("<=xlarge") {
-    $size-header: 21em;
+    $size-header: fn.layout("header-width");
 
     /* Basic */
     html,
@@ -1394,7 +530,7 @@ input[type="button"],
     /* Wrapper */
 
     #wrapper {
-      @if fn.misc(header-side) == "right" {
+      @if fn.layout("header-side") == "right" {
         padding-right: $size-header;
       } @else {
         padding-left: $size-header;
@@ -1415,7 +551,7 @@ input[type="button"],
   /* Large */
 
   @include bp.breakpoint("<=large") {
-    $size-header: 20em;
+    $size-header: fn.layout("header-width") * 0.9;
 
     /* Basic */
 
@@ -1436,13 +572,13 @@ input[type="button"],
 
     #header {
       // width: $size-header;
-      @include mixins.headerStyles($size-header, fn.misc(header-side), "translateX(0)"); // Visible
+      @include mx.headerStyles($size-header, fn.layout("header-side"), "translateX(0)"); // Visible
     }
 
     /* Wrapper */
 
     #wrapper {
-      @if fn.misc(header-side) == "right" {
+      @if fn.layout("header-side") == "right" {
         padding-right: $size-header;
       } @else {
         padding-left: $size-header;
@@ -1458,6 +594,7 @@ input[type="button"],
 
   @include bp.breakpoint("<=medium") {
     /* Basic */
+    $size-header: fn.layout("header-width") * 0.8;
 
     html,
     body {
@@ -1491,7 +628,7 @@ input[type="button"],
     /* Header */
 
     #header {
-      @include mixins.headerStyles($size-header, fn.misc(header-side), "translateX(#{$size-header})"); // Visible
+      @include mx.headerStyles($size-header, fn.layout("header-side"), "translateX(#{$size-header})"); // Visible
 
       > footer {
         bottom: auto;
@@ -1506,29 +643,29 @@ input[type="button"],
     /* Wrapper */
 
     #wrapper {
-      @include vendor.vendor("backface-visibility", "hidden");
-      @include vendor.vendor("transition", "transform #{fn.duration(header)} ease");
+      backface-visibility: hidden;
+      transition: transform fn.duration("transition") ease;
       padding: 44px 0 1px 0;
     }
 
     /* Header Panel */
 
     #titleBar {
-      @include vendor.vendor("backface-visibility", "hidden");
-      @include vendor.vendor("transition", "transform #{fn.duration(header)} ease");
+      backface-visibility: hidden;
+      transition: transform fn.duration("transition") ease;
       display: block;
       height: 44px;
       left: 0;
       position: fixed;
       top: 0;
       width: 100%;
-      z-index: fn.misc(z-index-base) + 1;
-      background: fn.color("primary");
-      color: fn.color("text");
+      z-index: fn.z-index("base") + 1;
+      background: c.color("primary");
+      color: c.color("text");
       min-width: 320px;
 
       .title {
-        color: fn.color("text");
+        color: c.color("text");
         display: block;
         font-weight: fn.font-weight("bold");
         height: 44px;
@@ -1536,7 +673,7 @@ input[type="button"],
         padding: 0 1em;
         width: 100%;
 
-        @if fn.misc(header-side) == "right" {
+        @if fn.layout("header-side") == "right" {
           text-align: left;
         } @else {
           text-align: right;
@@ -1549,7 +686,7 @@ input[type="button"],
       }
 
       .toggle {
-        @include mixins.icon(false, solid);
+        @include mx.icon(false, solid);
         height: 4em;
         position: absolute;
         top: 0;
@@ -1557,15 +694,15 @@ input[type="button"],
         border: 0;
         outline: 0;
 
-        @if fn.misc(header-side) == "right" {
+        @if fn.layout("header-side") == "right" {
           right: 0;
         } @else {
           left: 0;
         }
 
         &:before {
-          background: fn.color("secondary");
-          color: fn.color("text");
+          background: c.color("secondary");
+          color: c.color("text");
           content: "\f0c9";
           display: block;
           font-size: 18px;
@@ -1576,7 +713,7 @@ input[type="button"],
           top: 0;
           width: 64px;
 
-          @if fn.misc(header-side) == "right" {
+          @if fn.layout("header-side") == "right" {
             right: 0;
           } @else {
             left: 0;
@@ -1589,15 +726,15 @@ input[type="button"],
       &.header-visible {
         #wrapper,
         #titleBar {
-          @if fn.misc(header-side) == "right" {
-            @include vendor.vendor("transform", "translateX(#{$size-header * -1})");
+          @if fn.layout("header-side") == "right" {
+            transform: translateX(#{$size-header * -1});
           } @else {
-            @include vendor.vendor("transform", "translateX(#{$size-header})");
+            transform: translateX(#{$size-header});
           }
         }
 
         #header {
-          @include vendor.vendor("transform", "translateX(0)");
+          transform: translateX(0);
         }
       }
     }
@@ -1606,16 +743,15 @@ input[type="button"],
   /* Small */
 
   @include bp.breakpoint("<=small") {
-    $size-header: 17em;
-
     /* Basic */
+    $size-header: fn.layout("header-width") * 0.7;
 
     body {
       .travels-container {
         flex-direction: column;
 
         .world-tour-container {
-          border-top: 1px solid fn.color("text");
+          border-top: 1px solid c.color("text");
         }
       }
     }
@@ -1688,7 +824,7 @@ input[type="button"],
       article {
         .image {
           display: block;
-          margin: 0 0 fn.size(element-margin) 0;
+          margin: 0 0 fn.spacing("medium") 0;
           padding-right: 0;
           width: 100%;
         }
@@ -1709,7 +845,7 @@ input[type="button"],
         padding: 2em;
 
         .avatar {
-          margin: 0 auto (fn.size(element-margin) * 0.75) auto;
+          margin: 0 auto (fn.spacing("medium") * 0.75) auto;
           width: 6em;
         }
 
@@ -1775,10 +911,10 @@ input[type="button"],
       &.header-visible {
         #wrapper,
         #titleBar {
-          @if fn.misc(header-side) == "right" {
-            @include vendor.vendor("transform", "translateX(#{$size-header * -1})");
+          @if fn.layout("header-side") == "right" {
+            transform: translateX(#{$size-header * -1});
           } @else {
-            @include vendor.vendor("transform", "translateX(#{$size-header})");
+            transform: translateX(#{$size-header});
           }
         }
       }
@@ -1789,6 +925,7 @@ input[type="button"],
 
   @include bp.breakpoint("<=xsmall") {
     /* Basic */
+    $size-header: fn.layout("header-width") * 0.6;
 
     html,
     body {
@@ -1806,11 +943,11 @@ input[type="button"],
 
     ul {
       &.actions {
-        margin: 0 0 fn.size(element-margin) 0;
+        margin: 0 0 fn.spacing("small") 0;
 
         li {
           display: block;
-          padding: (fn.size(element-margin) * 0.5) 0 0 0;
+          padding: (fn.spacing("small") * 0.5) 0 0 0;
           text-align: center;
           width: 100%;
 
@@ -1832,7 +969,7 @@ input[type="button"],
 
         &.small {
           li {
-            padding: (fn.size(element-margin) * 0.25) 0 0 0;
+            padding: (fn.spacing("small") * 0.25) 0 0 0;
 
             &:first-child {
               padding-top: 0;
@@ -1855,138 +992,7 @@ input[type="button"],
     input[type="reset"],
     input[type="button"],
     .button {
-      padding: 0;
+      padding: fn.spacing("none");
     }
   }
 }
-
-// ==========================================================================
-// MAIN - Header
-// ==========================================================================
-
-// #header {
-//   @include vendor.vendor("display", "flex");
-//   @include vendor.vendor("flex-direction", "column");
-//   @include vendor.vendor("justify-content", "space-between");
-//   background: fn.color("header-bg");
-//   color: fn.color("header-text");
-//   height: 100%;
-//   overflow-y: auto;
-//   position: fixed;
-//   text-align: center;
-//   top: 0;
-//   width: $size-header;
-
-//   @if fn.misc(header-side) == "right" {
-//     right: 0;
-//   } @else {
-//     left: 0;
-//   }
-
-//   h1,
-//   h2,
-//   h3,
-//   h4,
-//   h5,
-//   h6 {
-//     color: fn.color("header-fg-bold");
-
-//     a {
-//       color: fn.color("header-fg-bold");
-//     }
-//   }
-
-//   header {
-//     p {
-//       color: fn.color("header-fg-light");
-//     }
-//   }
-
-//   // a {
-//   //   color: map.get($palette, tertiary, bg);
-
-//   //   &:hover {
-//   //     color: map.get($palette, tertiary, bg) !important;
-//   //   }
-//   // }
-
-//   > header {
-//     @include vendor.vendor("flex-shrink", "0");
-//     padding: 3em;
-
-//     .avatar {
-//       display: block;
-//       margin: 0 auto fn.size(element-margin) auto;
-//       width: 8em;
-//     }
-
-//     h1 {
-//       font-size: 1.75em;
-//       margin: 0;
-//     }
-
-//     p {
-//       color: map.get($palette, secondary, bg);
-//       font-style: italic;
-//       margin: 1em 0 0 0;
-//     }
-//   }
-
-//   > footer {
-//     @include vendor.vendor("flex-shrink", "0");
-//     bottom: 0;
-//     left: 0;
-//     padding: 2em;
-//     width: 100%;
-
-//     .icons {
-//       margin: 0;
-
-//       li {
-//         a {
-//           color: map.get($palette, accent-1, bg-light);
-//         }
-//       }
-//     }
-//   }
-
-//   > nav {
-//     @include vendor.vendor("flex-grow", "1");
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     overflow: hidden;
-
-//     ul {
-//       list-style: none;
-//       margin: 0;
-//       padding: 0;
-//       width: 100%;
-
-//       li {
-//         border-top: solid fn.size(border-width)
-//           fn.palette(header, border);
-//         display: block;
-//         padding: 0;
-
-//         a {
-//           @include vendor.vendor("transition", "none");
-//           border: 0;
-//           color: fn.color("header-fg-bold") !important;
-//           display: block;
-//           padding: 0.85em 0;
-//           text-decoration: none;
-
-//           &.active {
-//             background: map.get($palette, accent-2, bg);
-//             color: map.get($palette, primary, bg) !important;
-//           }
-//         }
-
-//         &:first-child {
-//           border-top: 0;
-//         }
-//       }
-//     }
-//   }
-// }

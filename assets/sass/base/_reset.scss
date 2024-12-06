@@ -1,6 +1,7 @@
 @use "../abstracts/functions" as fn;
 @use "../abstracts/mixins" as mx;
 @use "../vendor/vendor";
+@use "../abstracts/colors" as c;
 
 // ==========================================================================
 // Modern CSS Reset
@@ -265,7 +266,7 @@ ol {
 
 // Set default focus styles
 :focus-visible {
-  outline: 2px solid fn.color("primary");
+  outline: 2px solid c.color("primary");
   outline-offset: 2px;
 }
 
@@ -282,7 +283,7 @@ details summary {
 dialog {
   background-color: white;
   border: none;
-  border-radius: fn.layout("border", "radius");
+  border-radius: fn.layout("border-radius");
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
   padding: fn.spacing("large");
 

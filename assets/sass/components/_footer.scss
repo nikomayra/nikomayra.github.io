@@ -1,0 +1,38 @@
+@use "../abstracts/colors" as c;
+@use "../abstracts/functions" as fn;
+@use "../abstracts/breakpoints" as bp;
+
+// ==========================================================================
+// Footer Component
+// ==========================================================================
+// Contains all footer-related styles including copyright section
+
+#footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: c.color("background");
+  border-top: solid fn.layout("border-width") c.color("border");
+  padding: fn.spacing("large");
+
+  .copyright {
+    color: c.color("text-light");
+    font-size: fn.font-size("small");
+    list-style: none;
+    padding: 0;
+
+    li {
+      border-left: solid fn.layout("border-width") c.color("border");
+      display: inline-block;
+      line-height: 1;
+      margin: 0 0 0 fn.spacing("small");
+      padding: 0 0 0 fn.spacing("small");
+
+      &:first-child {
+        border-left: 0;
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+  }
+}

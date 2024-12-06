@@ -3,7 +3,8 @@
 // ==========================================================================
 //
 // This file contains all the mixins used throughout the application.
-// Mixins are organized by type (vendor prefixes, layout, typography, etc.)
+// Mixins are organized by type (layout, typography, etc.)
+// Each mixin is documented with its purpose and parameters.
 
 @use "sass:list";
 @use "sass:math";
@@ -12,33 +13,11 @@
 @use "../vendor/vendor";
 
 // ==========================================================================
-// Vendor Prefixes
-// ==========================================================================
-
-/// Add vendor prefixes to a property
-/// @param {string} $property - Property to prefix
-/// @param {string} $value - Value to apply
-@mixin vendor($property, $value) {
-  @include vendor.vendor($property, $value);
-}
-
-// Common vendor prefix mixins
-@mixin transition($value...) {
-  @include vendor("transition", $value);
-}
-
-@mixin transform($value...) {
-  @include vendor("transform", $value);
-}
-
-@mixin animation($value...) {
-  @include vendor("animation", $value);
-}
-
-// ==========================================================================
 // Visual Mixins
 // ==========================================================================
 
+/// Hide an element visually while keeping it accessible to screen readers
+/// @description Creates a visually hidden element that remains accessible to assistive technologies
 @mixin visually-hidden {
   position: absolute;
   width: 1px;
@@ -55,11 +34,12 @@
 // Layout Mixins
 // ==========================================================================
 
-/// Flexbox
-/// @param {string} $direction [row] - Flex direction
-/// @param {string} $justify [flex-start] - Justify content
-/// @param {string} $align [stretch] - Align items
-/// @param {string} $wrap [nowrap] - Flex wrap
+/// Flexbox layout
+/// @description Sets up a flex container with common alignment properties
+/// @param {string} $direction [row] - Flex direction (row, column, row-reverse, column-reverse)
+/// @param {string} $justify [flex-start] - Justify content alignment
+/// @param {string} $align [stretch] - Align items alignment
+/// @param {string} $wrap [nowrap] - Flex wrap behavior
 @mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
   display: flex;
   flex-direction: $direction;
@@ -68,17 +48,41 @@
   flex-wrap: $wrap;
 }
 
-/// Grid
-/// @param {number} $columns [12] - Number of grid columns
-/// @param {string} $gap [fn.spacing('medium')] - Grid gap
-@mixin grid($columns: 12, $gap: fn.spacing("medium")) {
-  display: grid;
-  grid-template-columns: repeat($columns, 1fr);
-  gap: $gap;
+/// Grid System
+/// @param {number} $gutters [1.5em] - Grid gutters size
+/// @param {string} $suffix [''] - Breakpoint suffix (xlarge, large, medium, small, xsmall)
+@mixin grid($gutters: 1.5em, $suffix: '') {
+  // Row styles
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-top: $gutters * -1;
+  margin-left: $gutters * -1;
+
+  // Column base styles
+  > * {
+    box-sizing: border-box;
+    padding: $gutters 0 0 $gutters;
+  }
+
+  // Column widths
+  @if $suffix != '' {
+    $suffix: '-' + $suffix;
+  }
+
+  @for $i from 1 through 12 {
+    > .col-#{$i}#{$suffix} {
+      width: #{100% / 12 * $i};
+    }
+  }
 }
 
 /// Clearfix
 /// @description Ensures that a container includes all floated children
+/// @example scss
+///   .container {
+///     @include clearfix;
+///   }
 @mixin clearfix {
   &::after {
     content: "";
@@ -88,7 +92,7 @@
 }
 
 /// Center block
-/// @description Centers a block element within its container
+/// @description Centers a block element within its container using auto margins
 @mixin center-block {
   display: block;
   margin-left: auto;
@@ -96,6 +100,7 @@
 }
 
 /// Absolute Position
+/// @description Positions an element absolutely with specified coordinates
 /// @param {number} $top [null] - Top position
 /// @param {number} $right [null] - Right position
 /// @param {number} $bottom [null] - Bottom position
@@ -110,6 +115,10 @@
 
 /// Absolute Center
 /// @description Absolutely positions an element at the center of its container
+/// @example scss
+///   .centered {
+///     @include absolute-center;
+///   }
 @mixin absolute-center {
   position: absolute;
   top: 50%;
@@ -119,6 +128,10 @@
 
 /// Fixed Center
 /// @description Fixes an element at the center of the viewport
+/// @example scss
+///   .modal {
+///     @include fixed-center;
+///   }
 @mixin fixed-center {
   position: fixed;
   top: 50%;
@@ -132,6 +145,10 @@
 
 /// Text truncation with ellipsis
 /// @description Truncates text with an ellipsis if it exceeds one line
+/// @example scss
+///   .truncated-text {
+///     @include truncate;
+///   }
 @mixin truncate {
   white-space: nowrap;
   overflow: hidden;
@@ -142,10 +159,11 @@
 // Icon Mixins
 // ==========================================================================
 
-/// Icon
-/// @param {string} $content [false] - Icon content
-/// @param {string} $category [regular] - Icon category
-/// @param {string} $where [before] - Icon position
+/// Icon styling
+/// @description Adds an icon using Font Awesome with proper font smoothing
+/// @param {string} $content [false] - Icon content (Font Awesome unicode)
+/// @param {string} $category [regular] - Icon category (regular, solid, brands)
+/// @param {string} $where [before] - Icon position (before, after)
 @mixin icon($content: false, $category: regular, $where: before) {
   text-decoration: none;
 
@@ -154,8 +172,7 @@
       content: $content;
     }
 
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
+    @include vendor.vendor("font-smoothing", "antialiased");
     display: inline-block;
     font-style: normal;
     font-variant: normal;
@@ -180,17 +197,21 @@
 // ==========================================================================
 
 /// Button Base
-/// @description Styles a basic button
+/// @description Styles a basic button with standard properties
+/// @example scss
+///   .button {
+///     @include button-base;
+///   }
 @mixin button-base {
   display: inline-block;
   padding: fn.spacing("small") fn.spacing("medium");
   border: none;
-  border-radius: fn.layout("border", "radius");
+  border-radius: fn.layout("border-radius");
   font-family: fn.font-family("primary");
   font-weight: fn.font-weight("bold");
   text-decoration: none;
   cursor: pointer;
-  @include transition(all fn.duration("standard") ease-in-out);
+  transition: all fn.duration("standard") ease-in-out;
 }
 
 // ==========================================================================
@@ -226,8 +247,8 @@
 /// @param {string} $header-side [null] - Header side
 /// @param {string} $translate-value [null] - Translate value
 @mixin headerStyles($size-header, $header-side, $translate-value) {
-  @include vendor("backface-visibility", "hidden");
-  @include vendor("transition", "transform #{fn.duration('header')} ease");
+  backface-visibility: hidden;
+  transition: transform fn.duration("transition") ease;
   display: block;
   height: 100%;
   overflow-y: auto;
@@ -237,10 +258,10 @@
   z-index: fn.z("header");
 
   @if $header-side == "right" {
-    @include vendor("transform", $translate-value);
+    transform: translateX($translate-value);
     right: 0;
   } @else {
-    @include vendor("transform", $translate-value);
+    transform: translateX($translate-value);
     left: 0;
   }
 }

@@ -12,6 +12,7 @@
 // </div>
 
 @use "../abstracts/functions" as fn;
+@use "../abstracts/colors" as c;
 @use "sass:map";
 
 // ==========================================================================
@@ -62,12 +63,12 @@
     right: 0;
     text-align: center;
     font-size: 1.2em;
-    color: fn.color("primary");
+    color: c.color("primary");
     transition: color var(--world-transition-duration) ease;
     padding: 10px;
 
     &.highlight {
-      color: fn.color("accent");
+      color: c.color("accent");
     }
   }
 }

@@ -7,16 +7,12 @@
 // 1. Automatic vendor prefixing for properties and values
 // 2. String manipulation utilities for CSS value processing
 // 3. List management for vendor-specific features
-//
-// Usage:
-// @use "vendor";
-// @include vendor.vendor("transform", "scale(2)");
-// @include vendor.vendor("display", "flex");
 
 @use "sass:list";
 @use "sass:math";
 @use "sass:meta";
 @use "sass:string";
+@use "sass:map";
 
 // ==========================================================================
 // Configuration
@@ -25,129 +21,35 @@
 /// List of vendor prefixes to apply
 /// @type List
 $vendor-prefixes: (
-  "-moz-",     // Firefox
-  "-webkit-",  // Chrome, Safari, newer versions of Opera
-  "-ms-",      // Internet Explorer
-  ""           // Standard (no prefix)
+  "-webkit-",
+  // Chrome, Safari, newer versions of Opera
+  "-moz-",
+  // Firefox
+  "" // Standard (no prefix)
 );
 
 /// Properties that require vendor prefixing
 /// @type List
-/// Data sourced from caniuse.com and MDN
 $vendor-properties: (
-  // Animation
-  "animation",
-  "animation-delay",
-  "animation-direction",
-  "animation-duration",
-  "animation-fill-mode",
-  "animation-iteration-count",
-  "animation-name",
-  "animation-play-state",
-  "animation-timing-function",
-
-  // Appearance
+  // Appearance is still experimental
   "appearance",
-
-  // Backdrop filter
-  "backdrop-filter",
-
-  // Background
-  "background-clip",
-  "background-origin",
-  "background-size",
-
-  // Box model
-  "box-sizing",
-  "clip-path",
-
-  // Filter effects
-  "filter",
-
-  // Flexbox
-  "align-content",
-  "align-items",
-  "align-self",
-  "flex",
-  "flex-basis",
-  "flex-direction",
-  "flex-flow",
-  "flex-grow",
-  "flex-shrink",
-  "flex-wrap",
-  "justify-content",
-  "order",
-
-  // Grid
-  "grid",
-  "grid-area",
-  "grid-auto-columns",
-  "grid-auto-flow",
-  "grid-auto-rows",
-  "grid-column",
-  "grid-column-end",
-  "grid-column-gap",
-  "grid-column-start",
-  "grid-gap",
-  "grid-row",
-  "grid-row-end",
-  "grid-row-gap",
-  "grid-row-start",
-  "grid-template",
-  "grid-template-areas",
-  "grid-template-columns",
-  "grid-template-rows",
-
-  // Transform
-  "transform",
-  "transform-origin",
-  "transform-style",
-  "backface-visibility",
-  "perspective",
-  "perspective-origin",
-
-  // Transition
-  "transition",
-  "transition-delay",
-  "transition-duration",
-  "transition-property",
-  "transition-timing-function",
-
-  // Other
+  // Font smoothing for older Safari
   "font-smoothing",
-  "user-select",
-  "touch-action"
+  // Backdrop filter still needs prefix in some browsers
+  "backdrop-filter",
+  // Scrollbar styling
+  "scrollbar",
+  // Some experimental grid features
+  "grid-gap"
 );
 
 /// CSS values that require vendor prefixing
 /// @type List
 $vendor-values: (
-  // Display modes
-  "flex",
-  "inline-flex",
-  "grid",
-  "inline-grid",
-
-  // Image handling
-  "image-set",
-
-  // Intrinsic sizing
-  "max-content",
-  "min-content",
-  "fit-content",
-  "fill",
-  "fill-available",
-  "stretch",
-
-  // Position
-  "sticky",
-
-  // Transform
-  "transform",
-
-  // Cursors
-  "zoom-in",
-  "zoom-out"
+  // Sticky positioning in older Safari
+  "position": "sticky",
+  // Some gradient syntaxes
+  "background-image": "linear-gradient"
 );
 
 // ==========================================================================
@@ -218,40 +120,31 @@ $vendor-values: (
 /// @param {String} $name - The name of the keyframe animation
 /// @content The keyframe rules
 @mixin keyframes($name) {
-  @-moz-keyframes #{$name} { @content; }
-  @-webkit-keyframes #{$name} { @content; }
-  @-ms-keyframes #{$name} { @content; }
-  @keyframes #{$name} { @content; }
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
 }
 
 /// Apply vendor prefixes to a property and/or its values
 /// @param {String} $property - The CSS property to prefix
-/// @param {String|List} $value - The value(s) to apply
-@mixin vendor($property, $value) {
-  // Check if property needs vendor prefixes
-  $expandProperty: list.index($vendor-properties, $property);
-
-  // Check if value needs vendor prefixes
-  $expandValue: false;
-  @each $x in $value {
-    @each $y in $vendor-values {
-      @if $y == string.slice($x, 1, string.length($y)) {
-        $value: list.set-nth($value, list.index($value, $x), "-prefix-" + $x);
-        $expandValue: true;
-      }
+/// @param {*} $value - The value to use
+/// @param {List} $prefixes [()] - Additional prefixes to add
+@mixin vendor($property, $value, $prefixes: ()) {
+  // Only prefix if property needs it
+  @if list.index($vendor-properties, $property) or
+    (map.has-key($vendor-values, $property) and list.index(map-get($vendor-values, $property), $value))
+  {
+    // Webkit
+    -webkit-#{$property}: $value;
+    // Mozilla (if needed)
+    @if $property == "appearance" {
+      -moz-#{$property}: $value;
     }
   }
 
-  // Apply prefixes based on what needs expansion
-  @if $expandProperty {
-    @each $vendor in $vendor-prefixes {
-      #{$vendor}#{$property}: #{str-replace-all($value, "-prefix-", $vendor)};
-    }
-  } @else if $expandValue {
-    @each $vendor in $vendor-prefixes {
-      #{$property}: #{str-replace-all($value, "-prefix-", $vendor)};
-    }
-  } @else {
-    #{$property}: #{$value};
-  }
+  // Standard property
+  #{$property}: $value;
 }

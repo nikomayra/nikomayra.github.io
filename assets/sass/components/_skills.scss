@@ -14,6 +14,7 @@
 
 @use "../abstracts/variables" as vars;
 @use "../abstracts/functions" as fn;
+@use "../abstracts/colors" as c;
 @use "../abstracts/mixins" as mx;
 @use "../abstracts/breakpoints" as bp;
 @use "sass:map";
@@ -48,7 +49,7 @@ $animation: (
   display: flex;
   justify-content: center;
   align-items: center;
-  background: fn.color("primary");
+  background: c.color("primary");
   overflow: hidden;
 }
 
@@ -62,7 +63,7 @@ $animation: (
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: fn.color("text");
+  color: c.color("text");
   font-weight: fn.font-weight("bold");
   cursor: pointer;
   text-align: center;
@@ -72,20 +73,19 @@ $animation: (
   user-select: none;
 
   // Visual styling
-  border: fn.layout("border", "width") solid fn.color("border-light");
-  box-shadow: inset 0 0 30px color.change(fn.color("primary-dark"), $alpha: 0.1),
-              0 4px 12px color.change(fn.color("primary-dark"), $alpha: 0.1);
+  border: 2px solid c.color("border");
+  box-shadow: inset 0 0 30px c.color("primary-dark"), 0 4px 12px c.color("primary-dark");
 
   // Animations
-  transition: transform fn.transition("standard") cubic-bezier(0.175, 0.885, 0.32, 1.275),
-              box-shadow fn.transition("standard") ease,
-              color fn.transition("standard") ease;
+  transition: transform fn.duration("standard") cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow fn.duration("standard") ease, color fn.duration("standard") ease;
   animation: float var(--skills-float-duration) ease-in-out infinite;
 
   // Hover state
   &:hover {
-    z-index: fn.z("base");
-    border-color: fn.color("border");
+    transform: scale(var(--skills-hover-scale));
+    border-color: c.color("accent");
+    box-shadow: inset 0 0 40px c.color("shadow"), 0 6px 16px c.color("shadow");
     animation: wiggle var(--skills-wiggle-duration) ease infinite;
   }
 
@@ -121,7 +121,8 @@ $animation: (
 // ==========================================================================
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0);
   }
   50% {

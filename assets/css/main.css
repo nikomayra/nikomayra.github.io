@@ -1,11 +1,13 @@
-/* Error: Undefined variable.
+/* Error: There is no module with the namespace "meta".
  *    ,
- * 80 |   @return map.get(c.$semantic-colors, $key);
- *    |                   ^^^^^^^^^^^^^^^^^^
+ * 52 |     @if meta.type-of($value) == "string" {
+ *    |         ^^^^^^^^^^^^^^^^^^^^
  *    '
- *   assets\sass\abstracts\_functions.scss 80:19  color()
- *   assets\sass\base\_reset.scss 268:22          @use
- *   assets\sass\main.scss 35:1                   root stylesheet */
+ *   assets\sass\abstracts\_breakpoints.scss 52:9   process-bp()
+ *   assets\sass\abstracts\_breakpoints.scss 65:18  create-media-query()
+ *   assets\sass\abstracts\_breakpoints.scss 84:16  breakpoint()
+ *   assets\sass\base\_base.scss 27:3               @use
+ *   assets\sass\main.scss 32:1                     root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -15,5 +17,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a    \2577 \a 80 \2502    @return map.get(c.$semantic-colors, $key);\a    \2502                    ^^^^^^^^^^^^^^^^^^\a    \2575 \a   assets\\sass\\abstracts\\_functions.scss 80:19  color()\a   assets\\sass\\base\\_reset.scss 268:22          @use\a   assets\\sass\\main.scss 35:1                   root stylesheet";
+  content: 'Error: There is no module with the namespace "meta".\a    \2577 \a 52 \2502      @if meta.type-of($value) == "string" {\a    \2502          ^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   assets\\sass\\abstracts\\_breakpoints.scss 52:9   process-bp()\a   assets\\sass\\abstracts\\_breakpoints.scss 65:18  create-media-query()\a   assets\\sass\\abstracts\\_breakpoints.scss 84:16  breakpoint()\a   assets\\sass\\base\\_base.scss 27:3               @use\a   assets\\sass\\main.scss 32:1                     root stylesheet';
 }

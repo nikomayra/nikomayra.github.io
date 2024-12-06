@@ -24,12 +24,12 @@
 // Simple Getters
 // ==========================================================================
 
-/// Get a size value
-/// @param {String} $key - Key to get from the size map
-/// @return {*} Found value
-@function size($key) {
-  @return map.get(vars.$sizes, $key);
-}
+// /// Get a size value
+// /// @param {String} $key - Key to get from the size map
+// /// @return {*} Found value
+// @function size($key) {
+//   @return map.get(vars.$sizes, $key);
+// }
 
 /// Get a spacing value
 /// @param {String} $key - Key to get from the spacing map
@@ -73,19 +73,19 @@
   @return map.get(vars.$durations, $key);
 }
 
-/// Get a color value
-/// @param {String} $key - Key to get from the color map
-/// @return {*} Found value
-@function color($key) {
-  @return map.get(c.$semantic-colors, $key);
-}
+// /// Get a color value
+// /// @param {String} $key - Key to get from the color map
+// /// @return {*} Found value
+// @function color($key) {
+//   @return map.get(c.$semantic-colors, $key);
+// }
 
-/// Get a misc value (for one-off configurations)
-/// @param {String} $key - Key to get from the misc map
-/// @return {*} Found value
-@function misc($key) {
-  @return map.get(vars.$misc, $key);
-}
+// /// Get a misc value (for one-off configurations)
+// /// @param {String} $key - Key to get from the misc map
+// /// @return {*} Found value
+// @function misc($key) {
+//   @return map.get(vars.$misc, $key);
+// }
 
 // ==========================================================================
 // Typography Functions
@@ -120,16 +120,16 @@
   @return map.get(vars.$font-sizes, $size);
 }
 
-// ==========================================================================
-// Breakpoint Functions
-// ==========================================================================
+// // ==========================================================================
+// // Breakpoint Functions
+// // ==========================================================================
 
-/// Get a breakpoint value
-/// @param {string} $key - Breakpoint key
-/// @return {string} Breakpoint value
-@function breakpoint($key) {
-  @return map.get(vars.$breakpoints, $key);
-}
+// /// Get a breakpoint value
+// /// @param {string} $key - Breakpoint key
+// /// @return {string} Breakpoint value
+// @function breakpoint($key) {
+//   @return map.get(vars.$breakpoints, $key);
+// }
 
 // ==========================================================================
 // Layout Functions
@@ -142,12 +142,12 @@
   @return map.get(vars.$layout, $key);
 }
 
-/// Get a size value
-/// @param {string} $key - Size key
-/// @return {*} Size value
-@function size($key) {
-  @return map.get(vars.$sizes, $key);
-}
+// /// Get a size value
+// /// @param {string} $key - Size key
+// /// @return {*} Size value
+// @function size($key) {
+//   @return map.get(vars.$sizes, $key);
+// }
 
 /// Get a spacing value
 /// @param {string} $key - Spacing key

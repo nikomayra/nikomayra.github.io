@@ -6,9 +6,9 @@
 // It uses a mobile-first approach with min-width breakpoints.
 //
 // Usage:
-// @include bp.breakpoint("<=md") { ... }
-// @include bp.breakpoint(">=lg") { ... }
-// @include bp.breakpoint(">sm", "<lg") { ... }
+// @include bp.breakpoint("<=medium") { ... }
+// @include bp.breakpoint(">=large") { ... }
+// @include bp.breakpoint(">small", "<large") { ... }
 
 @use "sass:string";
 @use "sass:map";
@@ -19,19 +19,18 @@
 /// @type Map
 $breakpoints: (
   // Mobile breakpoints
-  "xs": 320px,
-  "sm": 576px,
-  "md": 768px,
-  
+  "xsmall": 320px,
+  "small": 576px,
+  "medium": 768px,
+
   // Tablet/Desktop breakpoints
-  "lg": 992px,
-  "xl": 1200px,
-  "xxl": 1400px,
-  
-  // Special cases
-  "short": "(max-height: 896px)",
-  "xshort": "(max-height: 736px)",
-  "xxshort": "(max-height: 480px)"
+  "large": 992px,
+  "xlarge": 1200px,
+  // "xxlarge": 1400px,
+  // // Special cases
+  // "short": "(max-height: 896px)",
+  // "xshort": "(max-height: 736px)",
+  // "xxshort": "(max-height: 480px)"
 );
 
 /// Breakpoint operation list
@@ -41,7 +40,7 @@ $breakpoint-ops: (
   ">=": "min-width",
   "=": "max-width",
   "<=": "max-width",
-  "<": "max-width"
+  "<": "max-width",
 );
 
 /// Processes a breakpoint value

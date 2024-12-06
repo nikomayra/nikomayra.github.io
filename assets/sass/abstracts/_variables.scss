@@ -9,6 +9,9 @@
 // font-family: vars.$font-family-base;
 // color: vars.$color-primary;
 // margin: vars.$spacing-base;
+//
+// Note: Commented sections indicate code that is currently unused but may be
+// valuable for future development or reference.
 
 @use "sass:map";
 @use "colors" as c;
@@ -16,17 +19,27 @@
 // ==========================================================================
 // Typography
 // ==========================================================================
+// Core typography settings including font families, weights, and size scale
 
 $base-font-size: 16px;
 
 $typography: (
   "family": (
     "primary": (
-      "Lato",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
       sans-serif,
     ),
     "code": (
-      "Source Code Pro",
+      "SF Mono",
+      "Consolas",
+      "Monaco",
+      "Andale Mono",
+      "Ubuntu Mono",
       monospace,
     ),
   ),
@@ -40,40 +53,42 @@ $font-weights: (
 $font-sizes: (
   "base": 1rem,
   "small": 0.875rem,
-  "large": 1.25rem,
+  "large": 1.25em,
   "h1": 2.5rem,
   "h2": 2rem,
   "h3": 1.75rem,
+  "h4": 1.25em,
+  "h5": 0.9em,
 );
 
 // ==========================================================================
 // Layout
 // ==========================================================================
+// Core structural measurements and container configurations
 
 $layout: (
-  "header-side": "right",
   "header-width": 23em,
+  "border-radius": 5px,
+  "element-height": 2.75em,
   "container-width": 45em,
+  "header-side": "right",
+  // Used in wrapper padding calculations
 );
 
-$sizes: (
-  "border-radius": 5px,
-  "border-width": 2px,
-  "element-height": 2.75em,
-  "element-margin": 2em,
-  "container-width": 45em,
-  "header-width": 23em,
-);
+// ==========================================================================
+// Spacing
+// ==========================================================================
+// Consistent spacing units for margins, padding, and gaps
+// Uses a t-shirt size scale for intuitive naming
 
 $spacing: (
   "none": 0,
-  "xxsmall": 0.25rem,
   "xsmall": 0.5rem,
   "small": 1rem,
   "medium": 2rem,
   "large": 3rem,
   "xlarge": 4rem,
-  "xxlarge": 6rem,
+  "xxlarge": 6em,
 );
 
 // ==========================================================================
@@ -89,6 +104,7 @@ $z-index: (
 // ==========================================================================
 // Animation Durations
 // ==========================================================================
+// Standardized timing values for animations and transitions
 
 $durations: (
   "transition": 0.2s,
@@ -96,66 +112,38 @@ $durations: (
 );
 
 // ==========================================================================
-// Breakpoints
-// ==========================================================================
-
-/// Breakpoint configuration
-/// @type Map
-$breakpoints: (
-  "xlarge": (
-    1281px,
-    1680px,
-  ),
-  "large": (
-    1025px,
-    1280px,
-  ),
-  "medium": (
-    737px,
-    1024px,
-  ),
-  "small": (
-    481px,
-    736px,
-  ),
-  "xsmall": (
-    null,
-    480px,
-  ),
-);
-
-// ==========================================================================
 // Component Variables
 // ==========================================================================
+// Component-specific configuration variables
 
-/// Component-specific variables
-/// @type Map
 $component-vars: (
   "skills": (
-    "bubble-opacity": 0.9,
+    "bubble-opacity": 0.95,
     "hover-scale": 1.2,
-    "float-distance": "20px",
-    "float-duration": "3s",
+    "float-distance": "10px",
+    "float-duration": "4s",
     "wiggle-duration": "0.3s",
-    "wiggle-rotation": "5deg",
+    "wiggle-rotation": "7deg",
   ),
   "us-tour": (
-    "state-unvisited": map.get(c.$colors, "secondary"),
-    "state-visited": map.get(c.$colors, "accent"),
-    "state-hover": map.get(c.$colors, "accent-light"),
-    "state-border": map.get(c.$colors, "tertiary"),
+    "state-unvisited-color": map.get(c.$colors, "secondary"),
+    "state-visited-color": map.get(c.$colors, "accent"),
+    "state-hover-color": map.get(c.$colors, "accent-light"),
+    "state-border-color": map.get(c.$colors, "tertiary"),
   ),
   "world-tour": (
-    "land": map.get(c.$colors, "secondary"),
-    "visited-country": map.get(c.$colors, "accent"),
-    "border": map.get(c.$colors, "tertiary"),
-    "ocean": map.get(c.$colors, "primary-light"),
-    "graticule": map.get(c.$colors, "secondary-light"),
-    "flight-path": map.get(c.$colors, "accent-light"),
+    "land-color": map.get(c.$colors, "secondary"),
+    "visited-country-color": map.get(c.$colors, "accent"),
+    "border-color": map.get(c.$colors, "tertiary"),
+    "ocean-color": map.get(c.$colors, "primary-light"),
+    "graticule-color": map.get(c.$colors, "secondary-light"),
+    "flight-path-color": map.get(c.$colors, "accent-light"),
     "transition-duration": "0.3s",
   ),
 );
 
+// CSS Custom Properties
+// These variables are exposed to the CSS scope for runtime access
 :root {
   // Skills component
   --skills-bubble-opacity: #{map.get($component-vars, "skills", "bubble-opacity")};
@@ -166,17 +154,17 @@ $component-vars: (
   --skills-wiggle-rotation: #{map.get($component-vars, "skills", "wiggle-rotation")};
 
   // US Tour component
-  --us-tour-state-unvisited: #{map.get($component-vars, "us-tour", "state-unvisited")};
-  --us-tour-state-visited: #{map.get($component-vars, "us-tour", "state-visited")};
-  --us-tour-state-hover: #{map.get($component-vars, "us-tour", "state-hover")};
-  --us-tour-state-border: #{map.get($component-vars, "us-tour", "state-border")};
+  --us-tour-state-unvisited-color: #{map.get($component-vars, "us-tour", "state-unvisited-color")};
+  --us-tour-state-visited-color: #{map.get($component-vars, "us-tour", "state-visited-color")};
+  --us-tour-state-hover-color: #{map.get($component-vars, "us-tour", "state-hover-color")};
+  --us-tour-state-border-color: #{map.get($component-vars, "us-tour", "state-border-color")};
 
   // World Tour component
-  --world-land-color: #{map.get($component-vars, "world-tour", "land")};
-  --world-visited-country-color: #{map.get($component-vars, "world-tour", "visited-country")};
-  --world-border-color: #{map.get($component-vars, "world-tour", "border")};
-  --world-ocean-color: #{map.get($component-vars, "world-tour", "ocean")};
-  --world-graticule-color: #{map.get($component-vars, "world-tour", "graticule")};
-  --world-flight-path-color: #{map.get($component-vars, "world-tour", "flight-path")};
+  --world-land-color: #{map.get($component-vars, "world-tour", "land-color")};
+  --world-visited-country-color: #{map.get($component-vars, "world-tour", "visited-country-color")};
+  --world-border-color: #{map.get($component-vars, "world-tour", "border-color")};
+  --world-ocean-color: #{map.get($component-vars, "world-tour", "ocean-color")};
+  --world-graticule-color: #{map.get($component-vars, "world-tour", "graticule-color")};
+  --world-flight-path-color: #{map.get($component-vars, "world-tour", "flight-path-color")};
   --world-transition-duration: #{map.get($component-vars, "world-tour", "transition-duration")};
 }

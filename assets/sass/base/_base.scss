@@ -7,17 +7,13 @@
 
 @use "../abstracts/functions" as fn;
 @use "../abstracts/mixins" as mx;
-@use "../abstracts/colors" as colors;
+@use "../abstracts/colors" as c;
 @use "../abstracts/breakpoints" as bp;
 @use "../vendor/vendor";
 
 // ==========================================================================
-// Typography & Base Elements
+// Base Page Structure
 // ==========================================================================
-
-// Font imports
-@import url("fontawesome-all.min.css");
-@import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
 
 html {
   height: 100%;
@@ -29,16 +25,33 @@ html {
   }
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
+  margin: 0;
   min-height: 100%;
-  background: fn.color("background");
-  color: fn.color("text");
+  overflow: hidden;
+  background: c.color("background");
+  color: c.color("text");
   font-family: fn.font-family("primary");
   font-size: fn.font-size("base");
   font-weight: fn.font-weight("regular");
   line-height: 1.65;
   @include vendor.vendor("font-smoothing", "antialiased");
-  @include mx.transition("background #{fn.duration('standard')} ease-in-out");
+  transition: background fn.duration("standard") ease-in-out;
+
+  &.is-loading {
+    *,
+    *:before,
+    *:after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
 
   @include bp.breakpoint("<=small") {
     font-size: fn.font-size("small");
@@ -46,170 +59,59 @@ body {
   }
 }
 
-// Headings
+// ==========================================================================
+// Typography
+// ==========================================================================
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: fn.font-family("primary");
+  color: c.color("text");
   font-weight: fn.font-weight("bold");
-  line-height: 1.2;
-  margin: 0 0 fn.spacing("medium");
-  color: fn.color("heading");
-
-  a {
-    color: inherit;
-    text-decoration: none;
-    @include mx.transition("color #{fn.duration('standard')} ease-in-out");
-
-    &:hover {
-      color: fn.color("primary");
-    }
-  }
+  line-height: 1em;
+  margin: 0 0 fn.spacing("small");
 }
 
-h1 {
-  font-size: fn.font-size("h1");
-  letter-spacing: -0.02em;
-
-  @include bp.breakpoint("<=medium") {
-    font-size: fn.font-size("h2");
-  }
-}
-
-h2 {
-  font-size: fn.font-size("h2");
-
-  @include bp.breakpoint("<=medium") {
-    font-size: fn.font-size("h3");
-  }
-}
-
-h3 {
-  font-size: fn.font-size("h3");
-
-  @include bp.breakpoint("<=medium") {
-    font-size: fn.font-size("h4");
-  }
-}
-
+h1 { font-size: fn.font-size("h1"); }
+h2 { font-size: fn.font-size("h2"); }
+h3 { font-size: fn.font-size("h3"); }
 h4 { font-size: fn.font-size("h4"); }
 h5 { font-size: fn.font-size("h5"); }
 h6 { font-size: fn.font-size("h6"); }
 
-// Paragraphs and text
 p {
   margin: 0 0 fn.spacing("medium");
-
-  &.lead {
-    font-size: fn.font-size("large");
-    line-height: 1.5;
-    color: fn.color("text-bold");
-  }
-
-  &.small {
-    font-size: fn.font-size("small");
-    line-height: 1.4;
-  }
-}
-
-strong, b {
-  font-weight: fn.font-weight("bold");
-  color: fn.color("text-bold");
-}
-
-em, i {
-  font-style: italic;
 }
 
 // Links
 a {
-  color: fn.color("link");
+  color: c.color("link");
   text-decoration: none;
-  @include mx.transition("color #{fn.duration('standard')} ease-in-out");
+  transition: color fn.duration("standard") ease-in-out;
 
   &:hover {
-    color: fn.color("link-hover");
-  }
-
-  &:focus {
-    outline: 2px solid fn.color("primary");
-    outline-offset: 2px;
+    color: c.color("link-hover");
   }
 }
 
 // Lists
-ul,
-ol {
-  padding-left: 1.25em;
+ul, ol {
   margin: 0 0 fn.spacing("medium");
-
-  ul,
-  ol {
-    margin-bottom: 0;
-  }
-
-  &.unstyled {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  &.inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: fn.spacing("small");
-    list-style: none;
-    padding-left: 0;
-  }
+  padding-left: 1em;
 }
 
-// Blockquotes
-blockquote {
-  margin: 0 0 fn.spacing("medium");
-  padding: fn.spacing("medium");
-  border-left: 4px solid fn.color("primary");
-  background: fn.color("background-light");
-  font-style: italic;
-
-  p {
-    margin: 0;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  cite {
-    display: block;
-    margin-top: fn.spacing("small");
-    font-size: fn.font-size("small");
-    font-style: normal;
-    color: fn.color("text-light");
-  }
-}
-
-// Code blocks
-code,
-pre {
-  font-family: fn.font-family("code");
-  font-size: fn.font-size("small");
-  background: fn.color("code-bg");
-  color: fn.color("code-text");
-  border-radius: fn.layout("border", "radius");
-}
-
-pre {
-  padding: fn.spacing("medium");
-  margin: 0 0 fn.spacing("medium");
-  overflow-x: auto;
-  white-space: pre;
-  word-wrap: normal;
+ul {
+  list-style: disc;
   
-  code {
-    background: none;
-    padding: 0;
+  li {
+    padding-left: 0.5em;
   }
 }
 
-code {
-  padding: 0.2em 0.4em;
+ol {
+  list-style: decimal;
+  
+  li {
+    padding-left: 0.25em;
+  }
 }
 
 // ==========================================================================
@@ -225,9 +127,120 @@ textarea {
   font: inherit;
 
   &:focus {
-    outline: 2px solid fn.color("primary");
+    outline: 2px solid c.color("primary");
     outline-offset: 2px;
   }
+}
+
+// Text inputs
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  appearance: none;
+  background: c.color("input-bg");
+  border: solid fn.layout("border-width") c.color("border");
+  border-radius: fn.layout("border-radius");
+  color: c.color("text");
+  display: block;
+  outline: 0;
+  padding: 0 1em;
+  text-decoration: none;
+  width: 100%;
+  height: fn.layout("input-height");
+
+  &:focus {
+    border-color: c.color("primary");
+  }
+
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+// Textarea specific
+textarea {
+  padding: 0.75em 1em;
+  height: auto;
+  min-height: 8em;
+}
+
+// Labels
+label {
+  color: c.color("text");
+  display: block;
+  font-size: fn.font-size("small");
+  font-weight: fn.font-weight("bold");
+  margin: 0 0 fn.spacing("small");
+}
+
+// Buttons
+button,
+.button {
+  appearance: none;
+  transition: all fn.duration("standard") ease-in-out;
+  background-color: c.color("primary");
+  border: 0;
+  border-radius: fn.layout("border-radius");
+  color: c.color("text-inverse");
+  cursor: pointer;
+  display: inline-block;
+  font-weight: fn.font-weight("bold");
+  height: fn.layout("input-height");
+  line-height: fn.layout("input-height");
+  padding: 0 1.5em;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: c.color("primary-light");
+  }
+
+  &.small {
+    font-size: fn.font-size("small");
+    height: fn.layout("input-height-small");
+    line-height: fn.layout("input-height-small");
+    padding: 0 1em;
+  }
+
+  &.large {
+    font-size: fn.font-size("large");
+    height: fn.layout("input-height-large");
+    line-height: fn.layout("input-height-large");
+    padding: 0 2em;
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// Placeholders
+::placeholder {
+  color: c.color("text") !important;
+  font-style: italic;
+  opacity: 1;
+}
+
+:-webkit-input-placeholder {
+  @extend ::placeholder;
+}
+
+:-moz-placeholder {
+  @extend ::placeholder;
+}
+
+::-moz-placeholder {
+  @extend ::placeholder;
+}
+
+:-ms-input-placeholder {
+  @extend ::placeholder;
 }
 
 // ==========================================================================
@@ -256,7 +269,7 @@ table {
 th,
 td {
   padding: fn.spacing("small");
-  border: 1px solid fn.color("border");
+  border: 1px solid c.color("border");
   text-align: left;
 }
 
@@ -265,14 +278,14 @@ td {
 // ==========================================================================
 
 ::selection {
-  background: fn.color("primary");
-  color: fn.color("white");
+  background: c.color("primary");
+  color: c.color("text");
   text-shadow: none;
 }
 
 ::-moz-selection {
-  background: fn.color("primary");
-  color: fn.color("white");
+  background: c.color("primary");
+  color: c.color("text");
   text-shadow: none;
 }
 
@@ -290,37 +303,61 @@ td {
 
 // Text alignment
 .text {
-  &-center { text-align: center; }
-  &-left { text-align: left; }
-  &-right { text-align: right; }
-  &-justify { text-align: justify; }
+  &-center {
+    text-align: center;
+  }
+  &-left {
+    text-align: left;
+  }
+  &-right {
+    text-align: right;
+  }
+  &-justify {
+    text-align: justify;
+  }
 
   // Text transformation
-  &-uppercase { text-transform: uppercase; }
-  &-lowercase { text-transform: lowercase; }
-  &-capitalize { text-transform: capitalize; }
+  &-uppercase {
+    text-transform: uppercase;
+  }
+  &-lowercase {
+    text-transform: lowercase;
+  }
+  &-capitalize {
+    text-transform: capitalize;
+  }
 
   // Text wrapping
-  &-wrap { white-space: normal; }
-  &-nowrap { white-space: nowrap; }
-  &-truncate { @include mx.truncate; }
+  &-wrap {
+    white-space: normal;
+  }
+  &-nowrap {
+    white-space: nowrap;
+  }
+  &-truncate {
+    @include mx.truncate;
+  }
 
   // Text colors
-  &-primary { color: fn.color("primary"); }
-  &-secondary { color: fn.color("secondary"); }
-  &-success { color: fn.color("success"); }
-  &-warning { color: fn.color("warning"); }
-  &-error { color: fn.color("error"); }
-  &-muted { color: fn.color("text-muted"); }
+  &-primary {
+    color: c.color("primary");
+  }
+  &-secondary {
+    color: c.color("secondary");
+  }
 }
 
-.full-width { width: 100%; }
-.margin-bottom-none { margin-bottom: 0 !important; }
+.full-width {
+  width: 100%;
+}
+.margin-bottom-none {
+  margin-bottom: 0 !important;
+}
 
 // Container
 .container {
   width: 100%;
-  max-width: fn.layout("container", "max-width");
+  max-width: fn.layout("container-width");
   margin: 0 auto;
   padding: 0 fn.spacing("medium");
 }

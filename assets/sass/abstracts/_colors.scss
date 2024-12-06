@@ -35,8 +35,11 @@ $colors: map.merge(
   $colors,
   (
     "link": map.get($colors, "accent"),
+    "link-light": color.scale(map.get($colors, "accent"), $lightness: 15%),
     "border": color.change(map.get($colors, "text"), $alpha: 0.1),
-    "input": color.scale(map.get($colors, "background"), $lightness: 15%),
+    "input-bg": color.scale(map.get($colors, "background"), $lightness: 15%),
+    "header-bg": color.scale(map.get($colors, "background"), $lightness: 15%),
+    "shadow": color.change(map.get($colors, "primary"), $alpha: 0.1),
   )
 );
 
@@ -50,7 +53,7 @@ $colors: map.merge(
   @if map.has-key($colors, $key) {
     @return map.get($colors, $key);
   }
-  
+
   @error "Color `#{$key}` not found in $colors map.";
   @return null;
 }

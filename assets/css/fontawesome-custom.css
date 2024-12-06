@@ -1,0 +1,83 @@
+/*!
+ * Custom Font Awesome Kit - Minimal Version
+ * Only includes required icons
+ */
+
+.fa,
+.fab,
+.fas {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+/* Brand Icons */
+.fab {
+  font-family: "Font Awesome 5 Brands";
+}
+
+.fa-github:before {
+  content: "\f09b";
+}
+
+.fa-linkedin:before {
+  content: "\f08c";
+}
+
+.fa-flickr:before {
+  content: "\f16e";
+}
+
+.fa-deviantart:before {
+  content: "\f1bd";
+}
+
+.fa-instagram:before {
+  content: "\f16d";
+}
+
+/* Solid Icons */
+.fas,
+.fa-solid {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+
+.fa-envelope:before {
+  content: "\f0e0";
+}
+
+/* Icon Classes */
+.icon {
+  text-decoration: none;
+  border-bottom: none;
+  position: relative;
+}
+
+.icon:before {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  text-transform: none !important;
+}
+
+.icon > .label {
+  display: none;
+}
+
+.icon.brands:before {
+  font-family: "Font Awesome 5 Brands";
+}
+
+.icon.solid:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}

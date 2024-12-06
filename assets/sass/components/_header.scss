@@ -1,0 +1,100 @@
+// ==========================================================================
+// Header Component
+// ==========================================================================
+
+@use "../abstracts/functions" as fn;
+@use "../abstracts/mixins" as mx;
+@use "../abstracts/colors" as c;
+@use "../abstracts/breakpoints" as bp;
+
+#header {
+  background: c.color("primary");
+  color: c.color("text");
+  height: 100%;
+  left: 0;
+  padding: fn.spacing("large") fn.spacing("medium");
+  position: fixed;
+  text-align: right;
+  top: 0;
+  width: fn.layout("header-width");
+  
+  // Header Content
+  .inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  // Avatar
+  .avatar {
+    margin: 0 auto;
+    width: 8em;
+    
+    img {
+      border-radius: 100%;
+      width: 100%;
+    }
+  }
+
+  // Navigation
+  nav {
+    ul {
+      list-style: none;
+      margin: fn.spacing("medium") 0;
+      padding: 0;
+
+      li {
+        padding: 0;
+        
+        a {
+          border: 0;
+          color: c.color("text");
+          display: block;
+          font-size: fn.font-size("small");
+          font-weight: fn.font-weight("bold");
+          letter-spacing: 0.25em;
+          line-height: 1.75;
+          padding: 0.5em 0;
+          text-decoration: none;
+          text-transform: uppercase;
+
+          &:hover {
+            color: c.color("accent");
+          }
+
+          &.active {
+            color: c.color("accent");
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Header
+@include bp.breakpoint("<=xlarge") {
+  #header {
+    width: fn.layout("header-width") * 0.9;
+  }
+}
+
+@include bp.breakpoint("<=medium") {
+  #header {
+    width: fn.layout("header-width") * 0.8;
+  }
+}
+
+@include bp.breakpoint("<=small") {
+  #header {
+    width: fn.layout("header-width") * 0.7;
+  }
+}
+
+@include bp.breakpoint("<=xsmall") {
+  #header {
+    width: fn.layout("header-width") * 0.5;
+  }
+}
