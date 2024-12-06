@@ -11,13 +11,13 @@ h3,
 h4,
 h5,
 h6 {
-  color: c.color("text");
-  font-weight: fn.font-weight("bold");
+  color: c.color('text');
+  font-weight: fn.font-weight('bold');
   line-height: 1em;
-  margin: 0 0 fn.spacing("small");
+  margin: 0 0 fn.spacing('small');
 }
 
-@if fn.misc(header-side) == "right" {
+@if fn.misc(header-side) == 'right' {
   padding-right: $size-header;
 } @else {
   padding-left: $size-header;
@@ -29,7 +29,7 @@ h6 {
 
 ol {
   list-style: decimal;
-  margin: 0 0 fn.spacing("small") 0;
+  margin: 0 0 fn.spacing('small') 0;
   padding-left: 1.25em;
 
   li {
@@ -39,7 +39,7 @@ ol {
 
 ul {
   list-style: disc;
-  margin: 0 0 fn.spacing("small") 0;
+  margin: 0 0 fn.spacing('small') 0;
   padding-left: 1em;
 
   li {
@@ -51,7 +51,7 @@ ul {
     padding-left: 0;
 
     li {
-      border-top: solid fn.layout("border-width") c.color("border");
+      border-top: solid fn.layout('border-width') c.color('border');
       padding: 0.5em 0;
 
       &:first-child {
@@ -63,7 +63,7 @@ ul {
 }
 
 dl {
-  margin: 0 0 fn.spacing("small") 0;
+  margin: 0 0 fn.spacing('small') 0;
 }
 
 // ==========================================================================
@@ -74,11 +74,11 @@ ul.actions {
   display: flex;
   cursor: default;
   list-style: none;
-  margin-left: (fn.spacing("small") * -0.5);
+  margin-left: (fn.spacing('small') * -0.5);
   padding-left: 0;
 
   li {
-    padding: 0 0 0 (fn.spacing("small") * 0.5);
+    padding: 0 0 0 (fn.spacing('small') * 0.5);
     vertical-align: middle;
   }
 
@@ -99,7 +99,7 @@ ul.actions {
     margin-left: 0;
 
     li {
-      padding: (fn.spacing("small") * 0.5) 0 0 0;
+      padding: (fn.spacing('small') * 0.5) 0 0 0;
 
       &:first-child {
         padding-top: 0;
@@ -108,7 +108,7 @@ ul.actions {
   }
 
   &.fit {
-    width: calc(100% + #{fn.spacing("small") * 0.5});
+    width: calc(100% + #{fn.spacing('small') * 0.5});
 
     li {
       flex-grow: 1;
@@ -125,7 +125,7 @@ ul.actions {
     }
   }
 
-  @include bp.breakpoint("<=xsmall") {
+  @include bp.breakpoint('<=xsmall') {
     &:not(.fixed) {
       flex-direction: column;
       margin-left: 0;
@@ -134,7 +134,7 @@ ul.actions {
       li {
         flex-grow: 1;
         flex-shrink: 1;
-        padding: (fn.spacing("small") * 0.5) 0 0 0;
+        padding: (fn.spacing('small') * 0.5) 0 0 0;
         text-align: center;
         width: 100%;
 
@@ -146,9 +146,9 @@ ul.actions {
           padding-top: 0;
         }
 
-        input[type="submit"],
-        input[type="reset"],
-        input[type="button"],
+        input[type='submit'],
+        input[type='reset'],
+        input[type='button'],
         button,
         .button {
           width: 100%;
@@ -199,17 +199,17 @@ ul.icons {
 }
 
 table {
-  margin: 0 0 fn.spacing("small") 0;
+  margin: 0 0 fn.spacing('small') 0;
   width: 100%;
 
   tbody {
     tr {
-      border: solid fn.layout("border-width") c.color("border");
+      border: solid fn.layout('border-width') c.color('border');
       border-left: 0;
       border-right: 0;
 
       &:nth-child(2n + 1) {
-        background-color: c.color("border");
+        background-color: c.color('border');
       }
     }
   }
@@ -219,19 +219,19 @@ table {
   }
 
   th {
-    color: c.color("text");
+    color: c.color('text');
     font-size: 0.9em;
-    font-weight: fn.font-weight("bold");
+    font-weight: fn.font-weight('bold');
     padding: 0 0.75em 0.75em 0.75em;
     text-align: left;
   }
 
   thead {
-    border-bottom: solid (fn.layout("border-width") * 2) c.color("border");
+    border-bottom: solid (fn.layout('border-width') * 2) c.color('border');
   }
 
   tfoot {
-    border-top: solid (fn.layout("border-width") * 2) c.color("border");
+    border-top: solid (fn.layout('border-width') * 2) c.color('border');
   }
 
   &.alt {
@@ -240,18 +240,18 @@ table {
     tbody {
       tr {
         td {
-          border: solid fn.layout("border-width") c.color("border");
+          border: solid fn.layout('border-width') c.color('border');
           border-left-width: 0;
           border-top-width: 0;
 
           &:first-child {
-            border-left-width: fn.layout("border-width");
+            border-left-width: fn.layout('border-width');
           }
         }
 
         &:first-child {
           td {
-            border-top-width: fn.layout("border-width");
+            border-top-width: fn.layout('border-width');
           }
         }
       }
@@ -272,9 +272,9 @@ table {
 // ==========================================================================
 
 .box {
-  border-radius: fn.layout("border-radius");
-  border: solid fn.layout("border-width") c.color("border");
-  margin-bottom: fn.spacing("small");
+  border-radius: fn.layout('border-radius');
+  border: solid fn.layout('border-width') c.color('border');
+  margin-bottom: fn.spacing('small');
   padding: 1.5em;
 
   > :last-child,
@@ -296,15 +296,15 @@ table {
 
 // Moved to _base.scss
 form {
-  margin: 0 0 fn.spacing("small") 0;
+  margin: 0 0 fn.spacing('small') 0;
 }
 
 label {
-  color: c.color("text");
+  color: c.color('text');
   display: block;
-  font-size: fn.font-size("small");
-  font-weight: fn.font-weight("bold");
-  margin: 0 0 fn.spacing("small") 0;
+  font-size: fn.font-size('small');
+  font-weight: fn.font-weight('bold');
+  margin: 0 0 fn.spacing('small') 0;
 }
 
 input::-moz-focus-inner {
@@ -312,23 +312,23 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
 select,
 textarea {
   appearance: none;
-  border-radius: fn.layout("border-radius");
+  border-radius: fn.layout('border-radius');
   border: none;
-  border: solid fn.layout("border-width") c.color("border");
-  color: c.color("text") !important;
-  background: c.color("input-bg");
+  border: solid fn.layout('border-width') c.color('border');
+  color: c.color('text') !important;
+  background: c.color('input-bg');
   display: block;
   outline: 0;
   padding: 0 1em;
   text-decoration: none;
   width: 100%;
-  height: fn.layout("element-height");
+  height: fn.layout('element-height');
 
   &:invalid {
     box-shadow: none;
@@ -336,11 +336,11 @@ textarea {
 }
 
 Unused layout components #main {
-  margin-left: fn.layout("header-width");
+  margin-left: fn.layout('header-width');
 }
 
 .image {
-  border-radius: fn.layout("border-radius");
+  border-radius: fn.layout('border-radius');
   border: 0;
   display: inline-block;
   position: relative;
@@ -370,31 +370,31 @@ Moved to _base.scss .text {
 
 .margin {
   &-top {
-    margin-top: fn.spacing("medium");
+    margin-top: fn.spacing('medium');
   }
   &-bottom {
-    margin-bottom: fn.spacing("medium");
+    margin-bottom: fn.spacing('medium');
   }
   &-left {
-    margin-left: fn.spacing("medium");
+    margin-left: fn.spacing('medium');
   }
   &-right {
-    margin-right: fn.spacing("medium");
+    margin-right: fn.spacing('medium');
   }
 }
 
 .padding {
   &-top {
-    padding-top: fn.spacing("medium");
+    padding-top: fn.spacing('medium');
   }
   &-bottom {
-    padding-bottom: fn.spacing("medium");
+    padding-bottom: fn.spacing('medium');
   }
   &-left {
-    padding-left: fn.spacing("medium");
+    padding-left: fn.spacing('medium');
   }
   &-right {
-    padding-right: fn.spacing("medium");
+    padding-right: fn.spacing('medium');
   }
 }
 
@@ -409,25 +409,25 @@ Moved to _base.scss .text {
 // Additional button variants
 .button {
   &.secondary {
-    background: c.color("secondary");
+    background: c.color('secondary');
 
     &:hover {
-      background: c.color("secondary-light");
+      background: c.color('secondary-light');
     }
 
     &:active {
-      background: c.color("secondary-dark");
+      background: c.color('secondary-dark');
     }
   }
 
   &.outline {
     background: transparent;
-    border: fn.layout("border-width") solid currentColor;
-    color: c.color("primary");
+    border: fn.layout('border-width') solid currentColor;
+    color: c.color('primary');
 
     &:hover {
-      background: c.color("primary");
-      color: c.color("background");
+      background: c.color('primary');
+      color: c.color('background');
     }
   }
 }
@@ -447,31 +447,31 @@ Moved to _base.scss .text {
 
 .margin {
   &-top {
-    margin-top: fn.spacing("medium");
+    margin-top: fn.spacing('medium');
   }
   &-bottom {
-    margin-bottom: fn.spacing("medium");
+    margin-bottom: fn.spacing('medium');
   }
   &-left {
-    margin-left: fn.spacing("medium");
+    margin-left: fn.spacing('medium');
   }
   &-right {
-    margin-right: fn.spacing("medium");
+    margin-right: fn.spacing('medium');
   }
 }
 
 .padding {
   &-top {
-    padding-top: fn.spacing("medium");
+    padding-top: fn.spacing('medium');
   }
   &-bottom {
-    padding-bottom: fn.spacing("medium");
+    padding-bottom: fn.spacing('medium');
   }
   &-left {
-    padding-left: fn.spacing("medium");
+    padding-left: fn.spacing('medium');
   }
   &-right {
-    padding-right: fn.spacing("medium");
+    padding-right: fn.spacing('medium');
   }
 }
 
@@ -489,17 +489,17 @@ Moved to _base.scss .text {
 Moved to _base.scss input,
 select,
 textarea {
-  background: c.color("input-bg");
-  border: fn.layout("border-width") solid c.color("border");
-  border-radius: fn.layout("border-radius");
-  color: c.color("text");
-  font-family: fn.font-family("primary");
-  font-size: fn.font-size("base");
-  padding: fn.spacing("small");
+  background: c.color('input-bg');
+  border: fn.layout('border-width') solid c.color('border');
+  border-radius: fn.layout('border-radius');
+  color: c.color('text');
+  font-family: fn.font-family('primary');
+  font-size: fn.font-size('base');
+  padding: fn.spacing('small');
   width: 100%;
 
   &:focus {
-    border-color: c.color("primary");
+    border-color: c.color('primary');
     outline: none;
   }
 }
@@ -536,9 +536,9 @@ textarea {
 }
 
 // Forms
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
 select,
 textarea {
   appearance: none;
@@ -622,9 +622,9 @@ ul.actions {
 // Old Features Component
 .features {
   article {
-    border-top: solid (fn.layout("border-width") * 1.5) c.color("border");
-    margin-bottom: fn.spacing("medium");
-    padding-top: fn.spacing("medium");
+    border-top: solid (fn.layout('border-width') * 1.5) c.color('border');
+    margin-bottom: fn.spacing('medium');
+    padding-top: fn.spacing('medium');
 
     &:first-child {
       border-top: 0;
@@ -659,10 +659,10 @@ ul.actions {
 // Moved from _forms.scss - keeping for reference
 .button {
   &.icon {
-    padding-left: fn.spacing("small") * 1.35;
+    padding-left: fn.spacing('small') * 1.35;
 
     &:before {
-      margin-right: fn.spacing("xsmall");
+      margin-right: fn.spacing('xsmall');
     }
   }
 
@@ -671,36 +671,36 @@ ul.actions {
   }
 
   &.small {
-    font-size: fn.font-size("small");
+    font-size: fn.font-size('small');
   }
 
   &.large {
-    font-size: fn.font-size("large");
+    font-size: fn.font-size('large');
   }
 
   &.alt {
     background-color: transparent;
-    box-shadow: inset 0 0 0 fn.layout("border-width") c.color("border");
-    color: c.color("text") !important;
+    box-shadow: inset 0 0 0 fn.layout('border-width') c.color('border');
+    color: c.color('text') !important;
 
     &:hover {
-      background-color: c.color("border");
+      background-color: c.color('border');
     }
 
     &:active {
-      background-color: c.color("border");
+      background-color: c.color('border');
     }
   }
 
   &.primary {
-    background-color: c.color("primary");
+    background-color: c.color('primary');
 
     &:hover {
-      background-color: c.color("primary-light");
+      background-color: c.color('primary-light');
     }
 
     &:active {
-      background-color: c.color("primary-dark");
+      background-color: c.color('primary-dark');
     }
   }
 }
@@ -708,12 +708,49 @@ ul.actions {
 // Old Container Implementation
 .container {
   margin: 0 auto;
-  max-width: calc(100% - (fn.spacing("medium") * 2));
-  width: fn.layout("container-width");
+  max-width: calc(100% - (fn.spacing('medium') * 2));
+  width: fn.layout('container-width');
 
-  &.xsmall { width: (fn.layout("container-width") * 0.25); }
-  &.small { width: (fn.layout("container-width") * 0.5); }
-  &.medium { width: (fn.layout("container-width") * 0.75); }
-  &.large { width: (fn.layout("container-width") * 1.25); }
-  &.xlarge { width: (fn.layout("container-width") * 1.5); }
+  &.xsmall {
+    width: (fn.layout('container-width') * 0.25);
+  }
+  &.small {
+    width: (fn.layout('container-width') * 0.5);
+  }
+  &.medium {
+    width: (fn.layout('container-width') * 0.75);
+  }
+  &.large {
+    width: (fn.layout('container-width') * 1.25);
+  }
+  &.xlarge {
+    width: (fn.layout('container-width') * 1.5);
+  }
+}
+
+// ==========================================================================
+// XSmall Breakpoint Styles
+// ==========================================================================
+
+@include bp.breakpoint('<=xsmall') {
+  /* Basic */
+  html,
+  body {
+    min-width: 320px;
+  }
+
+  body,
+  input,
+  select,
+  textarea {
+    font-size: 12pt;
+  }
+
+  /* List */
+  ul {
+    &.actions {
+      margin: 0 0 fn.spacing('small') 0;
+      // ... rest of the ul.actions styles
+    }
+  }
 }

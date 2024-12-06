@@ -1,18 +1,24 @@
 // ==========================================================================
-// Vendor Prefix Management System
+// Vendor Prefix Management
 // ==========================================================================
 //
-// This file provides a comprehensive system for managing vendor prefixes and
-// browser-specific CSS properties. It handles:
-// 1. Automatic vendor prefixing for properties and values
-// 2. String manipulation utilities for CSS value processing
-// 3. List management for vendor-specific features
+// Handles browser compatibility and vendor prefixing.
+// This system is actively used for:
+// - Cross-browser transitions
+// - SVG handling in skills component
+// - Form element styling
+// - Animation properties
+//
+// Usage Examples:
+// @include vendor.prefix('transform', 'translateX(10px)');
+// @include vendor.prefix('appearance', 'none');
+// $encoded-svg: vendor.str-replace($svg-string, '"', "'");
 
-@use "sass:list";
-@use "sass:math";
-@use "sass:meta";
-@use "sass:string";
-@use "sass:map";
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:map';
 
 // ==========================================================================
 // Configuration
@@ -21,35 +27,35 @@
 /// List of vendor prefixes to apply
 /// @type List
 $vendor-prefixes: (
-  "-webkit-",
+  '-webkit-',
   // Chrome, Safari, newer versions of Opera
-  "-moz-",
+  '-moz-',
   // Firefox
-  "" // Standard (no prefix)
+  '' // Standard (no prefix)
 );
 
 /// Properties that require vendor prefixing
 /// @type List
 $vendor-properties: (
   // Appearance is still experimental
-  "appearance",
+  'appearance',
   // Font smoothing for older Safari
-  "font-smoothing",
+  'font-smoothing',
   // Backdrop filter still needs prefix in some browsers
-  "backdrop-filter",
+  'backdrop-filter',
   // Scrollbar styling
-  "scrollbar",
+  'scrollbar',
   // Some experimental grid features
-  "grid-gap"
+  'grid-gap'
 );
 
 /// CSS values that require vendor prefixing
 /// @type List
 $vendor-values: (
   // Sticky positioning in older Safari
-  "position": "sticky",
+  'position': 'sticky',
   // Some gradient syntaxes
-  "background-image": "linear-gradient"
+  'background-image': 'linear-gradient'
 );
 
 // ==========================================================================
@@ -88,7 +94,7 @@ $vendor-values: (
 /// @param {String} $search - The substring to find
 /// @param {String} $replace - The replacement string
 /// @return {String} The modified string
-@function str-replace($string, $search, $replace: "") {
+@function str-replace($string, $search, $replace: '') {
   $index: string.index($string, $search);
 
   @if $index {
@@ -104,9 +110,13 @@ $vendor-values: (
 /// @param {String} $search - The substring to find
 /// @param {String} $replace - The replacement string
 /// @return {List} The modified list of strings
-@function str-replace-all($strings, $search, $replace: "") {
+@function str-replace-all($strings, $search, $replace: '') {
   @each $string in $strings {
-    $strings: list.set-nth($strings, list.index($strings, $string), str-replace($string, $search, $replace));
+    $strings: list.set-nth(
+      $strings,
+      list.index($strings, $string),
+      str-replace($string, $search, $replace)
+    );
   }
 
   @return $strings;
@@ -135,12 +145,15 @@ $vendor-values: (
 @mixin vendor($property, $value, $prefixes: ()) {
   // Only prefix if property needs it
   @if list.index($vendor-properties, $property) or
-    (map.has-key($vendor-values, $property) and list.index(map-get($vendor-values, $property), $value))
+    (
+      map.has-key($vendor-values, $property) and
+        list.index(map-get($vendor-values, $property), $value)
+    )
   {
     // Webkit
     -webkit-#{$property}: $value;
     // Mozilla (if needed)
-    @if $property == "appearance" {
+    @if $property == 'appearance' {
       -moz-#{$property}: $value;
     }
   }

@@ -2,23 +2,30 @@
 // Function Library
 // ==========================================================================
 //
-// This file contains all the utility functions used throughout the application.
-// Functions are organized by type (color, typography, layout, etc.)
+// Core utility functions used throughout the application.
+// Functions are organized by type and purpose.
 //
-// Usage:
-// font-size: fn.font-size("base");
-// color: fn.color("primary");
-// spacing: fn.spacing("medium");
+// Categories:
+// - Simple Getters: Direct map access functions
+// - Typography: Font-related functions
+// - Layout: Spacing and structural functions
+// - Component: Component-specific value retrieval
+// - Unit Conversion: px to rem/em conversion
+// - SVG: SVG string manipulation
+//
+// Usage Examples:
+// font-size: fn.font-size('base');
+// color: fn.color('primary');
+// spacing: fn.spacing('medium');
 
-@use "sass:color";
-@use "sass:list";
-@use "sass:map";
-@use "sass:math";
-@use "sass:meta";
-@use "sass:string";
-@use "variables" as vars;
-@use "colors" as c;
-@use "../vendor/vendor";
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'variables' as vars;
+@use 'colors' as c;
 
 // ==========================================================================
 // Simple Getters
@@ -73,20 +80,6 @@
   @return map.get(vars.$durations, $key);
 }
 
-// /// Get a color value
-// /// @param {String} $key - Key to get from the color map
-// /// @return {*} Found value
-// @function color($key) {
-//   @return map.get(c.$semantic-colors, $key);
-// }
-
-// /// Get a misc value (for one-off configurations)
-// /// @param {String} $key - Key to get from the misc map
-// /// @return {*} Found value
-// @function misc($key) {
-//   @return map.get(vars.$misc, $key);
-// }
-
 // ==========================================================================
 // Typography Functions
 // ==========================================================================
@@ -100,10 +93,10 @@
 }
 
 /// Get a font family
-/// @param {string} $type - Font family type
-/// @return {string} Font family value
-@function font-family($type) {
-  @return typography("family", $type);
+/// @param {String} $key - Font family key
+/// @return {List} Font family stack
+@function font-family($key) {
+  @return map.get($typography, 'family', $key);
 }
 
 /// Get a font weight
@@ -120,34 +113,16 @@
   @return map.get(vars.$font-sizes, $size);
 }
 
-// // ==========================================================================
-// // Breakpoint Functions
-// // ==========================================================================
-
-// /// Get a breakpoint value
-// /// @param {string} $key - Breakpoint key
-// /// @return {string} Breakpoint value
-// @function breakpoint($key) {
-//   @return map.get(vars.$breakpoints, $key);
-// }
-
 // ==========================================================================
 // Layout Functions
 // ==========================================================================
 
-/// Get a layout value
-/// @param {string} $key - Layout key
-/// @return {*} Layout value
+/// Layout Function
+/// @param {String} $key - Layout measurement key
+/// @return {Number} Layout value
 @function layout($key) {
-  @return map.get(vars.$layout, $key);
+  @return map.get($layout, $key);
 }
-
-// /// Get a size value
-// /// @param {string} $key - Size key
-// /// @return {*} Size value
-// @function size($key) {
-//   @return map.get(vars.$sizes, $key);
-// }
 
 /// Get a spacing value
 /// @param {string} $key - Spacing key
@@ -213,7 +188,7 @@
 /// @param {number} $base [16px] - Base font size
 /// @return {string} Em value
 @function em($px, $base: vars.$base-font-size) {
-  @if meta.type-of($px) == "number" {
+  @if meta.type-of($px) == 'number' {
     @return math.div($px, $base) * 1em;
   }
   @return $px;
@@ -228,18 +203,18 @@
 /// @return {string} SVG URL
 @function svg-url($svg) {
   $svg: vendor.str-replace($svg, '"', "'");
-  $svg: vendor.str-replace($svg, "%", "%25");
-  $svg: vendor.str-replace($svg, "<", "%3C");
-  $svg: vendor.str-replace($svg, ">", "%3E");
-  $svg: vendor.str-replace($svg, "&", "%26");
-  $svg: vendor.str-replace($svg, "#", "%23");
-  $svg: vendor.str-replace($svg, "{", "%7B");
-  $svg: vendor.str-replace($svg, "}", "%7D");
-  $svg: vendor.str-replace($svg, "|", "%7C");
-  $svg: vendor.str-replace($svg, "^", "%5E");
-  $svg: vendor.str-replace($svg, "`", "%60");
-  $svg: vendor.str-replace($svg, "@", "%40");
-  $svg: vendor.str-replace($svg, ";", "%3B");
+  $svg: vendor.str-replace($svg, '%', '%25');
+  $svg: vendor.str-replace($svg, '<', '%3C');
+  $svg: vendor.str-replace($svg, '>', '%3E');
+  $svg: vendor.str-replace($svg, '&', '%26');
+  $svg: vendor.str-replace($svg, '#', '%23');
+  $svg: vendor.str-replace($svg, '{', '%7B');
+  $svg: vendor.str-replace($svg, '}', '%7D');
+  $svg: vendor.str-replace($svg, '|', '%7C');
+  $svg: vendor.str-replace($svg, '^', '%5E');
+  $svg: vendor.str-replace($svg, '`', '%60');
+  $svg: vendor.str-replace($svg, '@', '%40');
+  $svg: vendor.str-replace($svg, ';', '%3B');
 
-  @return url("data:image/svg+xml;charset=utf8,#{$svg}");
+  @return url('data:image/svg+xml;charset=utf8,#{$svg}');
 }

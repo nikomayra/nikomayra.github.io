@@ -2,36 +2,46 @@
 // Grid System
 // ==========================================================================
 //
-// This file contains the grid system used throughout the application.
-// It provides a flexible and responsive grid layout system using CSS Grid.
+// A flexible grid system using CSS Grid with responsive breakpoints.
 //
 // Usage:
 // <div class="grid">
-//   <div class="col-6">Half width on all screens</div>
-//   <div class="col-6 col-md-12">Half width, full on medium screens</div>
+//   <div class="col-6">Half width</div>
+//   <div class="col-6 col-md-12">Responsive column</div>
 // </div>
+//
+// Breakpoints:
+// - xlarge: 1680px
+// - large:  1280px
+// - medium: 980px
+// - small:  736px
+// - xsmall: 480px
+//
+// Column Classes:
+// - col-1 through col-12
+// - col-{breakpoint}-{1-12} for responsive layouts
 
-@use "sass:map";
-@use "sass:math";
-@use "../abstracts/functions" as fn;
-@use "../abstracts/mixins" as mx;
-@use "../abstracts/variables" as vars;
-@use "../abstracts/breakpoints" as bp;
+@use 'sass:map';
+@use 'sass:math';
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mx;
+@use '../abstracts/variables' as vars;
+@use '../abstracts/breakpoints' as bp;
 
 /// Grid configuration
 /// @type Map
 $grid-config: (
-  "columns": 12,
-  "gap": 2rem,
-  "container": (
-    "padding": 1rem,
-    "max-width": (
-      "xs": 100%,
-      "sm": 540px,
-      "md": 720px,
-      "lg": 960px,
-      "xl": 1140px,
-      "xxl": 1320px
+  'columns': 12,
+  'gap': 2rem,
+  'container': (
+    'padding': 1rem,
+    'max-width': (
+      'xs': 100%,
+      'sm': 540px,
+      'md': 720px,
+      'lg': 960px,
+      'xl': 1140px,
+      'xxl': 1320px,
     ),
   ),
 );
@@ -45,11 +55,11 @@ $grid-config: (
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding-right: map.get($grid-config, "container", "padding");
-  padding-left: map.get($grid-config, "container", "padding");
+  padding-right: map.get($grid-config, 'container', 'padding');
+  padding-left: map.get($grid-config, 'container', 'padding');
 
-  @each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
-    @include bp.breakpoint(">=#{$breakpoint}") {
+  @each $breakpoint, $width in map.get($grid-config, 'container', 'max-width') {
+    @include bp.breakpoint('>=#{$breakpoint}') {
       max-width: $width;
     }
   }
@@ -58,8 +68,8 @@ $grid-config: (
 /// Fluid container
 .container-fluid {
   width: 100%;
-  padding-right: map.get($grid-config, "container", "padding");
-  padding-left: map.get($grid-config, "container", "padding");
+  padding-right: map.get($grid-config, 'container', 'padding');
+  padding-left: map.get($grid-config, 'container', 'padding');
   margin-right: auto;
   margin-left: auto;
 }
@@ -71,15 +81,15 @@ $grid-config: (
 /// Base grid container
 .grid {
   display: grid;
-  grid-template-columns: repeat(#{map.get($grid-config, "columns")}, 1fr);
-  gap: map.get($grid-config, "gap");
-  
+  grid-template-columns: repeat(#{map.get($grid-config, 'columns')}, 1fr);
+  gap: map.get($grid-config, 'gap');
+
   // Responsive column classes
-  @each $breakpoint, $width in map.get($grid-config, "container", "max-width") {
-    $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
-    
-    @include bp.breakpoint(">=#{$breakpoint}") {
-      @for $i from 1 through map.get($grid-config, "columns") {
+  @each $breakpoint, $width in map.get($grid-config, 'container', 'max-width') {
+    $infix: if($breakpoint == 'xs', '', '-#{$breakpoint}');
+
+    @include bp.breakpoint('>=#{$breakpoint}') {
+      @for $i from 1 through map.get($grid-config, 'columns') {
         .col#{$infix}-#{$i} {
           grid-column: span #{$i};
         }
