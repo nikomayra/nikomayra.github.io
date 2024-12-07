@@ -21,79 +21,80 @@
 // - col-1 through col-12
 // - col-{breakpoint}-{1-12} for responsive layouts
 
-@use 'sass:map';
-@use 'sass:math';
-@use '../abstracts/functions' as fn;
-@use '../abstracts/mixins' as mx;
-@use '../abstracts/variables' as vars;
-@use '../abstracts/breakpoints' as bp;
+// Temporarily commenting out unused grid system
+// @use 'sass:map';
+// @use 'sass:math';
+// @use '../abstracts/functions' as fn;
+// @use '../abstracts/mixins' as mx;
+// @use '../abstracts/variables' as vars;
+// @use '../abstracts/breakpoints' as bp;
 
-/// Grid configuration
-/// @type Map
-$grid-config: (
-  'columns': 12,
-  'gap': 2rem,
-  'container': (
-    'padding': 1rem,
-    'max-width': (
-      'xs': 100%,
-      'sm': 540px,
-      'md': 720px,
-      'lg': 960px,
-      'xl': 1140px,
-      'xxl': 1320px,
-    ),
-  ),
-);
+// /// Grid configuration
+// /// @type Map
+// $grid-config: (
+//   'columns': 12,
+//   'gap': 2rem,
+//   'container': (
+//     'padding': 1rem,
+//     'max-width': (
+//       'xs': 100%,
+//       'sm': 540px,
+//       'md': 720px,
+//       'lg': 960px,
+//       'xl': 1140px,
+//       'xxl': 1320px,
+//     ),
+//   ),
+// );
 
-// ==========================================================================
-// Container Classes
-// ==========================================================================
+// // ==========================================================================
+// // Container Classes
+// // ==========================================================================
 
-/// Main container class
-.container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: map.get($grid-config, 'container', 'padding');
-  padding-left: map.get($grid-config, 'container', 'padding');
+// /// Main container class
+// .container {
+//   width: 100%;
+//   margin-right: auto;
+//   margin-left: auto;
+//   padding-right: map.get($grid-config, 'container', 'padding');
+//   padding-left: map.get($grid-config, 'container', 'padding');
 
-  @each $breakpoint, $width in map.get($grid-config, 'container', 'max-width') {
-    @include bp.breakpoint('>=#{$breakpoint}') {
-      max-width: $width;
-    }
-  }
-}
+//   @each $breakpoint, $width in map.get($grid-config, 'container', 'max-width') {
+//     @include bp.breakpoint('>=#{$breakpoint}') {
+//       max-width: $width;
+//     }
+//   }
+// }
 
-/// Fluid container
-.container-fluid {
-  width: 100%;
-  padding-right: map.get($grid-config, 'container', 'padding');
-  padding-left: map.get($grid-config, 'container', 'padding');
-  margin-right: auto;
-  margin-left: auto;
-}
+// /// Fluid container
+// .container-fluid {
+//   width: 100%;
+//   padding-right: map.get($grid-config, 'container', 'padding');
+//   padding-left: map.get($grid-config, 'container', 'padding');
+//   margin-right: auto;
+//   margin-left: auto;
+// }
 
-// ==========================================================================
-// Grid Classes
-// ==========================================================================
+// // ==========================================================================
+// // Grid Classes
+// // ==========================================================================
 
-/// Base grid container
-.grid {
-  display: grid;
-  grid-template-columns: repeat(#{map.get($grid-config, 'columns')}, 1fr);
-  gap: map.get($grid-config, 'gap');
+// /// Base grid container
+// .grid {
+//   display: grid;
+//   grid-template-columns: repeat(#{map.get($grid-config, 'columns')}, 1fr);
+//   gap: map.get($grid-config, 'gap');
 
-  // Responsive column classes
-  @each $breakpoint, $width in map.get($grid-config, 'container', 'max-width') {
-    $infix: if($breakpoint == 'xs', '', '-#{$breakpoint}');
+//   // Responsive column classes
+//   @each $breakpoint, $width in map.get($grid-config, 'container', 'max-width') {
+//     $infix: if($breakpoint == 'xs', '', '-#{$breakpoint}');
 
-    @include bp.breakpoint('>=#{$breakpoint}') {
-      @for $i from 1 through map.get($grid-config, 'columns') {
-        .col#{$infix}-#{$i} {
-          grid-column: span #{$i};
-        }
-      }
-    }
-  }
-}
+//     @include bp.breakpoint('>=#{$breakpoint}') {
+//       @for $i from 1 through map.get($grid-config, 'columns') {
+//         .col#{$infix}-#{$i} {
+//           grid-column: span #{$i};
+//         }
+//       }
+//     }
+//   }
+// }

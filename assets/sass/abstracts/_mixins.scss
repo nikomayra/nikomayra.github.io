@@ -6,11 +6,11 @@
 // Mixins are organized by type (layout, typography, etc.)
 // Each mixin is documented with its purpose and parameters.
 
-@use "sass:list";
-@use "sass:math";
-@use "functions" as fn;
-@use "breakpoints" as bp;
-@use "../vendor/vendor";
+@use 'sass:list';
+@use 'sass:math';
+@use 'functions' as fn;
+@use 'breakpoints' as bp;
+@use '../vendor/vendor';
 
 // ==========================================================================
 // Visual Mixins
@@ -53,11 +53,13 @@
 /// @param {string} $suffix [''] - Breakpoint suffix (xlarge, large, medium, small, xsmall)
 @mixin grid($gutters: 1.5em, $suffix: '') {
   // Row styles
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-  margin-top: $gutters * -1;
-  margin-left: $gutters * -1;
+  & {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    margin-top: $gutters * -1;
+    margin-left: $gutters * -1;
+  }
 
   // Column base styles
   > * {
@@ -72,7 +74,7 @@
 
   @for $i from 1 through 12 {
     > .col-#{$i}#{$suffix} {
-      width: #{100% / 12 * $i};
+      width: #{calc(100% / 12 * $i)};
     }
   }
 }
@@ -85,59 +87,59 @@
 ///   }
 @mixin clearfix {
   &::after {
-    content: "";
+    content: '';
     display: table;
     clear: both;
   }
 }
 
-/// Center block
-/// @description Centers a block element within its container using auto margins
-@mixin center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+// /// Center block
+// /// @description Centers a block element within its container using auto margins
+// @mixin center-block {
+//   display: block;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
 
-/// Absolute Position
-/// @description Positions an element absolutely with specified coordinates
-/// @param {number} $top [null] - Top position
-/// @param {number} $right [null] - Right position
-/// @param {number} $bottom [null] - Bottom position
-/// @param {number} $left [null] - Left position
-@mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
-  position: absolute;
-  top: $top;
-  right: $right;
-  bottom: $bottom;
-  left: $left;
-}
+// /// Absolute Position
+// /// @description Positions an element absolutely with specified coordinates
+// /// @param {number} $top [null] - Top position
+// /// @param {number} $right [null] - Right position
+// /// @param {number} $bottom [null] - Bottom position
+// /// @param {number} $left [null] - Left position
+// @mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
+//   position: absolute;
+//   top: $top;
+//   right: $right;
+//   bottom: $bottom;
+//   left: $left;
+// }
 
-/// Absolute Center
-/// @description Absolutely positions an element at the center of its container
-/// @example scss
-///   .centered {
-///     @include absolute-center;
-///   }
-@mixin absolute-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+// /// Absolute Center
+// /// @description Absolutely positions an element at the center of its container
+// /// @example scss
+// ///   .centered {
+// ///     @include absolute-center;
+// ///   }
+// @mixin absolute-center {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
 
-/// Fixed Center
-/// @description Fixes an element at the center of the viewport
-/// @example scss
-///   .modal {
-///     @include fixed-center;
-///   }
-@mixin fixed-center {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+// /// Fixed Center
+// /// @description Fixes an element at the center of the viewport
+// /// @example scss
+// ///   .modal {
+// ///     @include fixed-center;
+// ///   }
+// @mixin fixed-center {
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
 
 // ==========================================================================
 // Text Mixins
@@ -168,11 +170,7 @@
   text-decoration: none;
 
   &:#{$where} {
-    @if $content {
-      content: $content;
-    }
-
-    @include vendor.vendor("font-smoothing", "antialiased");
+    @include vendor.vendor('font-smoothing', 'antialiased');
     display: inline-block;
     font-style: normal;
     font-variant: normal;
@@ -180,13 +178,17 @@
     line-height: 1;
     text-transform: none !important;
 
+    @if $content {
+      content: $content;
+    }
+
     @if ($category == brands) {
-      font-family: "Font Awesome 5 Brands";
+      font-family: 'Font Awesome 5 Brands';
     } @else if ($category == solid) {
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-weight: 900;
     } @else {
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-weight: 400;
     }
   }
@@ -204,60 +206,60 @@
 ///   }
 @mixin button-base {
   display: inline-block;
-  padding: fn.spacing("small") fn.spacing("medium");
+  padding: fn.spacing('small') fn.spacing('medium');
   border: none;
-  border-radius: fn.layout("border-radius");
-  font-family: fn.font-family("primary");
-  font-weight: fn.font-weight("bold");
+  border-radius: fn.layout('border-radius');
+  font-family: fn.font-family('primary');
+  font-weight: fn.font-weight('bold');
   text-decoration: none;
   cursor: pointer;
-  transition: all fn.duration("standard") ease-in-out;
+  transition: all fn.duration('standard') ease-in-out;
 }
 
 // ==========================================================================
 // Spacing Mixins
 // ==========================================================================
 
-/// Padding
-/// @param {number} $tb [0] - Top and bottom padding
-/// @param {number} $lr [0] - Left and right padding
-/// @param {list} $pad [(0, 0, 0, 0)] - Individual padding values
-/// @param {boolean} $important [false] - Whether to add !important
-@mixin padding($tb, $lr, $pad: (0, 0, 0, 0), $important: null) {
-  @if $important {
-    $important: "!important";
-  }
+// /// Padding
+// /// @param {number} $tb [0] - Top and bottom padding
+// /// @param {number} $lr [0] - Left and right padding
+// /// @param {list} $pad [(0, 0, 0, 0)] - Individual padding values
+// /// @param {boolean} $important [false] - Whether to add !important
+// @mixin padding($tb, $lr, $pad: (0, 0, 0, 0), $important: null) {
+//   @if $important {
+//     $important: '!important';
+//   }
 
-  $x: 0.1em;
+//   $x: 0.1em;
 
-  @if math.unit(fn.spacing("element", "margin")) == "rem" {
-    $x: 0.1rem;
-  }
+//   @if math.unit(fn.spacing('element', 'margin')) == 'rem' {
+//     $x: 0.1rem;
+//   }
 
-  padding: ($tb + list.nth($pad, 1)) ($lr + list.nth($pad, 2))
-    max($x, $tb - fn.spacing("element", "margin") + list.nth($pad, 3)) ($lr + list.nth($pad, 4)) #{$important};
-}
+//   padding: ($tb + list.nth($pad, 1)) ($lr + list.nth($pad, 2))
+//     max($x, $tb - fn.spacing('element', 'margin') + list.nth($pad, 3)) ($lr + list.nth($pad, 4)) #{$important};
+// }
 
 // ==========================================================================
 // Header Styles
 // ==========================================================================
 
-/// Header Styles
+/// Toggle Header Visibility
 /// @param {number} $size-header [null] - Header size
 /// @param {string} $header-side [null] - Header side
 /// @param {string} $translate-value [null] - Translate value
-@mixin headerStyles($size-header, $header-side, $translate-value) {
+@mixin toggle-header-visibility($size-header, $header-side, $translate-value) {
   backface-visibility: hidden;
-  transition: transform fn.duration("transition") ease;
+  transition: transform fn.duration('transition') ease;
   display: block;
   height: 100%;
   overflow-y: auto;
   position: fixed;
   top: 0;
   width: $size-header;
-  z-index: fn.z("header");
+  z-index: fn.z('header');
 
-  @if $header-side == "right" {
+  @if $header-side == 'right' {
     transform: translateX($translate-value);
     right: 0;
   } @else {
@@ -266,15 +268,32 @@
   }
 }
 
-// ==========================================================================
-// Responsive Mixins
-// ==========================================================================
-
-/// Responsive breakpoint manager
-/// @param {string} $breakpoint - Breakpoint name
-/// @content styling within the media query
-@mixin responsive($breakpoint) {
-  @include bp.breakpoint($breakpoint) {
-    @content;
+/// Toggle Header
+/// @param {string} $state [show] - Header state (show, hide)
+/// @param {number} $width [null] - Header width
+@mixin toggle-header($state, $width) {
+  @if $state == 'show' {
+    transition: transform fn.duration('transition') ease;
+    transform: translateX(if(fn.layout('header-side') == 'right', 0, $width)); //show
+  } @else {
+    transition: transform fn.duration('transition') ease;
+    transform: translateX(if(fn.layout('header-side') == 'right', $width, 0)); //hide
+  }
+  &.header-visible {
+    transition: transform fn.duration('transition') ease;
+    transform: translateX(if(fn.layout('header-side') == 'right', 0, $width)); //show
   }
 }
+
+// // ==========================================================================
+// // Responsive Mixins
+// // ==========================================================================
+
+// /// Responsive breakpoint manager
+// /// @param {string} $breakpoint - Breakpoint name
+// /// @content styling within the media query
+// @mixin responsive($breakpoint) {
+//   @include bp.breakpoint($breakpoint) {
+//     @content;
+//   }
+// }

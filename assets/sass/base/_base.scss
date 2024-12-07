@@ -5,11 +5,11 @@
 // This file contains base styles for HTML elements after reset.
 // Includes typography and basic element styling.
 
-@use "../abstracts/functions" as fn;
-@use "../abstracts/mixins" as mx;
-@use "../abstracts/colors" as c;
-@use "../abstracts/breakpoints" as bp;
-@use "../vendor/vendor";
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mx;
+@use '../abstracts/colors' as c;
+@use '../abstracts/breakpoints' as bp;
+@use '../vendor/vendor';
 
 // ==========================================================================
 // Base Page Structure
@@ -18,10 +18,10 @@
 html {
   height: 100%;
   box-sizing: border-box;
-  font-size: fn.font-size("base");
+  font-size: fn.font-size('base');
 
-  @include bp.breakpoint("<=medium") {
-    font-size: fn.font-size("small");
+  @include bp.breakpoint('<=medium') {
+    font-size: fn.font-size('small');
   }
 }
 
@@ -35,14 +35,14 @@ body {
   margin: 0;
   min-height: 100%;
   overflow: hidden;
-  background: c.color("background");
-  color: c.color("text");
-  font-family: fn.font-family("primary");
-  font-size: fn.font-size("base");
-  font-weight: fn.font-weight("regular");
+  background: c.color('background');
+  color: c.color('text');
+  font-family: fn.font-family('primary');
+  font-size: fn.font-size('base');
+  font-weight: fn.font-weight('regular');
   line-height: 1.65;
-  @include vendor.vendor("font-smoothing", "antialiased");
-  transition: background fn.duration("standard") ease-in-out;
+  @include vendor.vendor('font-smoothing', 'antialiased');
+  transition: background fn.duration('standard') ease-in-out;
 
   &.is-loading {
     *,
@@ -53,8 +53,8 @@ body {
     }
   }
 
-  @include bp.breakpoint("<=small") {
-    font-size: fn.font-size("small");
+  @include bp.breakpoint('<=small') {
+    font-size: fn.font-size('small');
     line-height: 1.5;
   }
 }
@@ -63,44 +63,62 @@ body {
 // Typography
 // ==========================================================================
 
-h1, h2, h3, h4, h5, h6 {
-  color: c.color("text");
-  font-weight: fn.font-weight("bold");
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: c.color('text');
+  font-weight: fn.font-weight('bold');
   line-height: 1em;
-  margin: 0 0 fn.spacing("small");
+  margin: 0 0 fn.spacing('small');
 }
 
-h1 { font-size: fn.font-size("h1"); }
-h2 { font-size: fn.font-size("h2"); }
-h3 { font-size: fn.font-size("h3"); }
-h4 { font-size: fn.font-size("h4"); }
-h5 { font-size: fn.font-size("h5"); }
-h6 { font-size: fn.font-size("h6"); }
+h1 {
+  font-size: fn.font-size('h1');
+}
+h2 {
+  font-size: fn.font-size('h2');
+}
+h3 {
+  font-size: fn.font-size('h3');
+}
+h4 {
+  font-size: fn.font-size('h4');
+}
+h5 {
+  font-size: fn.font-size('h5');
+}
+h6 {
+  font-size: fn.font-size('h6');
+}
 
 p {
-  margin: 0 0 fn.spacing("medium");
+  margin: 0 0 fn.spacing('medium');
 }
 
 // Links
 a {
-  color: c.color("link");
+  color: c.color('link');
   text-decoration: none;
-  transition: color fn.duration("standard") ease-in-out;
+  transition: color fn.duration('standard') ease-in-out;
 
   &:hover {
-    color: c.color("link-hover");
+    color: c.color('link-hover');
   }
 }
 
 // Lists
-ul, ol {
-  margin: 0 0 fn.spacing("medium");
+ul,
+ol {
+  margin: 0 0 fn.spacing('medium');
   padding-left: 1em;
 }
 
 ul {
   list-style: disc;
-  
+
   li {
     padding-left: 0.5em;
   }
@@ -108,7 +126,7 @@ ul {
 
 ol {
   list-style: decimal;
-  
+
   li {
     padding-left: 0.25em;
   }
@@ -127,32 +145,32 @@ textarea {
   font: inherit;
 
   &:focus {
-    outline: 2px solid c.color("primary");
+    outline: 2px solid c.color('primary');
     outline-offset: 2px;
   }
 }
 
 // Text inputs
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='tel'],
 select,
 textarea {
   appearance: none;
-  background: c.color("input-bg");
-  border: solid fn.layout("border-width") c.color("border");
-  border-radius: fn.layout("border-radius");
-  color: c.color("text");
+  background: c.color('input-bg');
+  border: solid fn.layout('border-width') c.color('border');
+  border-radius: fn.layout('border-radius');
+  color: c.color('text');
   display: block;
   outline: 0;
   padding: 0 1em;
   text-decoration: none;
   width: 100%;
-  height: fn.layout("input-height");
+  height: fn.layout('input-height');
 
   &:focus {
-    border-color: c.color("primary");
+    border-color: c.color('primary');
   }
 
   &:invalid {
@@ -169,47 +187,48 @@ textarea {
 
 // Labels
 label {
-  color: c.color("text");
+  color: c.color('text');
   display: block;
-  font-size: fn.font-size("small");
-  font-weight: fn.font-weight("bold");
-  margin: 0 0 fn.spacing("small");
+  font-size: fn.font-size('small');
+  font-weight: fn.font-weight('bold');
+  margin: 0 0 fn.spacing('small');
 }
 
 // Buttons
 button,
 .button {
   appearance: none;
-  transition: all fn.duration("standard") ease-in-out;
-  background-color: c.color("primary");
+  transition: all fn.duration('standard') ease-in-out;
+  background-color: c.color('primary');
   border: 0;
-  border-radius: fn.layout("border-radius");
-  color: c.color("text-inverse");
+  border-radius: fn.layout('border-radius');
+  color: c.color('text');
   cursor: pointer;
   display: inline-block;
-  font-weight: fn.font-weight("bold");
-  height: fn.layout("input-height");
-  line-height: fn.layout("input-height");
+  font-weight: fn.font-weight('bold');
+  height: fn.layout('input-height');
+  line-height: fn.layout('input-height');
   padding: 0 1.5em;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
 
   &:hover {
-    background-color: c.color("primary-light");
+    background-color: c.color('primary-light');
+    color: c.color('text-light');
   }
 
   &.small {
-    font-size: fn.font-size("small");
-    height: fn.layout("input-height-small");
-    line-height: fn.layout("input-height-small");
+    font-size: fn.font-size('small');
+    height: fn.layout('input-height-small');
+    line-height: fn.layout('input-height-small');
     padding: 0 1em;
   }
 
   &.large {
-    font-size: fn.font-size("large");
-    height: fn.layout("input-height-large");
-    line-height: fn.layout("input-height-large");
+    font-size: fn.font-size('large');
+    height: fn.layout('input-height-large');
+    line-height: fn.layout('input-height-large');
     padding: 0 2em;
   }
 
@@ -222,7 +241,7 @@ button,
 
 // Placeholders
 ::placeholder {
-  color: c.color("text") !important;
+  color: c.color('text') !important;
   font-style: italic;
   opacity: 1;
 }
@@ -263,13 +282,13 @@ svg {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 0 0 fn.spacing("medium");
+  margin: 0 0 fn.spacing('medium');
 }
 
 th,
 td {
-  padding: fn.spacing("small");
-  border: 1px solid c.color("border");
+  padding: fn.spacing('small');
+  border: 1px solid c.color('border');
   text-align: left;
 }
 
@@ -278,14 +297,14 @@ td {
 // ==========================================================================
 
 ::selection {
-  background: c.color("primary");
-  color: c.color("text");
+  background: c.color('primary');
+  color: c.color('text');
   text-shadow: none;
 }
 
 ::-moz-selection {
-  background: c.color("primary");
-  color: c.color("text");
+  background: c.color('primary');
+  color: c.color('text');
   text-shadow: none;
 }
 
@@ -340,10 +359,10 @@ td {
 
   // Text colors
   &-primary {
-    color: c.color("primary");
+    color: c.color('primary');
   }
   &-secondary {
-    color: c.color("secondary");
+    color: c.color('secondary');
   }
 }
 
@@ -357,7 +376,7 @@ td {
 // Container
 .container {
   width: 100%;
-  max-width: fn.layout("container-width");
+  max-width: fn.layout('container-width');
   margin: 0 auto;
-  padding: 0 fn.spacing("medium");
+  padding: 0 fn.spacing('medium');
 }

@@ -1,0 +1,59 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mx;
+@use '../abstracts/colors' as c;
+@use '../abstracts/breakpoints' as bp;
+@use '../abstracts/variables' as v;
+
+#titleBar {
+  display: none;
+
+  @include bp.breakpoint('<=large') {
+    & {
+      backface-visibility: hidden;
+      background: c.color('background');
+      display: block;
+      height: v.$titlebar-height;
+      left: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: fn.z('header') + 1;
+    }
+
+    .title {
+      color: c.color('text');
+      display: block;
+      font-weight: fn.font-weight('bold');
+      height: v.$titlebar-height;
+      line-height: v.$titlebar-height;
+      padding: 0 1em;
+      text-align: if(fn.layout('header-side') == 'right', 'left', 'right');
+    }
+
+    .toggle {
+      @include mx.icon(false, solid);
+      border: 0;
+      height: v.$titlebar-toggle-height;
+      outline: 0;
+      position: absolute;
+      top: 0;
+      width: v.$titlebar-toggle-width;
+      #{if(fn.layout('header-side') == 'right', 'right', 'left')}: 0;
+
+      &:before {
+        background: c.color('background');
+        color: c.color('text');
+        content: '\f0c9';
+        display: block;
+        font-size: v.$titlebar-icon-size;
+        height: v.$titlebar-height;
+        line-height: v.$titlebar-height;
+        position: absolute;
+        text-align: center;
+        top: 0;
+        width: v.$titlebar-icon-width;
+        #{if(fn.layout('header-side') == 'right', 'right', 'left')}: 0;
+      }
+    }
+  }
+}

@@ -2,20 +2,20 @@
 // Color System
 // ==========================================================================
 
-@use "sass:color";
-@use "sass:map";
+@use 'sass:color';
+@use 'sass:map';
 
 // Core color definitions
 $base-colors: (
   // Core colors
-  "primary": #5e42a6,
-  "secondary": #b74e91,
-  "accent": #00ffcc,
-  "accent-alt": #ff3366,
+  'primary': #5e42a6,
+  'secondary': #b74e91,
+  'accent': #00ffcc,
+  'accent-alt': #ff3366,
 
   // Base colors
-  "background": #312450,
-  "text": #ffffff
+  'background': #312450,
+  'text': #ffffff
 );
 
 // Generate color map with variants
@@ -26,20 +26,20 @@ $colors: ();
   $colors: map.set($colors, $name, $color);
 
   // Light/dark variants
-  $colors: map.set($colors, "#{$name}-light", color.scale($color, $lightness: 10%));
-  $colors: map.set($colors, "#{$name}-dark", color.scale($color, $lightness: -10%));
+  $colors: map.set($colors, '#{$name}-light', color.scale($color, $lightness: 10%));
+  $colors: map.set($colors, '#{$name}-dark', color.scale($color, $lightness: -10%));
 }
 
 // Add semantic color aliases
 $colors: map.merge(
   $colors,
   (
-    "link": map.get($colors, "accent"),
-    "link-light": color.scale(map.get($colors, "accent"), $lightness: 15%),
-    "border": color.change(map.get($colors, "text"), $alpha: 0.1),
-    "input-bg": color.scale(map.get($colors, "background"), $lightness: 15%),
-    "header-bg": color.scale(map.get($colors, "background"), $lightness: 15%),
-    "shadow": color.change(map.get($colors, "primary"), $alpha: 0.1),
+    'link': map.get($colors, 'accent'),
+    'link-hover': color.scale(map.get($colors, 'accent'), $lightness: 15%),
+    'border': color.change(map.get($colors, 'text'), $alpha: 0.1),
+    'input-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
+    'header-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
+    'shadow': color.change(map.get($colors, 'primary'), $alpha: 0.1),
   )
 );
 

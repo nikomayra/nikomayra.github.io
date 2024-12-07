@@ -30,6 +30,9 @@
 @use 'components/skills';
 @use 'components/usTour';
 @use 'components/worldTour';
+@use 'components/titlebar';
+
+@import '../css/fontawesome-custom.css';
 
 // ==========================================================================
 // Global Styles
@@ -55,8 +58,4 @@ body {
       transition: none !important;
     }
   }
-}
-
-:root {
-  @include vars.css-variables;
 }

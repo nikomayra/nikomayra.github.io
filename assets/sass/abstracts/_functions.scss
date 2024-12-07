@@ -84,19 +84,11 @@
 // Typography Functions
 // ==========================================================================
 
-/// Get a typography value
-/// @param {string} $type - Type of typography value (family, weight, size)
-/// @param {string} $key - Specific key to retrieve
-/// @return {*} The typography value
-@function typography($type, $key) {
-  @return map.get(map.get(vars.$typography, $type), $key);
-}
-
 /// Get a font family
 /// @param {String} $key - Font family key
 /// @return {List} Font family stack
 @function font-family($key) {
-  @return map.get($typography, 'family', $key);
+  @return map.get(vars.$font-families, $key);
 }
 
 /// Get a font weight
@@ -121,7 +113,7 @@
 /// @param {String} $key - Layout measurement key
 /// @return {Number} Layout value
 @function layout($key) {
-  @return map.get($layout, $key);
+  @return map.get(vars.$layout, $key);
 }
 
 /// Get a spacing value

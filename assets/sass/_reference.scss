@@ -1,756 +1,756 @@
-// ==========================================================================
-// Reference Code
-// ==========================================================================
-// This file contains code that was previously in main.scss but is currently unused.
-// Kept for future reference and potential reuse.
-
-// Typography - moved to _base.scss
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: c.color('text');
-  font-weight: fn.font-weight('bold');
-  line-height: 1em;
-  margin: 0 0 fn.spacing('small');
-}
-
-@if fn.misc(header-side) == 'right' {
-  padding-right: $size-header;
-} @else {
-  padding-left: $size-header;
-}
-
-// ==========================================================================
-// MAIN - List
-// ==========================================================================
-
-ol {
-  list-style: decimal;
-  margin: 0 0 fn.spacing('small') 0;
-  padding-left: 1.25em;
-
-  li {
-    padding-left: 0.25em;
-  }
-}
-
-ul {
-  list-style: disc;
-  margin: 0 0 fn.spacing('small') 0;
-  padding-left: 1em;
-
-  li {
-    padding-left: 0.5em;
-  }
-
-  &.alt {
-    list-style: none;
-    padding-left: 0;
-
-    li {
-      border-top: solid fn.layout('border-width') c.color('border');
-      padding: 0.5em 0;
-
-      &:first-child {
-        border-top: 0;
-        padding-top: 0;
-      }
-    }
-  }
-}
-
-dl {
-  margin: 0 0 fn.spacing('small') 0;
-}
-
-// ==========================================================================
-// MAIN - Actions
-// ==========================================================================
-
-ul.actions {
-  display: flex;
-  cursor: default;
-  list-style: none;
-  margin-left: (fn.spacing('small') * -0.5);
-  padding-left: 0;
-
-  li {
-    padding: 0 0 0 (fn.spacing('small') * 0.5);
-    vertical-align: middle;
-  }
-
-  &.special {
-    justify-content: center;
-    width: 100%;
-    margin-left: 0;
-
-    li {
-      &:first-child {
-        padding-left: 0;
-      }
-    }
-  }
-
-  &.stacked {
-    flex-direction: column;
-    margin-left: 0;
-
-    li {
-      padding: (fn.spacing('small') * 0.5) 0 0 0;
-
-      &:first-child {
-        padding-top: 0;
-      }
-    }
-  }
-
-  &.fit {
-    width: calc(100% + #{fn.spacing('small') * 0.5});
-
-    li {
-      flex-grow: 1;
-      flex-shrink: 1;
-      width: 100%;
-
-      > * {
-        width: 100%;
-      }
-    }
-
-    &.stacked {
-      width: 100%;
-    }
-  }
-
-  @include bp.breakpoint('<=xsmall') {
-    &:not(.fixed) {
-      flex-direction: column;
-      margin-left: 0;
-      width: 100% !important;
-
-      li {
-        flex-grow: 1;
-        flex-shrink: 1;
-        padding: (fn.spacing('small') * 0.5) 0 0 0;
-        text-align: center;
-        width: 100%;
-
-        > * {
-          width: 100%;
-        }
-
-        &:first-child {
-          padding-top: 0;
-        }
-
-        input[type='submit'],
-        input[type='reset'],
-        input[type='button'],
-        button,
-        .button {
-          width: 100%;
-
-          &.icon {
-            &:before {
-              margin-left: -0.5rem;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Icons
-// ==========================================================================
-
-ul.icons {
-  cursor: default;
-  list-style: none;
-  padding-left: 0;
-
-  li {
-    display: inline-block;
-    padding: 0 1em 0 0;
-
-    &:last-child {
-      padding-right: 0 !important;
-    }
-
-    .icon {
-      &:before {
-        font-size: 2em;
-      }
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Table
-// ==========================================================================
-
-.table-wrapper {
-  -webkit-overflow-scrolling: touch;
-  overflow-x: auto;
-}
-
-table {
-  margin: 0 0 fn.spacing('small') 0;
-  width: 100%;
-
-  tbody {
-    tr {
-      border: solid fn.layout('border-width') c.color('border');
-      border-left: 0;
-      border-right: 0;
-
-      &:nth-child(2n + 1) {
-        background-color: c.color('border');
-      }
-    }
-  }
-
-  td {
-    padding: 0.75em 0.75em;
-  }
-
-  th {
-    color: c.color('text');
-    font-size: 0.9em;
-    font-weight: fn.font-weight('bold');
-    padding: 0 0.75em 0.75em 0.75em;
-    text-align: left;
-  }
-
-  thead {
-    border-bottom: solid (fn.layout('border-width') * 2) c.color('border');
-  }
-
-  tfoot {
-    border-top: solid (fn.layout('border-width') * 2) c.color('border');
-  }
-
-  &.alt {
-    border-collapse: separate;
-
-    tbody {
-      tr {
-        td {
-          border: solid fn.layout('border-width') c.color('border');
-          border-left-width: 0;
-          border-top-width: 0;
-
-          &:first-child {
-            border-left-width: fn.layout('border-width');
-          }
-        }
-
-        &:first-child {
-          td {
-            border-top-width: fn.layout('border-width');
-          }
-        }
-      }
-    }
-
-    thead {
-      border-bottom: 0;
-    }
-
-    tfoot {
-      border-top: 0;
-    }
-  }
-}
-
-// ==========================================================================
-// MAIN - Box
-// ==========================================================================
-
-.box {
-  border-radius: fn.layout('border-radius');
-  border: solid fn.layout('border-width') c.color('border');
-  margin-bottom: fn.spacing('small');
-  padding: 1.5em;
-
-  > :last-child,
-  > :last-child > :last-child,
-  > :last-child > :last-child > :last-child {
-    margin-bottom: 0;
-  }
-
-  &.alt {
-    border: 0;
-    border-radius: 0;
-    padding: 0;
-  }
-}
-
-// ==========================================================================
-// MAIN - Form
-// ==========================================================================
-
-// Moved to _base.scss
-form {
-  margin: 0 0 fn.spacing('small') 0;
-}
-
-label {
-  color: c.color('text');
-  display: block;
-  font-size: fn.font-size('small');
-  font-weight: fn.font-weight('bold');
-  margin: 0 0 fn.spacing('small') 0;
-}
-
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-input[type='text'],
-input[type='password'],
-input[type='email'],
-select,
-textarea {
-  appearance: none;
-  border-radius: fn.layout('border-radius');
-  border: none;
-  border: solid fn.layout('border-width') c.color('border');
-  color: c.color('text') !important;
-  background: c.color('input-bg');
-  display: block;
-  outline: 0;
-  padding: 0 1em;
-  text-decoration: none;
-  width: 100%;
-  height: fn.layout('element-height');
-
-  &:invalid {
-    box-shadow: none;
-  }
-}
-
-Unused layout components #main {
-  margin-left: fn.layout('header-width');
-}
-
-.image {
-  border-radius: fn.layout('border-radius');
-  border: 0;
-  display: inline-block;
-  position: relative;
-}
-
-ul.icons {
-  cursor: default;
-  list-style: none;
-  padding-left: 0;
-}
-
-// ==========================================================================
-// Utilities
-// ==========================================================================
-
-Moved to _base.scss .text {
-  &-center {
-    text-align: center;
-  }
-  &-left {
-    text-align: left;
-  }
-  &-right {
-    text-align: right;
-  }
-}
-
-.margin {
-  &-top {
-    margin-top: fn.spacing('medium');
-  }
-  &-bottom {
-    margin-bottom: fn.spacing('medium');
-  }
-  &-left {
-    margin-left: fn.spacing('medium');
-  }
-  &-right {
-    margin-right: fn.spacing('medium');
-  }
-}
-
-.padding {
-  &-top {
-    padding-top: fn.spacing('medium');
-  }
-  &-bottom {
-    padding-bottom: fn.spacing('medium');
-  }
-  &-left {
-    padding-left: fn.spacing('medium');
-  }
-  &-right {
-    padding-right: fn.spacing('medium');
-  }
-}
-
-.hidden {
-  display: none !important;
-}
-
-.visually-hidden {
-  @include mx.visually-hidden;
-}
-
-// Additional button variants
-.button {
-  &.secondary {
-    background: c.color('secondary');
-
-    &:hover {
-      background: c.color('secondary-light');
-    }
-
-    &:active {
-      background: c.color('secondary-dark');
-    }
-  }
-
-  &.outline {
-    background: transparent;
-    border: fn.layout('border-width') solid currentColor;
-    color: c.color('primary');
-
-    &:hover {
-      background: c.color('primary');
-      color: c.color('background');
-    }
-  }
-}
-
-// Utility classes (moved to _base.scss)
-.text {
-  &-center {
-    text-align: center;
-  }
-  &-left {
-    text-align: left;
-  }
-  &-right {
-    text-align: right;
-  }
-}
-
-.margin {
-  &-top {
-    margin-top: fn.spacing('medium');
-  }
-  &-bottom {
-    margin-bottom: fn.spacing('medium');
-  }
-  &-left {
-    margin-left: fn.spacing('medium');
-  }
-  &-right {
-    margin-right: fn.spacing('medium');
-  }
-}
-
-.padding {
-  &-top {
-    padding-top: fn.spacing('medium');
-  }
-  &-bottom {
-    padding-bottom: fn.spacing('medium');
-  }
-  &-left {
-    padding-left: fn.spacing('medium');
-  }
-  &-right {
-    padding-right: fn.spacing('medium');
-  }
-}
-
-.hidden {
-  display: none !important;
-}
-.visually-hidden {
-  @include mx.visually-hidden;
-}
-
-// ==========================================================================
-// Forms
-// ==========================================================================
-
-Moved to _base.scss input,
-select,
-textarea {
-  background: c.color('input-bg');
-  border: fn.layout('border-width') solid c.color('border');
-  border-radius: fn.layout('border-radius');
-  color: c.color('text');
-  font-family: fn.font-family('primary');
-  font-size: fn.font-size('base');
-  padding: fn.spacing('small');
-  width: 100%;
-
-  &:focus {
-    border-color: c.color('primary');
-    outline: none;
-  }
-}
-
-// Features Component
-.features {
-  article {
-    border-top: solid 3px #f4f4f4;
-    margin-bottom: 2.25em;
-    padding-top: 2.25em;
-
-    &:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .image {
-      display: inline-block;
-      padding-right: 2.5em;
-      vertical-align: middle;
-      width: 48%;
-    }
-
-    .inner {
-      display: inline-block;
-      vertical-align: middle;
-      width: 50%;
-
-      > :last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
-// Forms
-input[type='text'],
-input[type='password'],
-input[type='email'],
-select,
-textarea {
-  appearance: none;
-  border-radius: 5px;
-  border: solid 2px #e4e4e4;
-  color: inherit;
-  display: block;
-  outline: 0;
-  padding: 0 1em;
-  text-decoration: none;
-  width: 100%;
-
-  &:invalid {
-    box-shadow: none;
-  }
-}
-
-// Images
-.image {
-  border-radius: 5px;
-  border: 0;
-  display: inline-block;
-  position: relative;
-
-  &.avatar {
-    border-radius: 100%;
-    overflow: hidden;
-
-    img {
-      border-radius: 100%;
-      width: 100%;
-    }
-  }
-
-  &.main {
-    display: block;
-    height: 20em;
-    border-radius: 0;
-
-    img {
-      border-radius: 0;
-    }
-  }
-}
-
-// Actions
-ul.actions {
-  display: flex;
-  cursor: default;
-  list-style: none;
-  margin-left: -1.125em;
-  padding-left: 0;
-
-  li {
-    padding: 0 0 0 1.125em;
-    vertical-align: middle;
-  }
-}
-
-// Old Grid System
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-  align-items: stretch;
-
-  > * {
-    box-sizing: border-box;
-  }
-
-  &.gtr-uniform > * > :last-child {
-    margin-bottom: 0;
-  }
-}
-
-// ==========================================================================
-// Deprecated Components
-// ==========================================================================
-// Components that have been moved to their own files or simplified
-
-// Old Features Component
-.features {
-  article {
-    border-top: solid (fn.layout('border-width') * 1.5) c.color('border');
-    margin-bottom: fn.spacing('medium');
-    padding-top: fn.spacing('medium');
-
-    &:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .image {
-      display: inline-block;
-      padding-right: 2.5em;
-      vertical-align: middle;
-      width: 48%;
-
-      img {
-        display: block;
-        width: 100%;
-      }
-    }
-
-    .inner {
-      display: inline-block;
-      vertical-align: middle;
-      width: 50%;
-
-      > :last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
-// Old Form Styles
-// Moved from _forms.scss - keeping for reference
-.button {
-  &.icon {
-    padding-left: fn.spacing('small') * 1.35;
-
-    &:before {
-      margin-right: fn.spacing('xsmall');
-    }
-  }
-
-  &.fit {
-    width: 100%;
-  }
-
-  &.small {
-    font-size: fn.font-size('small');
-  }
-
-  &.large {
-    font-size: fn.font-size('large');
-  }
-
-  &.alt {
-    background-color: transparent;
-    box-shadow: inset 0 0 0 fn.layout('border-width') c.color('border');
-    color: c.color('text') !important;
-
-    &:hover {
-      background-color: c.color('border');
-    }
-
-    &:active {
-      background-color: c.color('border');
-    }
-  }
-
-  &.primary {
-    background-color: c.color('primary');
-
-    &:hover {
-      background-color: c.color('primary-light');
-    }
-
-    &:active {
-      background-color: c.color('primary-dark');
-    }
-  }
-}
-
-// Old Container Implementation
-.container {
-  margin: 0 auto;
-  max-width: calc(100% - (fn.spacing('medium') * 2));
-  width: fn.layout('container-width');
-
-  &.xsmall {
-    width: (fn.layout('container-width') * 0.25);
-  }
-  &.small {
-    width: (fn.layout('container-width') * 0.5);
-  }
-  &.medium {
-    width: (fn.layout('container-width') * 0.75);
-  }
-  &.large {
-    width: (fn.layout('container-width') * 1.25);
-  }
-  &.xlarge {
-    width: (fn.layout('container-width') * 1.5);
-  }
-}
-
-// ==========================================================================
-// XSmall Breakpoint Styles
-// ==========================================================================
-
-@include bp.breakpoint('<=xsmall') {
-  /* Basic */
-  html,
-  body {
-    min-width: 320px;
-  }
-
-  body,
-  input,
-  select,
-  textarea {
-    font-size: 12pt;
-  }
-
-  /* List */
-  ul {
-    &.actions {
-      margin: 0 0 fn.spacing('small') 0;
-      // ... rest of the ul.actions styles
-    }
-  }
-}
+// // ==========================================================================
+// // Reference Code
+// // ==========================================================================
+// // This file contains code that was previously in main.scss but is currently unused.
+// // Kept for future reference and potential reuse.
+
+// // Typography - moved to _base.scss
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   color: c.color('text');
+//   font-weight: fn.font-weight('bold');
+//   line-height: 1em;
+//   margin: 0 0 fn.spacing('small');
+// }
+
+// @if fn.misc(header-side) == 'right' {
+//   padding-right: $size-header;
+// } @else {
+//   padding-left: $size-header;
+// }
+
+// // ==========================================================================
+// // MAIN - List
+// // ==========================================================================
+
+// ol {
+//   list-style: decimal;
+//   margin: 0 0 fn.spacing('small') 0;
+//   padding-left: 1.25em;
+
+//   li {
+//     padding-left: 0.25em;
+//   }
+// }
+
+// ul {
+//   list-style: disc;
+//   margin: 0 0 fn.spacing('small') 0;
+//   padding-left: 1em;
+
+//   li {
+//     padding-left: 0.5em;
+//   }
+
+//   &.alt {
+//     list-style: none;
+//     padding-left: 0;
+
+//     li {
+//       border-top: solid fn.layout('border-width') c.color('border');
+//       padding: 0.5em 0;
+
+//       &:first-child {
+//         border-top: 0;
+//         padding-top: 0;
+//       }
+//     }
+//   }
+// }
+
+// dl {
+//   margin: 0 0 fn.spacing('small') 0;
+// }
+
+// // ==========================================================================
+// // MAIN - Actions
+// // ==========================================================================
+
+// ul.actions {
+//   display: flex;
+//   cursor: default;
+//   list-style: none;
+//   margin-left: (fn.spacing('small') * -0.5);
+//   padding-left: 0;
+
+//   li {
+//     padding: 0 0 0 (fn.spacing('small') * 0.5);
+//     vertical-align: middle;
+//   }
+
+//   &.special {
+//     justify-content: center;
+//     width: 100%;
+//     margin-left: 0;
+
+//     li {
+//       &:first-child {
+//         padding-left: 0;
+//       }
+//     }
+//   }
+
+//   &.stacked {
+//     flex-direction: column;
+//     margin-left: 0;
+
+//     li {
+//       padding: (fn.spacing('small') * 0.5) 0 0 0;
+
+//       &:first-child {
+//         padding-top: 0;
+//       }
+//     }
+//   }
+
+//   &.fit {
+//     width: calc(100% + #{fn.spacing('small') * 0.5});
+
+//     li {
+//       flex-grow: 1;
+//       flex-shrink: 1;
+//       width: 100%;
+
+//       > * {
+//         width: 100%;
+//       }
+//     }
+
+//     &.stacked {
+//       width: 100%;
+//     }
+//   }
+
+//   @include bp.breakpoint('<=xsmall') {
+//     &:not(.fixed) {
+//       flex-direction: column;
+//       margin-left: 0;
+//       width: 100% !important;
+
+//       li {
+//         flex-grow: 1;
+//         flex-shrink: 1;
+//         padding: (fn.spacing('small') * 0.5) 0 0 0;
+//         text-align: center;
+//         width: 100%;
+
+//         > * {
+//           width: 100%;
+//         }
+
+//         &:first-child {
+//           padding-top: 0;
+//         }
+
+//         input[type='submit'],
+//         input[type='reset'],
+//         input[type='button'],
+//         button,
+//         .button {
+//           width: 100%;
+
+//           &.icon {
+//             &:before {
+//               margin-left: -0.5rem;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // ==========================================================================
+// // MAIN - Icons
+// // ==========================================================================
+
+// ul.icons {
+//   cursor: default;
+//   list-style: none;
+//   padding-left: 0;
+
+//   li {
+//     display: inline-block;
+//     padding: 0 1em 0 0;
+
+//     &:last-child {
+//       padding-right: 0 !important;
+//     }
+
+//     .icon {
+//       &:before {
+//         font-size: 2em;
+//       }
+//     }
+//   }
+// }
+
+// // ==========================================================================
+// // MAIN - Table
+// // ==========================================================================
+
+// .table-wrapper {
+//   -webkit-overflow-scrolling: touch;
+//   overflow-x: auto;
+// }
+
+// table {
+//   margin: 0 0 fn.spacing('small') 0;
+//   width: 100%;
+
+//   tbody {
+//     tr {
+//       border: solid fn.layout('border-width') c.color('border');
+//       border-left: 0;
+//       border-right: 0;
+
+//       &:nth-child(2n + 1) {
+//         background-color: c.color('border');
+//       }
+//     }
+//   }
+
+//   td {
+//     padding: 0.75em 0.75em;
+//   }
+
+//   th {
+//     color: c.color('text');
+//     font-size: 0.9em;
+//     font-weight: fn.font-weight('bold');
+//     padding: 0 0.75em 0.75em 0.75em;
+//     text-align: left;
+//   }
+
+//   thead {
+//     border-bottom: solid (fn.layout('border-width') * 2) c.color('border');
+//   }
+
+//   tfoot {
+//     border-top: solid (fn.layout('border-width') * 2) c.color('border');
+//   }
+
+//   &.alt {
+//     border-collapse: separate;
+
+//     tbody {
+//       tr {
+//         td {
+//           border: solid fn.layout('border-width') c.color('border');
+//           border-left-width: 0;
+//           border-top-width: 0;
+
+//           &:first-child {
+//             border-left-width: fn.layout('border-width');
+//           }
+//         }
+
+//         &:first-child {
+//           td {
+//             border-top-width: fn.layout('border-width');
+//           }
+//         }
+//       }
+//     }
+
+//     thead {
+//       border-bottom: 0;
+//     }
+
+//     tfoot {
+//       border-top: 0;
+//     }
+//   }
+// }
+
+// // ==========================================================================
+// // MAIN - Box
+// // ==========================================================================
+
+// .box {
+//   border-radius: fn.layout('border-radius');
+//   border: solid fn.layout('border-width') c.color('border');
+//   margin-bottom: fn.spacing('small');
+//   padding: 1.5em;
+
+//   > :last-child,
+//   > :last-child > :last-child,
+//   > :last-child > :last-child > :last-child {
+//     margin-bottom: 0;
+//   }
+
+//   &.alt {
+//     border: 0;
+//     border-radius: 0;
+//     padding: 0;
+//   }
+// }
+
+// // ==========================================================================
+// // MAIN - Form
+// // ==========================================================================
+
+// // Moved to _base.scss
+// form {
+//   margin: 0 0 fn.spacing('small') 0;
+// }
+
+// label {
+//   color: c.color('text');
+//   display: block;
+//   font-size: fn.font-size('small');
+//   font-weight: fn.font-weight('bold');
+//   margin: 0 0 fn.spacing('small') 0;
+// }
+
+// input::-moz-focus-inner {
+//   border: 0;
+//   padding: 0;
+// }
+
+// input[type='text'],
+// input[type='password'],
+// input[type='email'],
+// select,
+// textarea {
+//   appearance: none;
+//   border-radius: fn.layout('border-radius');
+//   border: none;
+//   border: solid fn.layout('border-width') c.color('border');
+//   color: c.color('text') !important;
+//   background: c.color('input-bg');
+//   display: block;
+//   outline: 0;
+//   padding: 0 1em;
+//   text-decoration: none;
+//   width: 100%;
+//   height: fn.layout('element-height');
+
+//   &:invalid {
+//     box-shadow: none;
+//   }
+// }
+
+// Unused layout components #main {
+//   margin-left: fn.layout('header-width');
+// }
+
+// .image {
+//   border-radius: fn.layout('border-radius');
+//   border: 0;
+//   display: inline-block;
+//   position: relative;
+// }
+
+// ul.icons {
+//   cursor: default;
+//   list-style: none;
+//   padding-left: 0;
+// }
+
+// // ==========================================================================
+// // Utilities
+// // ==========================================================================
+
+// Moved to _base.scss .text {
+//   &-center {
+//     text-align: center;
+//   }
+//   &-left {
+//     text-align: left;
+//   }
+//   &-right {
+//     text-align: right;
+//   }
+// }
+
+// .margin {
+//   &-top {
+//     margin-top: fn.spacing('medium');
+//   }
+//   &-bottom {
+//     margin-bottom: fn.spacing('medium');
+//   }
+//   &-left {
+//     margin-left: fn.spacing('medium');
+//   }
+//   &-right {
+//     margin-right: fn.spacing('medium');
+//   }
+// }
+
+// .padding {
+//   &-top {
+//     padding-top: fn.spacing('medium');
+//   }
+//   &-bottom {
+//     padding-bottom: fn.spacing('medium');
+//   }
+//   &-left {
+//     padding-left: fn.spacing('medium');
+//   }
+//   &-right {
+//     padding-right: fn.spacing('medium');
+//   }
+// }
+
+// .hidden {
+//   display: none !important;
+// }
+
+// .visually-hidden {
+//   @include mx.visually-hidden;
+// }
+
+// // Additional button variants
+// .button {
+//   &.secondary {
+//     background: c.color('secondary');
+
+//     &:hover {
+//       background: c.color('secondary-light');
+//     }
+
+//     &:active {
+//       background: c.color('secondary-dark');
+//     }
+//   }
+
+//   &.outline {
+//     background: transparent;
+//     border: fn.layout('border-width') solid currentColor;
+//     color: c.color('primary');
+
+//     &:hover {
+//       background: c.color('primary');
+//       color: c.color('background');
+//     }
+//   }
+// }
+
+// // Utility classes (moved to _base.scss)
+// .text {
+//   &-center {
+//     text-align: center;
+//   }
+//   &-left {
+//     text-align: left;
+//   }
+//   &-right {
+//     text-align: right;
+//   }
+// }
+
+// .margin {
+//   &-top {
+//     margin-top: fn.spacing('medium');
+//   }
+//   &-bottom {
+//     margin-bottom: fn.spacing('medium');
+//   }
+//   &-left {
+//     margin-left: fn.spacing('medium');
+//   }
+//   &-right {
+//     margin-right: fn.spacing('medium');
+//   }
+// }
+
+// .padding {
+//   &-top {
+//     padding-top: fn.spacing('medium');
+//   }
+//   &-bottom {
+//     padding-bottom: fn.spacing('medium');
+//   }
+//   &-left {
+//     padding-left: fn.spacing('medium');
+//   }
+//   &-right {
+//     padding-right: fn.spacing('medium');
+//   }
+// }
+
+// .hidden {
+//   display: none !important;
+// }
+// .visually-hidden {
+//   @include mx.visually-hidden;
+// }
+
+// // ==========================================================================
+// // Forms
+// // ==========================================================================
+
+// Moved to _base.scss input,
+// select,
+// textarea {
+//   background: c.color('input-bg');
+//   border: fn.layout('border-width') solid c.color('border');
+//   border-radius: fn.layout('border-radius');
+//   color: c.color('text');
+//   font-family: fn.font-family('primary');
+//   font-size: fn.font-size('base');
+//   padding: fn.spacing('small');
+//   width: 100%;
+
+//   &:focus {
+//     border-color: c.color('primary');
+//     outline: none;
+//   }
+// }
+
+// // Features Component
+// .features {
+//   article {
+//     border-top: solid 3px #f4f4f4;
+//     margin-bottom: 2.25em;
+//     padding-top: 2.25em;
+
+//     &:first-child {
+//       border-top: 0;
+//       padding-top: 0;
+//     }
+
+//     .image {
+//       display: inline-block;
+//       padding-right: 2.5em;
+//       vertical-align: middle;
+//       width: 48%;
+//     }
+
+//     .inner {
+//       display: inline-block;
+//       vertical-align: middle;
+//       width: 50%;
+
+//       > :last-child {
+//         margin-bottom: 0;
+//       }
+//     }
+//   }
+// }
+
+// // Forms
+// input[type='text'],
+// input[type='password'],
+// input[type='email'],
+// select,
+// textarea {
+//   appearance: none;
+//   border-radius: 5px;
+//   border: solid 2px #e4e4e4;
+//   color: inherit;
+//   display: block;
+//   outline: 0;
+//   padding: 0 1em;
+//   text-decoration: none;
+//   width: 100%;
+
+//   &:invalid {
+//     box-shadow: none;
+//   }
+// }
+
+// // Images
+// .image {
+//   border-radius: 5px;
+//   border: 0;
+//   display: inline-block;
+//   position: relative;
+
+//   &.avatar {
+//     border-radius: 100%;
+//     overflow: hidden;
+
+//     img {
+//       border-radius: 100%;
+//       width: 100%;
+//     }
+//   }
+
+//   &.main {
+//     display: block;
+//     height: 20em;
+//     border-radius: 0;
+
+//     img {
+//       border-radius: 0;
+//     }
+//   }
+// }
+
+// // Actions
+// ul.actions {
+//   display: flex;
+//   cursor: default;
+//   list-style: none;
+//   margin-left: -1.125em;
+//   padding-left: 0;
+
+//   li {
+//     padding: 0 0 0 1.125em;
+//     vertical-align: middle;
+//   }
+// }
+
+// // Old Grid System
+// .row {
+//   display: flex;
+//   flex-wrap: wrap;
+//   box-sizing: border-box;
+//   align-items: stretch;
+
+//   > * {
+//     box-sizing: border-box;
+//   }
+
+//   &.gtr-uniform > * > :last-child {
+//     margin-bottom: 0;
+//   }
+// }
+
+// // ==========================================================================
+// // Deprecated Components
+// // ==========================================================================
+// // Components that have been moved to their own files or simplified
+
+// // Old Features Component
+// .features {
+//   article {
+//     border-top: solid (fn.layout('border-width') * 1.5) c.color('border');
+//     margin-bottom: fn.spacing('medium');
+//     padding-top: fn.spacing('medium');
+
+//     &:first-child {
+//       border-top: 0;
+//       padding-top: 0;
+//     }
+
+//     .image {
+//       display: inline-block;
+//       padding-right: 2.5em;
+//       vertical-align: middle;
+//       width: 48%;
+
+//       img {
+//         display: block;
+//         width: 100%;
+//       }
+//     }
+
+//     .inner {
+//       display: inline-block;
+//       vertical-align: middle;
+//       width: 50%;
+
+//       > :last-child {
+//         margin-bottom: 0;
+//       }
+//     }
+//   }
+// }
+
+// // Old Form Styles
+// // Moved from _forms.scss - keeping for reference
+// .button {
+//   &.icon {
+//     padding-left: fn.spacing('small') * 1.35;
+
+//     &:before {
+//       margin-right: fn.spacing('xsmall');
+//     }
+//   }
+
+//   &.fit {
+//     width: 100%;
+//   }
+
+//   &.small {
+//     font-size: fn.font-size('small');
+//   }
+
+//   &.large {
+//     font-size: fn.font-size('large');
+//   }
+
+//   &.alt {
+//     background-color: transparent;
+//     box-shadow: inset 0 0 0 fn.layout('border-width') c.color('border');
+//     color: c.color('text') !important;
+
+//     &:hover {
+//       background-color: c.color('border');
+//     }
+
+//     &:active {
+//       background-color: c.color('border');
+//     }
+//   }
+
+//   &.primary {
+//     background-color: c.color('primary');
+
+//     &:hover {
+//       background-color: c.color('primary-light');
+//     }
+
+//     &:active {
+//       background-color: c.color('primary-dark');
+//     }
+//   }
+// }
+
+// // Old Container Implementation
+// .container {
+//   margin: 0 auto;
+//   max-width: calc(100% - (fn.spacing('medium') * 2));
+//   width: fn.layout('container-width');
+
+//   &.xsmall {
+//     width: (fn.layout('container-width') * 0.25);
+//   }
+//   &.small {
+//     width: (fn.layout('container-width') * 0.5);
+//   }
+//   &.medium {
+//     width: (fn.layout('container-width') * 0.75);
+//   }
+//   &.large {
+//     width: (fn.layout('container-width') * 1.25);
+//   }
+//   &.xlarge {
+//     width: (fn.layout('container-width') * 1.5);
+//   }
+// }
+
+// // ==========================================================================
+// // XSmall Breakpoint Styles
+// // ==========================================================================
+
+// @include bp.breakpoint('<=xsmall') {
+//   /* Basic */
+//   html,
+//   body {
+//     min-width: 320px;
+//   }
+
+//   body,
+//   input,
+//   select,
+//   textarea {
+//     font-size: 12pt;
+//   }
+
+//   /* List */
+//   ul {
+//     &.actions {
+//       margin: 0 0 fn.spacing('small') 0;
+//       // ... rest of the ul.actions styles
+//     }
+//   }
+// }

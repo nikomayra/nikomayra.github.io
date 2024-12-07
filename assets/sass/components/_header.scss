@@ -2,37 +2,43 @@
 // Header Component
 // ==========================================================================
 
-@use "../abstracts/functions" as fn;
-@use "../abstracts/mixins" as mx;
-@use "../abstracts/colors" as c;
-@use "../abstracts/breakpoints" as bp;
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mx;
+@use '../abstracts/colors' as c;
+@use '../abstracts/breakpoints' as bp;
+
+// Header Variables
+$header-width: fn.layout('header-width');
+$header-side: fn.layout('header-side');
+
+// ==========================================================================
+// Main Header
+// ==========================================================================
 
 #header {
-  background: c.color("primary");
-  color: c.color("text");
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: c.color('primary');
+  color: c.color('text');
   height: 100%;
-  left: 0;
-  padding: fn.spacing("large") fn.spacing("medium");
   position: fixed;
-  text-align: right;
+  text-align: center;
   top: 0;
-  width: fn.layout("header-width");
-  
+  width: $header-width;
+  z-index: fn.z('header');
+  #{if($header-side == 'right', 'right', 'left')}: 0;
+
   // Header Content
-  .inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    position: relative;
-    z-index: 1;
+  > * {
+    padding: fn.spacing('large') fn.spacing('medium');
   }
 
   // Avatar
   .avatar {
-    margin: 0 auto;
+    margin: 0 auto fn.spacing('medium') auto;
     width: 8em;
-    
+
     img {
       border-radius: 100%;
       width: 100%;
@@ -41,60 +47,77 @@
 
   // Navigation
   nav {
+    flex-grow: 1;
     ul {
       list-style: none;
-      margin: fn.spacing("medium") 0;
+      margin: fn.spacing('medium') 0;
       padding: 0;
 
       li {
         padding: 0;
-        
+
         a {
           border: 0;
-          color: c.color("text");
+          color: c.color('text');
           display: block;
-          font-size: fn.font-size("small");
-          font-weight: fn.font-weight("bold");
+          font-size: fn.font-size('small');
+          font-weight: fn.font-weight('bold');
           letter-spacing: 0.25em;
-          line-height: 1.75;
           padding: 0.5em 0;
           text-decoration: none;
           text-transform: uppercase;
 
           &:hover {
-            color: c.color("accent");
+            color: c.color('accent');
           }
-
           &.active {
-            color: c.color("accent");
+            color: c.color('accent');
           }
         }
       }
     }
   }
+
+  // Footer Icons
+  footer {
+    flex-shrink: 0;
+    bottom: 0;
+    left: 0;
+    #{if($header-side == 'right', 'right', 'left')}: 0;
+    padding: fn.spacing('medium');
+    position: absolute;
+    width: 100%;
+    ol,
+    ul {
+      list-style: none;
+    }
+  }
 }
 
+// ==========================================================================
 // Responsive Header
-@include bp.breakpoint("<=xlarge") {
+// ==========================================================================
+
+@include bp.breakpoint('<=xlarge') {
   #header {
-    width: fn.layout("header-width") * 0.9;
+    width: $header-width * 0.9;
+    transform: translateX(if($header-side == 'right', 100%, -100%));
+    transition: transform fn.duration('transition') ease;
+
+    &.header-visible {
+      transform: translateX(0);
+    }
   }
 }
 
-@include bp.breakpoint("<=medium") {
+@include bp.breakpoint('<=large') {
   #header {
-    width: fn.layout("header-width") * 0.8;
+    width: $header-width * 0.8;
   }
 }
 
-@include bp.breakpoint("<=small") {
+@include bp.breakpoint('<=xsmall') {
   #header {
-    width: fn.layout("header-width") * 0.7;
-  }
-}
-
-@include bp.breakpoint("<=xsmall") {
-  #header {
-    width: fn.layout("header-width") * 0.5;
+    width: $header-width * 0.6;
   }
 }

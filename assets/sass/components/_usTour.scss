@@ -10,12 +10,12 @@
 //   <div class="tooltip">State info</div>
 // </div>
 
-@use "../abstracts/variables" as vars;
-@use "../abstracts/functions" as fn;
-@use "../abstracts/colors" as c;
-@use "../abstracts/mixins" as mx;
-@use "../abstracts/breakpoints" as bp;
-@use "sass:map";
+@use '../abstracts/variables' as vars;
+@use '../abstracts/functions' as fn;
+@use '../abstracts/colors' as c;
+@use '../abstracts/mixins' as mx;
+@use '../abstracts/breakpoints' as bp;
+@use 'sass:map';
 
 // ==========================================================================
 // Container Layout
@@ -24,14 +24,16 @@
 .travels-container {
   display: flex;
   flex-direction: row;
-  gap: fn.spacing("medium");
+  gap: fn.spacing('medium');
   width: 100%;
 
-  @include bp.breakpoint("<=medium") {
-    flex-direction: column;
+  @include bp.breakpoint('<=medium') {
+    & {
+      flex-direction: column;
+    }
 
     .world-tour-container {
-      border-top: 1px solid c.color("secondary");
+      border-top: 1px solid c.color('secondary');
     }
   }
 }
@@ -56,15 +58,15 @@
 
 .tooltip {
   position: fixed;
-  padding: fn.spacing("small");
-  background: c.color("primary-light");
-  color: c.color("text");
-  border: fn.layout("border-width") solid c.color("border");
-  border-radius: fn.layout("border-radius");
+  padding: fn.spacing('small');
+  background: c.color('primary-light');
+  color: c.color('text');
+  border: fn.layout('border-width') solid c.color('border');
+  border-radius: fn.layout('border-radius');
   pointer-events: none;
-  font-size: fn.font-size("small");
+  font-size: fn.font-size('small');
   opacity: 0;
-  transition: opacity fn.duration("transition") ease;
+  transition: opacity fn.duration('transition') ease;
   transform: translate(-50%, -100%);
 
   &.visible {
@@ -80,7 +82,7 @@
   fill: var(--us-tour-state-unvisited);
   stroke: var(--us-tour-state-border);
   stroke-width: 1;
-  transition: fill fn.duration("transition") ease;
+  transition: fill fn.duration('transition') ease;
 
   &.visited {
     fill: var(--us-tour-state-visited);

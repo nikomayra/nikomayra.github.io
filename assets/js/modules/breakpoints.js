@@ -4,11 +4,11 @@
 class Breakpoint {
   constructor() {
     this.breakpoints = {
-      xlarge: [1281, 1680],
-      large: [1025, 1280],
-      medium: [737, 1024],
-      small: [481, 736],
-      xsmall: [null, 480],
+      xlarge: [1200, null], // ≥1200px
+      large: [992, 1199], // 992px-1199px
+      medium: [768, 991], // 768px-991px
+      small: [576, 767], // 576px-767px
+      xsmall: [320, 575], // 320px-575px
     };
   }
 
@@ -21,7 +21,7 @@ class Breakpoint {
         return key;
       }
     }
-    return null; // Return null if no breakpoint matches
+    return 'xsmall'; // Default to xsmall if no breakpoint matches
   }
 }
 

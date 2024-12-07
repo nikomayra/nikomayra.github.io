@@ -150,14 +150,12 @@ $vendor-values: (
         list.index(map-get($vendor-values, $property), $value)
     )
   {
-    // Webkit
-    -webkit-#{$property}: $value;
-    // Mozilla (if needed)
-    @if $property == 'appearance' {
-      -moz-#{$property}: $value;
+    // Apply all vendor prefixes from the list
+    @each $prefix in $vendor-prefixes {
+      #{$prefix}#{$property}: $value;
     }
+  } @else {
+    // Standard property only
+    #{$property}: $value;
   }
-
-  // Standard property
-  #{$property}: $value;
 }

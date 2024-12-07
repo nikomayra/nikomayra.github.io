@@ -10,37 +10,36 @@
 // @include bp.breakpoint(">=large") { ... }
 // @include bp.breakpoint(">small", "<large") { ... }
 
-@use "sass:string";
-@use "sass:map";
-@use "sass:list";
-@use "functions" as fn;
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'functions' as fn;
 
 /// Breakpoint list
 /// @type Map
+/// These values correspond to the min-width of each breakpoint range.
+/// The JavaScript implementation uses these as range boundaries.
 $breakpoints: (
-  // Mobile breakpoints
-  "xsmall": 320px,
-  "small": 576px,
-  "medium": 768px,
-
-  // Tablet/Desktop breakpoints
-  "large": 992px,
-  "xlarge": 1200px,
-  // "xxlarge": 1400px,
-  // // Special cases
-  // "short": "(max-height: 896px)",
-  // "xshort": "(max-height: 736px)",
-  // "xxshort": "(max-height: 480px)"
+  'xsmall': 320px,
+  // 320px-575px
+  'small': 576px,
+  // 576px-767px
+  'medium': 768px,
+  // 768px-991px
+  'large': 992px,
+  // 992px-1199px
+  'xlarge': 1200px // ≥1200px,,,,,,,,,,,
 );
 
 /// Breakpoint operation list
 /// @type Map
 $breakpoint-ops: (
-  ">": "min-width",
-  ">=": "min-width",
-  "=": "max-width",
-  "<=": "max-width",
-  "<": "max-width",
+  '>': 'min-width',
+  '>=': 'min-width',
+  '=': 'max-width',
+  '<=': 'max-width',
+  '<': 'max-width',
 );
 
 /// Processes a breakpoint value
@@ -49,10 +48,10 @@ $breakpoint-ops: (
 @function process-bp($str) {
   @if map.has-key($breakpoints, $str) {
     $value: map.get($breakpoints, $str);
-    @if meta.type-of($value) == "string" {
-      @return $value;
-    }
-    @return $value * 1px;
+    // @if meta.type-of($value) == 'string' {
+    //   @return $value;
+    // }
+    @return $value;
   }
   @return $str;
 }
@@ -63,24 +62,42 @@ $breakpoint-ops: (
 /// @return {string} Media query string
 @function create-media-query($op, $bp) {
   $processed-bp: process-bp($bp);
-  @if string.index($processed-bp, "max-height") {
-    @return $processed-bp;
+  @return '(#{map.get($breakpoint-ops, $op)}: #{$processed-bp})';
+}
+
+@function parse-breakpoint($query) {
+  $operators: ('>=', '<=', '>', '<', '=');
+
+  @each $op in $operators {
+    @if string.index($query, $op) == 1 {
+      $bp: string.slice($query, string.length($op) + 1);
+
+      // Return as a map instead of a list for clearer access
+      @return (operator: $op, breakpoint: $bp);
+    }
   }
-  @return "(#{map.get($breakpoint-ops, $op)}: #{$processed-bp})";
+
+  @warn 'Invalid breakpoint operator in #{$query}';
+  @return (operator: null, breakpoint: null);
 }
 
 /// Breakpoint mixin
 /// @param {string} $from [null] - Lower bound breakpoint
 /// @param {string} $until [null] - Upper bound breakpoint
 @mixin breakpoint($from: null, $until: null) {
+  // Handle both from and until first
   @if $from and $until {
     @media #{create-media-query(">", $from)} and #{create-media-query("<", $until)} {
       @content;
     }
-  } @else if $from {
-    @if string.index($from, ">") or string.index($from, ">=") or string.index($from, "<") or string.index($from, "<=") {
-      $op: string.slice($from, 1, string.index($from, string.slice($from, -1)) - 1);
-      $bp: string.slice($from, string.index($from, string.slice($from, -1)));
+  }
+  // Handle single conditions only if we don't have both
+  @else if $from {
+    @if string.index($from, '>') or string.index($from, '<') {
+      $parsed: parse-breakpoint($from);
+      $op: map.get($parsed, 'operator');
+      $bp: map.get($parsed, 'breakpoint');
+
       @media #{create-media-query($op, $bp)} {
         @content;
       }
@@ -93,7 +110,5 @@ $breakpoint-ops: (
     @media #{create-media-query("<", $until)} {
       @content;
     }
-  } @else {
-    @content;
   }
 }

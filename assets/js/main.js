@@ -55,7 +55,7 @@ $body.appendChild(titleBar);
 // Handle side panel toggle
 function toggleNavPanel() {
   $header.classList.toggle('header-visible');
-  $body.classList.toggle('header-visible');
+  // $body.classList.toggle('header-visible');
 }
 
 // Event listener for the toggle button
@@ -71,7 +71,11 @@ if ($titleBarToggle) {
 function checkHeaderVisibility() {
   const currentBreakpoint = breakpointInstance.getCurrent();
 
-  if (currentBreakpoint === 'medium' || currentBreakpoint === 'small') {
+  if (
+    currentBreakpoint === 'medium' ||
+    currentBreakpoint === 'small' ||
+    currentBreakpoint === 'xsmall'
+  ) {
     $header.classList.remove('header-visible'); // Hide header on medium and small screens
   } else {
     $header.classList.add('header-visible'); // Show header on large and xlarge screens

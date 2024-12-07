@@ -3,6 +3,7 @@
  * Only includes required icons
  */
 
+/* Base Icon Styles */
 .fa,
 .fab,
 .fas {
@@ -17,67 +18,65 @@
 
 /* Brand Icons */
 .fab {
-  font-family: "Font Awesome 5 Brands";
-}
-
-.fa-github:before {
-  content: "\f09b";
-}
-
-.fa-linkedin:before {
-  content: "\f08c";
-}
-
-.fa-flickr:before {
-  content: "\f16e";
-}
-
-.fa-deviantart:before {
-  content: "\f1bd";
-}
-
-.fa-instagram:before {
-  content: "\f16d";
+  font-family: 'Font Awesome 5 Brands';
+  font-weight: 400;
 }
 
 /* Solid Icons */
 .fas,
 .fa-solid {
-  font-family: "Font Awesome 5 Free";
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
 }
 
+/* Icon Content */
+.fa-github:before {
+  content: '\f09b';
+}
+.fa-linkedin:before {
+  content: '\f08c';
+}
+.fa-flickr:before {
+  content: '\f16e';
+}
+.fa-deviantart:before {
+  content: '\f1bd';
+}
+.fa-instagram:before {
+  content: '\f16d';
+}
 .fa-envelope:before {
-  content: "\f0e0";
+  content: '\f0e0';
+}
+.fa-bars:before {
+  content: '\f0c9';
 }
 
-/* Icon Classes */
+/* Icon Utilities */
 .icon {
   text-decoration: none;
   border-bottom: none;
   position: relative;
 }
 
-.icon:before {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1;
-  text-transform: none !important;
-}
-
 .icon > .label {
   display: none;
 }
 
-.icon.brands:before {
-  font-family: "Font Awesome 5 Brands";
+@font-face {
+  font-family: 'Font Awesome 5 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../webfonts/fa-brands-400.woff2') format('woff2'),
+    url('../webfonts/fa-brands-400.woff') format('woff');
 }
 
-.icon.solid:before {
-  font-family: "Font Awesome 5 Free";
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
   font-weight: 900;
+  font-display: block;
+  src: url('../webfonts/fa-solid-900.woff2') format('woff2'),
+    url('../webfonts/fa-solid-900.woff') format('woff');
 }
