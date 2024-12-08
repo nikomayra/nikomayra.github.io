@@ -79,16 +79,16 @@
 // ==========================================================================
 
 .state {
-  fill: var(--us-tour-state-unvisited);
-  stroke: var(--us-tour-state-border);
+  fill: var(--us-tour-state-unvisited-color);
+  stroke: var(--us-tour-state-border-color);
   stroke-width: 1;
   transition: fill fn.duration('transition') ease;
 
   &.visited {
-    fill: var(--us-tour-state-visited);
+    fill: var(--us-tour-state-visited-color);
   }
 
   &:hover {
-    fill: var(--us-tour-state-hover);
+    fill: var(--us-tour-state-hover-color);
   }
 }

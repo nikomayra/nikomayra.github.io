@@ -31,6 +31,7 @@
 @use 'components/usTour';
 @use 'components/worldTour';
 @use 'components/titlebar';
+@use 'components/projects';
 
 @import '../css/fontawesome-custom.css';
 
@@ -45,7 +46,7 @@ html {
 
 body {
   margin: 0;
-  overflow: hidden;
+  overflow: auto;
   background: c.color('background');
   color: c.color('text');
   font-family: fn.font-family('primary');

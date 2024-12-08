@@ -22,14 +22,12 @@ $header-side: fn.layout('header-side');
 }
 
 #main {
-  // max-width: fn.layout('container-width');
-  // margin-#{if($header-side == 'right', 'right', 'left')}: $header-width;
-  padding: fn.spacing('large');
-
   > section {
-    margin: fn.spacing('large') 0;
     &:first-child {
-      margin-top: 0;
+      border-top: 0;
+    }
+    > .container {
+      padding: 4em 0 2em 0;
     }
   }
 }
@@ -63,72 +61,38 @@ $header-side: fn.layout('header-side');
 // Responsive Layout
 // ==========================================================================
 
-// Large Screens (>=large)
-// @include bp.breakpoint('>=large') {
-//   #wrapper {
-//     padding-#{if($header-side == 'right', 'right', 'left')}: fn.layout('header-width') * 0.8;
-//   }
-//   #main {
-//     // margin-#{if($header-side == 'right', 'right', 'left')}: $header-width * 0.8;
-//   }
-// }
-
-// Medium Screens (<=medium)
-@include bp.breakpoint('<=medium') {
+@include bp.breakpoint('>=xlarge') {
   #wrapper {
-    // padding-#{if($header-side == 'right', 'right', 'left')}: $header-width * 0.8;
-  }
-  #main {
-    // margin-#{if($header-side == 'right', 'right', 'left')}: $header-width * 0.8;
+    body:has(#header.header-visible) & {
+      width: calc(100% - #{fn.layout('header-width') * 0.9});
+    }
   }
 }
 
-// Small Screens (<=small)
+@include bp.breakpoint('<=xlarge') {
+  #wrapper {
+    body:has(#header.header-visible) & {
+      width: calc(100% - #{fn.layout('header-width') * 0.9});
+    }
+  }
+}
+
+@include bp.breakpoint('<=large') {
+  #wrapper {
+    & {
+      padding: fn.layout('titlebar-height') 0 0 0;
+    }
+    body:has(#header.header-visible) & {
+      width: calc(100% - #{fn.layout('header-width') * 0.8});
+    }
+  }
+}
+
 @include bp.breakpoint('<=small') {
-  #wrapper {
-    // padding-#{if($header-side == 'right', 'right', 'left')}: $header-width * 0.7;
-    // min-width: 320px;
-  }
   #main {
-    // margin-#{if($header-side == 'right', 'right', 'left')}: $header-width * 0.7;
-    padding: fn.spacing('small');
-  }
-}
-
-// ==========================================================================
-// Section/Article Styles
-// ==========================================================================
-
-section,
-article {
-  &.special {
-    text-align: center;
-  }
-}
-
-header {
-  p {
-    color: c.color('text-light');
-    position: relative;
-    margin: 0 0 (fn.spacing('medium') * 0.75) 0;
-  }
-
-  h2 + p {
-    font-size: 1.25em;
-    margin-top: -0.5em;
-    line-height: 1.5em;
-  }
-
-  &.major {
-    h2 {
-      color: c.color('accent');
-      font-size: 3.5em;
-
-      & + p {
-        color: c.color('text');
-        font-size: 1.75em;
-        font-weight: fn.font-weight('bold');
-        margin-top: -0.75em;
+    > section {
+      > .container {
+        padding: 2em 0 0 0;
       }
     }
   }

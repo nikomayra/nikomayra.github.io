@@ -51,6 +51,15 @@
 .fa-bars:before {
   content: '\f0c9';
 }
+.fa-chevron-left:before {
+  content: '\f053';
+}
+.fa-chevron-right:before {
+  content: '\f054';
+}
+.fa-sync-alt:before {
+  content: '\f2f1';
+}
 
 /* Icon Utilities */
 .icon {

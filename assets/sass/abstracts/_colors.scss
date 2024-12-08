@@ -11,7 +11,7 @@ $base-colors: (
   'primary': #5e42a6,
   'secondary': #b74e91,
   'accent': #00ffcc,
-  'accent-alt': #ff3366,
+  'accent-alt': #e2c221,
 
   // Base colors
   'background': #312450,
@@ -26,8 +26,8 @@ $colors: ();
   $colors: map.set($colors, $name, $color);
 
   // Light/dark variants
-  $colors: map.set($colors, '#{$name}-light', color.scale($color, $lightness: 10%));
-  $colors: map.set($colors, '#{$name}-dark', color.scale($color, $lightness: -10%));
+  $colors: map.set($colors, '#{$name}-light', color.scale($color, $lightness: 20%));
+  $colors: map.set($colors, '#{$name}-dark', color.scale($color, $lightness: -20%));
 }
 
 // Add semantic color aliases
@@ -36,10 +36,10 @@ $colors: map.merge(
   (
     'link': map.get($colors, 'accent'),
     'link-hover': color.scale(map.get($colors, 'accent'), $lightness: 15%),
-    'border': color.change(map.get($colors, 'text'), $alpha: 0.1),
+    'border': color.change(map.get($colors, 'text'), $alpha: 0.5),
     'input-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
     'header-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
-    'shadow': color.change(map.get($colors, 'primary'), $alpha: 0.1),
+    'shadow': color.change(map.get($colors, 'background-dark'), $alpha: 0.1),
   )
 );
 

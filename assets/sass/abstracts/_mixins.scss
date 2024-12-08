@@ -93,54 +93,6 @@
   }
 }
 
-// /// Center block
-// /// @description Centers a block element within its container using auto margins
-// @mixin center-block {
-//   display: block;
-//   margin-left: auto;
-//   margin-right: auto;
-// }
-
-// /// Absolute Position
-// /// @description Positions an element absolutely with specified coordinates
-// /// @param {number} $top [null] - Top position
-// /// @param {number} $right [null] - Right position
-// /// @param {number} $bottom [null] - Bottom position
-// /// @param {number} $left [null] - Left position
-// @mixin position-absolute($top: null, $right: null, $bottom: null, $left: null) {
-//   position: absolute;
-//   top: $top;
-//   right: $right;
-//   bottom: $bottom;
-//   left: $left;
-// }
-
-// /// Absolute Center
-// /// @description Absolutely positions an element at the center of its container
-// /// @example scss
-// ///   .centered {
-// ///     @include absolute-center;
-// ///   }
-// @mixin absolute-center {
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// }
-
-// /// Fixed Center
-// /// @description Fixes an element at the center of the viewport
-// /// @example scss
-// ///   .modal {
-// ///     @include fixed-center;
-// ///   }
-// @mixin fixed-center {
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// }
-
 // ==========================================================================
 // Text Mixins
 // ==========================================================================
@@ -216,84 +168,12 @@
   transition: all fn.duration('standard') ease-in-out;
 }
 
-// ==========================================================================
-// Spacing Mixins
-// ==========================================================================
-
-// /// Padding
-// /// @param {number} $tb [0] - Top and bottom padding
-// /// @param {number} $lr [0] - Left and right padding
-// /// @param {list} $pad [(0, 0, 0, 0)] - Individual padding values
-// /// @param {boolean} $important [false] - Whether to add !important
-// @mixin padding($tb, $lr, $pad: (0, 0, 0, 0), $important: null) {
-//   @if $important {
-//     $important: '!important';
-//   }
-
-//   $x: 0.1em;
-
-//   @if math.unit(fn.spacing('element', 'margin')) == 'rem' {
-//     $x: 0.1rem;
-//   }
-
-//   padding: ($tb + list.nth($pad, 1)) ($lr + list.nth($pad, 2))
-//     max($x, $tb - fn.spacing('element', 'margin') + list.nth($pad, 3)) ($lr + list.nth($pad, 4)) #{$important};
-// }
-
-// ==========================================================================
-// Header Styles
-// ==========================================================================
-
-/// Toggle Header Visibility
-/// @param {number} $size-header [null] - Header size
-/// @param {string} $header-side [null] - Header side
-/// @param {string} $translate-value [null] - Translate value
-@mixin toggle-header-visibility($size-header, $header-side, $translate-value) {
-  backface-visibility: hidden;
-  transition: transform fn.duration('transition') ease;
-  display: block;
-  height: 100%;
-  overflow-y: auto;
-  position: fixed;
-  top: 0;
-  width: $size-header;
-  z-index: fn.z('header');
-
-  @if $header-side == 'right' {
-    transform: translateX($translate-value);
-    right: 0;
-  } @else {
-    transform: translateX($translate-value);
-    left: 0;
+/// Hide scrollbar
+/// @description Hides scrollbars on a container
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
-
-/// Toggle Header
-/// @param {string} $state [show] - Header state (show, hide)
-/// @param {number} $width [null] - Header width
-@mixin toggle-header($state, $width) {
-  @if $state == 'show' {
-    transition: transform fn.duration('transition') ease;
-    transform: translateX(if(fn.layout('header-side') == 'right', 0, $width)); //show
-  } @else {
-    transition: transform fn.duration('transition') ease;
-    transform: translateX(if(fn.layout('header-side') == 'right', $width, 0)); //hide
-  }
-  &.header-visible {
-    transition: transform fn.duration('transition') ease;
-    transform: translateX(if(fn.layout('header-side') == 'right', 0, $width)); //show
-  }
-}
-
-// // ==========================================================================
-// // Responsive Mixins
-// // ==========================================================================
-
-// /// Responsive breakpoint manager
-// /// @param {string} $breakpoint - Breakpoint name
-// /// @content styling within the media query
-// @mixin responsive($breakpoint) {
-//   @include bp.breakpoint($breakpoint) {
-//     @content;
-//   }
-// }

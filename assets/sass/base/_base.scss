@@ -80,6 +80,7 @@ h1 {
 }
 h2 {
   font-size: fn.font-size('h2');
+  margin: 0 0 fn.spacing('medium') * 1.2;
 }
 h3 {
   font-size: fn.font-size('h3');
@@ -112,16 +113,16 @@ a {
 // Lists
 ul,
 ol {
-  margin: 0 0 fn.spacing('medium');
+  // margin: 0 0 fn.spacing('medium');
   padding-left: 1em;
 }
 
 ul {
   list-style: disc;
 
-  li {
-    padding-left: 0.5em;
-  }
+  // li {
+  //   padding-left: 0.5em;
+  // }
 }
 
 ol {
@@ -202,7 +203,7 @@ button,
   background-color: c.color('primary');
   border: 0;
   border-radius: fn.layout('border-radius');
-  color: c.color('text');
+  color: c.color('background');
   cursor: pointer;
   display: inline-block;
   font-weight: fn.font-weight('bold');
@@ -215,7 +216,7 @@ button,
 
   &:hover {
     background-color: c.color('primary-light');
-    color: c.color('text-light');
+    color: c.color('text-dark');
   }
 
   &.small {
@@ -374,9 +375,49 @@ td {
 }
 
 // Container
-.container {
-  width: 100%;
-  max-width: fn.layout('container-width');
-  margin: 0 auto;
-  padding: 0 fn.spacing('medium');
+// .container {
+//   width: 100%;
+//   max-width: fn.layout('container-width');
+//   margin: 0 auto;
+//   padding: 0 fn.spacing('medium');
+// }
+
+// ==========================================================================
+// Section/Article Styles
+// ==========================================================================
+
+section,
+article {
+  &.special {
+    text-align: center;
+  }
+}
+
+header {
+  p {
+    color: c.color('text-light');
+    position: relative;
+    margin: 0 0 (fn.spacing('medium') * 0.75) 0;
+  }
+
+  h2 + p {
+    font-size: 1.25em;
+    margin-top: -0.5em;
+    line-height: 1.5em;
+  }
+
+  &.major {
+    h2 {
+      color: c.color('accent');
+      font-size: 3.5em;
+      line-height: 1.1em;
+
+      & + p {
+        color: c.color('text');
+        font-size: 1.75em;
+        font-weight: fn.font-weight('bold');
+        margin-top: -0.75em;
+      }
+    }
+  }
 }

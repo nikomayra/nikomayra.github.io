@@ -10,22 +10,27 @@
   @include bp.breakpoint('<=large') {
     & {
       backface-visibility: hidden;
-      background: c.color('background');
+      background: c.color('background-dark');
       display: block;
-      height: v.$titlebar-height;
+      height: fn.layout('titlebar-height');
       left: 0;
       position: fixed;
       top: 0;
       width: 100%;
       z-index: fn.z('header') + 1;
+      transition: width fn.duration('transition') ease;
+    }
+
+    body:has(#header.header-visible) & {
+      width: calc(100% - #{fn.layout('header-width') * 0.8});
     }
 
     .title {
       color: c.color('text');
       display: block;
       font-weight: fn.font-weight('bold');
-      height: v.$titlebar-height;
-      line-height: v.$titlebar-height;
+      height: fn.layout('titlebar-height');
+      line-height: fn.layout('titlebar-height');
       padding: 0 1em;
       text-align: if(fn.layout('header-side') == 'right', 'left', 'right');
     }
@@ -41,13 +46,13 @@
       #{if(fn.layout('header-side') == 'right', 'right', 'left')}: 0;
 
       &:before {
-        background: c.color('background');
+        background: c.color('primary');
         color: c.color('text');
         content: '\f0c9';
         display: block;
         font-size: v.$titlebar-icon-size;
-        height: v.$titlebar-height;
-        line-height: v.$titlebar-height;
+        height: fn.layout('titlebar-height');
+        line-height: fn.layout('titlebar-height');
         position: absolute;
         text-align: center;
         top: 0;

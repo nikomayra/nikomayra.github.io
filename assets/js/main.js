@@ -12,9 +12,10 @@ Fancybox.bind('[data-fancybox]', {
 });
 
 // Import other visualization modules
-import './worldTour.js';
+import './components/worldTour.js';
 import './skills.js';
-import './usTour.js';
+import './components/usTour.js';
+import './components/projects.js';
 
 // DOM Elements
 const $window = window;
@@ -55,7 +56,6 @@ $body.appendChild(titleBar);
 // Handle side panel toggle
 function toggleNavPanel() {
   $header.classList.toggle('header-visible');
-  // $body.classList.toggle('header-visible');
 }
 
 // Event listener for the toggle button
@@ -72,14 +72,21 @@ function checkHeaderVisibility() {
   const currentBreakpoint = breakpointInstance.getCurrent();
 
   if (
-    currentBreakpoint === 'medium' ||
-    currentBreakpoint === 'small' ||
-    currentBreakpoint === 'xsmall'
+    (currentBreakpoint === 'large' || currentBreakpoint === 'xlarge') &&
+    !document.querySelector('#header.header-visible')
   ) {
-    $header.classList.remove('header-visible'); // Hide header on medium and small screens
-  } else {
-    $header.classList.add('header-visible'); // Show header on large and xlarge screens
+    $header.classList.add('header-visible');
   }
+
+  //   if (
+  //     currentBreakpoint === 'medium' ||
+  //   currentBreakpoint === 'small' ||
+  //   currentBreakpoint === 'xsmall'
+  // ) {
+  //   $header.classList.remove('header-visible'); // Hide header on medium and small screens
+  // } else {
+  //   $header.classList.add('header-visible'); // Show header on large and xlarge screens
+  // }
 }
 
 // Check visibility on load and resize

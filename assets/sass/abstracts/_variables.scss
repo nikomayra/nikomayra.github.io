@@ -20,11 +20,10 @@
 // Titlebar
 // ==========================================================================
 
-$titlebar-height: 44px !default;
 $titlebar-toggle-height: 4em !default;
 $titlebar-toggle-width: 6em !default;
 $titlebar-icon-size: 18px !default;
-$titlebar-icon-width: 64px !default;
+$titlebar-icon-width: 50px !default;
 
 // ==========================================================================
 // Typography
@@ -80,6 +79,7 @@ $layout: (
   'element-height': 2.75em,
   'container-width': 45em,
   'header-side': 'right',
+  'titlebar-height': 44px,
   // Used in wrapper padding calculations
 );
 
@@ -91,7 +91,7 @@ $layout: (
 
 $spacing: (
   'none': 0,
-  'xsmall': 0.5rem,
+  'xsmall': 0.6rem,
   'small': 1rem,
   'medium': 2rem,
   'large': 3rem,
@@ -126,6 +126,7 @@ $durations: (
 
 $component-vars: (
   'skills': (
+    'base-color': map.get(c.$colors, 'secondary'),
     'bubble-opacity': 0.95,
     'hover-scale': 1.2,
     'float-distance': '10px',
@@ -136,7 +137,7 @@ $component-vars: (
   'us-tour': (
     'state-unvisited-color': map.get(c.$colors, 'secondary'),
     'state-visited-color': map.get(c.$colors, 'accent'),
-    'state-hover-color': map.get(c.$colors, 'accent-light'),
+    'state-hover-color': map.get(c.$colors, 'accent-alt'),
     'state-border-color': map.get(c.$colors, 'tertiary'),
   ),
   'world-tour': (
@@ -154,6 +155,7 @@ $component-vars: (
 // These variables are exposed to the CSS scope for runtime access
 :root {
   // Skills component
+  --skill-base-color: #{map.get($component-vars, 'skills', 'base-color')};
   --skills-bubble-opacity: #{map.get($component-vars, 'skills', 'bubble-opacity')};
   --skills-hover-scale: #{map.get($component-vars, 'skills', 'hover-scale')};
   --skills-float-distance: #{map.get($component-vars, 'skills', 'float-distance')};
@@ -175,4 +177,8 @@ $component-vars: (
   --world-graticule-color: #{map.get($component-vars, 'world-tour', 'graticule-color')};
   --world-flight-path-color: #{map.get($component-vars, 'world-tour', 'flight-path-color')};
   --world-transition-duration: #{map.get($component-vars, 'world-tour', 'transition-duration')};
+
+  // Projects component
+  --project-card-width: 300px;
+  --project-card-height: 450px;
 }

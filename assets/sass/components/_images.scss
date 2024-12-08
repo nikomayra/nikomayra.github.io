@@ -1,6 +1,6 @@
-@use "../abstracts/colors" as c;
-@use "../abstracts/functions" as fn;
-@use "../abstracts/breakpoints" as bp;
+@use '../abstracts/colors' as c;
+@use '../abstracts/functions' as fn;
+@use '../abstracts/breakpoints' as bp;
 
 // ==========================================================================
 // Images Component
@@ -8,7 +8,7 @@
 // Contains all image-related styles including positioning and layout variants
 
 .image {
-  border-radius: fn.layout("border-radius");
+  border-radius: fn.layout('border-radius');
   border: 0;
   display: inline-block;
   position: relative;
@@ -28,7 +28,7 @@
 
   // Position Variants
   @each $pos in (top left, top, top right, right, bottom right, bottom, bottom left, left, center) {
-    &[data-position="#{$pos}"] {
+    &[data-position='#{$pos}'] {
       img {
         object-position: #{$pos};
       }
@@ -37,7 +37,7 @@
 
   // Percentage Position Variants
   @each $x, $y in ((25%, 25%), (75%, 25%), (75%, 75%), (25%, 75%)) {
-    &[data-position="#{$x} #{$y}"] {
+    &[data-position='#{$x} #{$y}'] {
       img {
         object-position: #{$x} #{$y};
       }
@@ -46,7 +46,7 @@
 
   // Base Image Styles
   img {
-    border-radius: fn.layout("border-radius");
+    border-radius: fn.layout('border-radius');
     display: block;
   }
 
@@ -65,7 +65,7 @@
 
   &.fit {
     display: block;
-    margin: 0 0 fn.spacing("small") 0;
+    margin: 0 0 fn.spacing('small') 0;
     width: 100%;
 
     img {
@@ -88,11 +88,19 @@
 
   &.main {
     display: block;
-    height: 20em;
     border-radius: 0;
+    height: 20em;
 
     img {
       border-radius: 0;
+    }
+
+    @include bp.breakpoint('<=large') {
+      height: 15em;
+    }
+
+    @include bp.breakpoint('<=medium') {
+      height: 12em;
     }
   }
 }
