@@ -17,129 +17,136 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as mx;
 @use '../abstracts/breakpoints' as bp;
+@use '../vendor/vendor' as vendor;
 @use 'sass:map';
 @use 'sass:color';
-
-// ==========================================================================
-// Component Variables
-// ==========================================================================
-
-/// Animation configuration
-/// @type Map
-$animation: (
-  'bubble': (
-    'opacity': 0.95,
-    'hover-scale': 1.2,
-    'float-distance': 6px,
-    'float-duration': 7s,
-    'wiggle-duration': 0.4s,
-    'wiggle-rotation': 7deg,
-  ),
-);
 
 // ==========================================================================
 // Skills Container
 // ==========================================================================
 
-.skills-container {
-  position: relative;
+.skills-wrapper {
+  display: flex;
   width: 100%;
-  height: 100%;
+  gap: 2rem;
+
+  @include bp.breakpoint('<=medium') {
+    flex-direction: column;
+  }
+}
+
+.skills-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   min-height: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  &.software {
+    flex: 3;
+  }
+
+  &.mechanical {
+    flex: 2;
+  }
+
+  .skills-section-title {
+    text-align: center;
+    color: c.color('accent');
+    font-size: 1.5em;
+    margin: 0 0 1rem 0;
+  }
+}
+
+.skills-container {
+  flex: 1;
+  position: relative;
+  padding: 1rem;
+  border: 2px solid c.color('secondary');
+  border-radius: 15px;
   overflow: hidden;
-}
 
-// ==========================================================================
-// Skill Bubble
-// ==========================================================================
-
-.skill {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: c.color('text');
-  font-weight: fn.font-weight('bold');
-  cursor: pointer;
-  text-align: center;
-  box-sizing: border-box;
-  opacity: var(--skills-bubble-opacity);
-  padding: 0;
-  user-select: none;
-
-  // Visual styling
-  border: 2px solid c.color('border');
-  box-shadow: inset 0 0 30px c.color('primary-dark'), 0 4px 12px c.color('primary-dark');
-
-  // Animations
-  transition: transform fn.duration('standard') cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow fn.duration('standard') ease, color fn.duration('standard') ease;
-  animation: float var(--skills-float-duration) ease-in-out infinite;
-
-  // Hover state
   &:hover {
-    transform: scale(var(--skills-hover-scale));
-    border-color: c.color('accent');
-    box-shadow: inset 0 0 40px c.color('shadow'), 0 6px 16px c.color('shadow');
-    animation: wiggle var(--skills-wiggle-duration) ease infinite;
+    border-color: c.color('accent-alt');
+    transition: border-color fn.duration('transition') ease;
   }
 
-  // Remove default link styling
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+  }
+}
+
+// Skill Tags
+.skill {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all fn.duration('transition') ease-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   a {
-    border: none;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     text-decoration: none;
-  }
-}
+    color: c.color('accent');
+    border: 2px solid c.color('accent');
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    font-weight: fn.font-weight('bold');
+    background-color: var(--skill-base-color);
+    transition: all fn.duration('transition') cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      opacity fn.duration('transition') ease;
+    overflow: hidden;
 
-// ==========================================================================
-// Skill Name
-// ==========================================================================
+    .skill-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: var(--skill-level);
+      background-color: c.color('accent');
+      opacity: var(--skill-progress-opacity);
+      transition: all fn.duration('transition') ease;
+    }
 
-.skill-name {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  word-wrap: break-word;
-  hyphens: auto;
-  line-height: 1.2;
-  font-family: fn.font-family('primary');
-  border: none;
-  text-decoration: none;
-  font-size: 1cqw;
-}
+    .skill-text {
+      position: relative;
+      z-index: 1;
+    }
 
-// ==========================================================================
-// Animations
-// ==========================================================================
+    &:hover {
+      transform: translateY(var(--skill-hover-translate)) scale(var(--skill-hover-scale));
+      border-color: c.color('accent-alt');
+      box-shadow: 0 4px 11px c.color('shadow');
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translate(0, 0);
+      .skill-progress {
+        background-color: c.color('accent-alt');
+        opacity: var(--skill-progress-hover-opacity);
+      }
+    }
   }
-  50% {
-    transform: translate(0, var(--skills-float-distance));
-  }
-}
 
-@keyframes wiggle {
-  0% {
-    transform: rotate(0deg) scale(var(--skills-hover-scale));
+  // Responsive adjustments
+  @include bp.breakpoint('<=medium') {
+    a {
+      font-size: clamp(0.8rem, 3vw, 1.4rem);
+      // padding: 0.4rem 0.8rem;
+    }
   }
-  25% {
-    transform: rotate(calc(-1 * var(--skills-wiggle-rotation))) scale(var(--skills-hover-scale));
-  }
-  75% {
-    transform: rotate(var(--skills-wiggle-rotation)) scale(var(--skills-hover-scale));
-  }
-  100% {
-    transform: rotate(0deg) scale(var(--skills-hover-scale));
+
+  @include bp.breakpoint('<=small') {
+    a {
+      font-size: clamp(0.8rem, 4vw, 1rem);
+      // padding: 0.3rem 0.6rem;
+    }
   }
 }

@@ -25,12 +25,11 @@
 
 .carousel-controls {
   position: absolute;
-  top: 0;
+  top: 0.5rem;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
   z-index: 2;
 }
 
@@ -43,10 +42,18 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background fn.duration('transition') ease;
+  transition: all fn.duration('transition') ease;
+  opacity: 0.8;
 
-  &:hover {
+  &.disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &:not(.disabled):hover {
     background: c.color('primary-dark');
+    opacity: 1;
   }
 
   .chevron-left {
@@ -59,15 +66,17 @@
 }
 
 .projects-carousel {
-  display: flex;
-  gap: 2rem;
-  padding: 2rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  position: relative;
+  width: 100%;
+  height: var(--project-card-height);
+  overflow: hidden;
 
-  @include mx.hide-scrollbar;
+  .carousel-track {
+    position: absolute;
+    display: flex;
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
 }
 
 p {
@@ -77,10 +86,14 @@ p {
 .project-card {
   flex: 0 0 var(--project-card-width);
   height: var(--project-card-height);
-  scroll-snap-align: start;
-  position: relative;
-  perspective: 1000px;
-  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+  transform: scale(0.9);
+
+  &.active {
+    opacity: 1;
+    transform: scale(1);
+  }
 
   @include bp.breakpoint('<=small') {
     --project-card-width: 280px;

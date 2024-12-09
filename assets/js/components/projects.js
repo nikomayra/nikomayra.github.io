@@ -6,6 +6,26 @@ class ProjectsCarousel {
     this.carousel = document.querySelector('.projects-carousel');
     this.projects = [
       {
+        title: 'Project 5',
+        subtitle: 'TBD',
+        image: 'images/pic03.jpg',
+        description: 'TBD TBD TBD TBD TBD TBD TBD TBD TBD TBD',
+        tech: 'TBD|TBD|TBD|TBD|TBD|TBD',
+        demoUrl: 'TBD',
+        repoUrl: 'TBD',
+        videoUrl: null,
+      },
+      {
+        title: 'Project 4',
+        subtitle: 'Real-time chat & sketch',
+        image: 'images/pic02.jpg',
+        description: 'TBD TBD TBD TBD TBD TBD TBD TBD TBD TBD',
+        tech: 'Go Lang|React|Websockets|PostgreSQL',
+        demoUrl: 'TBD',
+        repoUrl: 'https://github.com/nikomayra/rtc-nb',
+        videoUrl: null,
+      },
+      {
         title: 'Serverless Image Processor',
         subtitle: 'Azure Serverless Architecture',
         image: 'images/BG.png',
@@ -39,40 +59,42 @@ class ProjectsCarousel {
         videoUrl: 'https://youtu.be/JCAG6QyIfGM',
       },
     ];
-
+    this.activeIndex = 0;
     this.init();
   }
 
   init() {
     this.render();
-    this.setupNavigation();
-    this.initializeFancybox();
-    this.setupCardFlip();
+    // Wait for next frame to ensure DOM and styles are fully applied
+    requestAnimationFrame(() => {
+      this.setupNavigation();
+      this.initializeFancybox();
+      this.setupCardFlip();
+      this.setActiveCard(this.activeIndex);
+    });
   }
 
   render() {
-    // Create carousel container
-    this.carousel.innerHTML = this.projects
-      .map((project) => this.createProjectCard(project))
-      .join('');
+    this.carousel.innerHTML = `
+      <div class="carousel-track">
+        ${this.projects.map((project, index) => this.createProjectCard(project, index)).join('')}
+      </div>
+    `;
 
-    // Add navigation arrows
     this.container.insertAdjacentHTML(
       'beforeend',
-      `
-      <div class="carousel-controls">
+      `<div class="carousel-controls">
         <div class="carousel-nav prev">
           <i class="chevron-left"></i>
         </div>
         <div class="carousel-nav next">
           <i class="chevron-right"></i>
         </div>
-      </div>
-      `
+      </div>`
     );
   }
 
-  createProjectCard(project) {
+  createProjectCard(project, index) {
     const techTags = project.tech
       .split('|')
       .map((tech) => `<span class="tech-tag">${tech.trim()}</span>`)
@@ -113,15 +135,55 @@ class ProjectsCarousel {
   }
 
   setupNavigation() {
-    const scrollAmount = 320; // card width + gap
+    this.prevButton = document.querySelector('.carousel-nav.prev');
+    this.nextButton = document.querySelector('.carousel-nav.next');
 
-    document.querySelector('.carousel-nav.prev').addEventListener('click', () => {
-      this.carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
+    this.prevButton.addEventListener('click', () => this.navigate('prev'));
+    this.nextButton.addEventListener('click', () => this.navigate('next'));
 
-    document.querySelector('.carousel-nav.next').addEventListener('click', () => {
-      this.carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
+    this.updateNavigationVisibility();
+  }
+
+  navigate(direction) {
+    const newIndex = direction === 'next' ? this.activeIndex + 1 : this.activeIndex - 1;
+
+    if (newIndex >= 0 && newIndex < this.projects.length) {
+      this.setActiveCard(newIndex);
+    }
+  }
+
+  setActiveCard(index) {
+    const cards = this.carousel.querySelectorAll('.project-card');
+    const track = this.carousel.querySelector('.carousel-track');
+
+    cards.forEach((card) => card.classList.remove('active'));
+    cards[index].classList.add('active');
+
+    const cardWidth = cards[0].offsetWidth;
+    const carouselWidth = this.carousel.offsetWidth;
+
+    // Calculate the offset to center the active card within the carousel
+    const totalOffset = cardWidth * index;
+    const centerOffset = (carouselWidth - cardWidth) / 2;
+
+    track.style.transform = `translateX(${centerOffset - totalOffset}px)`;
+
+    this.activeIndex = index;
+    this.updateNavigationVisibility();
+  }
+
+  updateNavigationVisibility() {
+    if (this.activeIndex <= 0) {
+      this.prevButton.classList.add('disabled');
+    } else {
+      this.prevButton.classList.remove('disabled');
+    }
+
+    if (this.activeIndex >= this.projects.length - 1) {
+      this.nextButton.classList.add('disabled');
+    } else {
+      this.nextButton.classList.remove('disabled');
+    }
   }
 
   initializeFancybox() {

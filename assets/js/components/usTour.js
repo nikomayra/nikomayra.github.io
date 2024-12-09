@@ -105,4 +105,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     .attr('stroke', getColorValue('--us-tour-state-border-color'))
     .attr('stroke-linejoin', 'round')
     .attr('d', path);
+
+  // Hide tooltip on scroll or mouse movement
+  document.addEventListener('scroll', () => {
+    const tooltip = document.querySelector('.tooltip');
+    if (tooltip) tooltip.classList.remove('visible');
+  });
 });

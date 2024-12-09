@@ -1,5 +1,5 @@
-import * as d3 from "d3";
-import { hexToHSL, HSLToHex } from "../js/colorConverter.js";
+import * as d3 from 'd3';
+import { hexToHSL, HSLToHex } from '../js/colorConverter.js';
 
 // Modified version of https://observablehq.com/@d3/bubble-chart/2
 // ISC License
@@ -17,280 +17,278 @@ import { hexToHSL, HSLToHex } from "../js/colorConverter.js";
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-document.addEventListener("DOMContentLoaded", function () {
-  const skills = [
+document.addEventListener('DOMContentLoaded', function () {
+  const levels = {
+    novice: 1,
+    intermediate: 2,
+    advanced: 3,
+    expert: 4,
+    master: 5,
+  };
+
+  const softwareSkills = [
     // Programming Languages
     {
-      name: "JavaScript",
-      level: 4,
-      category: "Languages",
-      url: "https://www.javascript.com/",
+      name: 'JavaScript',
+      level: levels.advanced,
+      category: 'Languages',
+      url: 'https://www.javascript.com/',
     },
     {
-      name: "TypeScript",
-      level: 5,
-      category: "Languages",
-      url: "https://www.typescriptlang.org/",
+      name: 'TypeScript',
+      level: levels.advanced,
+      category: 'Languages',
+      url: 'https://www.typescriptlang.org/',
     },
     {
-      name: "Python",
-      level: 5,
-      category: "Languages",
-      url: "https://www.python.org/",
+      name: 'Python',
+      level: levels.advanced,
+      category: 'Languages',
+      url: 'https://www.python.org/',
     },
     {
-      name: "VBA",
-      level: 3,
-      category: "Languages",
-      url: "https://learn.microsoft.com/en-us/office/vba/api/overview/",
+      name: 'VBA',
+      level: levels.intermediate,
+      category: 'Languages',
+      url: 'https://learn.microsoft.com/en-us/office/vba/api/overview/',
     },
     {
-      name: "C#",
-      level: 2,
-      category: "Languages",
-      url: "https://learn.microsoft.com/en-us/dotnet/csharp/",
+      name: 'C#',
+      level: levels.novice,
+      category: 'Languages',
+      url: 'https://learn.microsoft.com/en-us/dotnet/csharp/',
     },
     {
-      name: "HTML",
-      level: 3,
-      category: "Languages",
-      url: "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      name: 'HTML',
+      level: levels.intermediate,
+      category: 'Languages',
+      url: 'https://developer.mozilla.org/en-US/docs/Web/HTML',
     },
     {
-      name: "CSS",
-      level: 2,
-      category: "Languages",
-      url: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      name: 'CSS',
+      level: levels.intermediate,
+      category: 'Languages',
+      url: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
     },
     {
-      name: "Go Lang",
-      level: 6,
-      category: "Languages",
-      url: "https://go.dev/",
+      name: 'Go Lang',
+      level: levels.advanced,
+      category: 'Languages',
+      url: 'https://go.dev/',
     },
 
     // Frameworks & Runtime
     {
-      name: "React (Vite)",
-      level: 6,
-      category: "Frameworks",
-      url: "https://react.dev/",
+      name: 'React',
+      level: levels.advanced,
+      category: 'Frameworks',
+      url: 'https://react.dev/',
     },
     {
-      name: "Node.js",
-      level: 4,
-      category: "Frameworks",
-      url: "https://nodejs.org/docs/latest/api/",
+      name: 'Vite',
+      level: levels.intermediate,
+      category: 'Frameworks',
+      url: 'https://vitejs.dev/',
     },
     {
-      name: "Express",
-      level: 3,
-      category: "Frameworks",
-      url: "https://expressjs.com/",
+      name: 'Node',
+      level: levels.advanced,
+      category: 'Frameworks',
+      url: 'https://nodejs.org/docs/latest/api/',
     },
     {
-      name: "Flask",
-      level: 3,
-      category: "Frameworks",
-      url: "https://flask.palletsprojects.com/",
+      name: 'Express',
+      level: levels.intermediate,
+      category: 'Frameworks',
+      url: 'https://expressjs.com/',
     },
     {
-      name: "Azure Functions",
-      level: 2,
-      category: "Frameworks",
-      url: "https://learn.microsoft.com/en-us/azure/azure-functions/",
+      name: 'Flask',
+      level: levels.intermediate,
+      category: 'Frameworks',
+      url: 'https://flask.palletsprojects.com/',
+    },
+    {
+      name: 'Azure Functions',
+      level: levels.novice,
+      category: 'Frameworks',
+      url: 'https://learn.microsoft.com/en-us/azure/azure-functions/',
     },
 
     // Data Storage
     {
-      name: "MongoDB",
-      level: 4,
-      category: "Storage",
-      url: "https://www.mongodb.com/docs/",
+      name: 'MongoDB',
+      level: levels.intermediate,
+      category: 'Storage',
+      url: 'https://www.mongodb.com/docs/',
     },
     {
-      name: "PostgreSQL",
-      level: 5,
-      category: "Storage",
-      url: "https://www.postgresql.org/docs/",
+      name: 'Postgres',
+      level: levels.intermediate,
+      category: 'Storage',
+      url: 'https://www.postgresql.org/docs/',
     },
     {
-      name: "Azure Blob",
-      level: 3,
-      category: "Storage",
-      url: "https://learn.microsoft.com/en-us/azure/storage/blobs/",
+      name: 'Azure Blob',
+      level: levels.novice,
+      category: 'Storage',
+      url: 'https://learn.microsoft.com/en-us/azure/storage/blobs/',
     },
     {
-      name: "DynamoDB",
-      level: 2,
-      category: "Storage",
-      url: "https://aws.amazon.com/dynamodb/",
-    },
-
-    // Project Management
-    {
-      name: "Jira",
-      level: 6,
-      category: "Management",
-      url: "https://www.atlassian.com/software/jira",
-    },
-    {
-      name: "Confluence",
-      level: 5,
-      category: "Management",
-      url: "https://www.atlassian.com/software/confluence",
-    },
-    {
-      name: "SAP",
-      level: 3,
-      category: "Management",
-      url: "https://help.sap.com/",
-    },
-
-    // CAD & Design
-    {
-      name: "Creo",
-      level: 6,
-      category: "Design",
-      url: "https://www.ptc.com/en/products/creo",
-    },
-    {
-      name: "CATIA",
-      level: 6,
-      category: "Design",
-      url: "https://www.3ds.com/products-services/catia/",
-    },
-    {
-      name: "Solidworks",
-      level: 4,
-      category: "Design",
-      url: "https://www.solidworks.com/",
-    },
-    {
-      name: "Unity3D",
-      level: 3,
-      category: "Design",
-      url: "https://docs.unity3d.com/",
-    },
-
-    // PLM Systems
-    {
-      name: "Windchill",
-      level: 4,
-      category: "PLM",
-      url: "https://www.ptc.com/en/products/windchill",
-    },
-    {
-      name: "Enovia",
-      level: 4,
-      category: "PLM",
-      url: "https://www.3ds.com/products-services/enovia/",
-    },
-    {
-      name: "SmarTeam",
-      level: 3,
-      category: "PLM",
-      url: "https://www.3ds.com/products-services/smarteam/",
+      name: 'DynamoDB',
+      level: levels.novice,
+      category: 'Storage',
+      url: 'https://aws.amazon.com/dynamodb/',
     },
   ];
 
-  function generateCategoryColors() {
-    const baseColor = getComputedStyle(document.documentElement)
-      .getPropertyValue("--skill-base-color")
-      .trim();
-    // console.log(baseColor); //GOOD
-
-    // Convert base color to HSL
-    const baseColorHex = hexToHSL(baseColor);
-
-    // Parse HSL values
-    const [h, s, _] = baseColorHex.match(/\d+/g).map(Number);
-
-    // Get unique categories
-    const categories = [...new Set(skills.map((skill) => skill.category))];
-
-    // Generate colors by adjusting lightness only
-    const categoryColors = {};
-    let lightness = 10;
-
-    categories.forEach((category) => {
-      categoryColors[category] = `hsl(${h}, ${s}%, ${lightness}%)`;
-      lightness += 10;
-    });
-    //console.log("categoryColors", categoryColors);
-    return categoryColors;
-  }
+  const mechanicalSkills = [
+    {
+      name: 'SAP',
+      level: levels.intermediate,
+      category: 'Management',
+      url: 'https://help.sap.com/',
+    },
+    // CAD & Design
+    {
+      name: 'Creo',
+      level: levels.master,
+      category: 'Design',
+      url: 'https://www.ptc.com/en/products/creo',
+    },
+    {
+      name: 'CATIA',
+      level: levels.master,
+      category: 'Design',
+      url: 'https://www.3ds.com/products-services/catia/',
+    },
+    {
+      name: 'Solidworks',
+      level: levels.advanced,
+      category: 'Design',
+      url: 'https://www.solidworks.com/',
+    },
+    {
+      name: 'Unity3D',
+      level: levels.intermediate,
+      category: 'Design',
+      url: 'https://docs.unity3d.com/',
+    },
+    // PLM Systems
+    {
+      name: 'Windchill',
+      level: levels.advanced,
+      category: 'PLM',
+      url: 'https://www.ptc.com/en/products/windchill',
+    },
+    {
+      name: 'Enovia',
+      level: levels.advanced,
+      category: 'PLM',
+      url: 'https://www.3ds.com/products-services/enovia/',
+    },
+    {
+      name: 'SmarTeam',
+      level: levels.intermediate,
+      category: 'PLM',
+      url: 'https://www.3ds.com/products-services/smarteam/',
+    },
+    // Project Management
+    {
+      name: 'Jira',
+      level: levels.expert,
+      category: 'Management',
+      url: 'https://www.atlassian.com/software/jira',
+    },
+    {
+      name: 'Confluence',
+      level: levels.expert,
+      category: 'Management',
+      url: 'https://www.atlassian.com/software/confluence',
+    },
+  ];
 
   function createSkillsChart() {
-    const container = document.querySelector(".skills-container");
+    createSkillsSection('.skills-container.software', softwareSkills);
+    createSkillsSection('.skills-container.mechanical', mechanicalSkills);
+  }
+
+  function createSkillsSection(containerSelector, skills) {
+    const container = document.querySelector(containerSelector);
     if (!container) return;
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    // const minDimension = Math.min(width, height);
-    const margin = 2;
-    // console.log("width", width);
-    // console.log("height", height);
+    // Clear container
+    container.innerHTML = '';
 
-    // Clear existing skills
-    container.innerHTML = "";
+    // Create grid
+    const grid = document.createElement('div');
+    grid.className = 'skills-grid';
+    container.appendChild(grid);
 
-    // Generate colors for categories
-    const categoryColors = generateCategoryColors();
+    // Sort skills by level (highest first)
+    const sortedSkills = [...skills].sort((a, b) => b.level - a.level);
 
-    // Create pack layoutb
-    const pack = d3
-      .pack()
-      .size([width - margin * 2, height - margin * 2])
-      .padding(5);
+    // Find the highest level within this category of skills
+    const maxLevelInCategory = Math.max(...skills.map((skill) => skill.level));
 
-    // Create hierarchy with dynamic sizing based on container
-    // const root = d3.hierarchy({ children: skills }).sum((d) => {
-    //   const baseSizePercent = minDimension * 0.15; // Base size is 15% of container
-    //   const sizeMap = {
-    //     1: baseSizePercent * 0.7,
-    //     2: baseSizePercent * 0.85,
-    //     3: baseSizePercent,
-    //     4: baseSizePercent * 1.15,
-    //   };
-    //   return d.level ? sizeMap[d.level] : 0;
-    // });
+    // Create and add skill tags
+    sortedSkills.forEach((skillData) => {
+      const skill = document.createElement('div');
+      skill.className = 'skill';
 
-    const root = pack(d3.hierarchy({ children: skills }).sum((d) => d.level));
+      const link = document.createElement('a');
+      link.href = skillData.url;
+      link.target = '_blank';
 
-    // Generate bubble layout data
-    const skillData = pack(root).leaves();
+      // Create progress bar background
+      const progress = document.createElement('div');
+      progress.className = 'skill-progress';
+      progress.style.width = `${(skillData.level / Object.keys(levels).length) * 100}%`;
 
-    // Create and position skill bubbles
-    skillData.forEach((d, i) => {
-      const skill = document.createElement("div");
-      skill.className = "skill";
+      // Add text
+      const text = document.createElement('span');
+      text.className = 'skill-text';
+      text.textContent = skillData.name;
 
-      const link = document.createElement("a");
-      link.href = d.data.url;
-      link.target = "_blank";
-      link.className = "skill-name";
-      link.textContent = d.data.name;
+      link.style.setProperty(
+        '--skill-level',
+        `${(skillData.level / Object.keys(levels).length) * 100}%`
+      );
 
-      // Set CSS variables for dynamic text sizing
-      //   skill.style.setProperty("--text-length", d.data.name.length);
-      //   skill.style.setProperty("--bubble-size", `${d.r * 2}px`);
+      const baseOpacity = 1;
+      const minOpacity = 0.4;
+      const opacityExponent = 1.3;
 
-      // Apply background color based on category
-      skill.style.background = categoryColors[d.data.category];
+      // Calculate opacity relative to the highest level in this category
+      const normalizedLevel = skillData.level / maxLevelInCategory;
+      const opacity =
+        minOpacity + (baseOpacity - minOpacity) * Math.pow(normalizedLevel, opacityExponent);
 
-      // Position and size the bubble
-      skill.style.left = `${d.x - d.r}px`;
-      skill.style.top = `${d.y - d.r}px`;
-      skill.style.width = `${d.r * 2}px`;
-      skill.style.height = `${d.r * 2}px`;
+      // Set opacity on the link element
+      link.style.opacity = opacity;
 
-      // Add random animation delay for floating and ensure wiggle works
-      skill.style.animationDelay = `${Math.random() * -8}s`;
-      skill.style.animationPlayState = "running";
-
+      link.appendChild(progress);
+      link.appendChild(text);
       skill.appendChild(link);
-      container.appendChild(skill);
+      grid.appendChild(skill);
+    });
+
+    // Add intersection observer for fade-in effect
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.skill').forEach((skill, index) => {
+      skill.style.transitionDelay = `${index * 50}ms`;
+      observer.observe(skill);
     });
   }
 
@@ -299,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle window resizing
   let resizeTimeout;
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(createSkillsChart, 250);
   });

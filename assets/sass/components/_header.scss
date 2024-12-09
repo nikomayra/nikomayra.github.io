@@ -20,7 +20,7 @@ $header-side: fn.layout('header-side');
   flex-direction: column;
   justify-content: flex-start;
   background: c.color('primary');
-  gap: fn.spacing('medium');
+  gap: fn.spacing('small');
   color: c.color('text');
   height: 100%;
   position: fixed;
@@ -43,8 +43,8 @@ $header-side: fn.layout('header-side');
 
   // Avatar
   .avatar {
-    margin: fn.spacing('medium');
-    // width: 8em;
+    margin: fn.spacing('small');
+    max-width: 10em;
 
     img {
       border-radius: 100%;

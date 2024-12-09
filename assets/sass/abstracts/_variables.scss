@@ -126,13 +126,12 @@ $durations: (
 
 $component-vars: (
   'skills': (
-    'base-color': map.get(c.$colors, 'secondary'),
-    'bubble-opacity': 0.95,
-    'hover-scale': 1.2,
-    'float-distance': '10px',
-    'float-duration': '4s',
-    'wiggle-duration': '0.3s',
-    'wiggle-rotation': '7deg',
+    'base-color': map.get(c.$colors, 'primary'),
+    'progress-opacity': 0.1,
+    'progress-hover-opacity': 0.15,
+    // 'level-brightness-step': 5%,
+    'hover-scale': 1.05,
+    'hover-translate': -2px,
   ),
   'us-tour': (
     'state-unvisited-color': map.get(c.$colors, 'secondary'),
@@ -156,12 +155,11 @@ $component-vars: (
 :root {
   // Skills component
   --skill-base-color: #{map.get($component-vars, 'skills', 'base-color')};
-  --skills-bubble-opacity: #{map.get($component-vars, 'skills', 'bubble-opacity')};
-  --skills-hover-scale: #{map.get($component-vars, 'skills', 'hover-scale')};
-  --skills-float-distance: #{map.get($component-vars, 'skills', 'float-distance')};
-  --skills-float-duration: #{map.get($component-vars, 'skills', 'float-duration')};
-  --skills-wiggle-duration: #{map.get($component-vars, 'skills', 'wiggle-duration')};
-  --skills-wiggle-rotation: #{map.get($component-vars, 'skills', 'wiggle-rotation')};
+  --skill-progress-opacity: #{map.get($component-vars, 'skills', 'progress-opacity')};
+  --skill-progress-hover-opacity: #{map.get($component-vars, 'skills', 'progress-hover-opacity')};
+  // --skill-level-brightness-step: #{map.get($component-vars, 'skills', 'level-brightness-step')};
+  --skill-hover-scale: #{map.get($component-vars, 'skills', 'hover-scale')};
+  --skill-hover-translate: #{map.get($component-vars, 'skills', 'hover-translate')};
 
   // US Tour component
   --us-tour-state-unvisited-color: #{map.get($component-vars, 'us-tour', 'state-unvisited-color')};
@@ -181,4 +179,5 @@ $component-vars: (
   // Projects component
   --project-card-width: 300px;
   --project-card-height: 450px;
+  --project-card-gap: calc(var(--project-card-width) * 0.1);
 }
