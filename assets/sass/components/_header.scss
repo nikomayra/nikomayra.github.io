@@ -57,12 +57,55 @@ $header-side: fn.layout('header-side');
   }
 
   // Navigation
-  nav {
-    flex-grow: 1;
-    overflow-y: auto; // Allow vertical scrolling
-    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  // Navigation wrapper
+  .nav-wrapper {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 
-    @include mx.hide-scrollbar;
+    // Scrollable navigation
+    nav {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      @include mx.hide-scrollbar;
+    }
+
+    // Gradient overlays
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 50%;
+      max-height: 100px;
+      min-height: 25px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity fn.duration('transition') ease;
+      z-index: fn.z('header') + 2;
+    }
+
+    &::before {
+      top: 0;
+      background: linear-gradient(to bottom, c.color('primary'), transparent);
+    }
+
+    &::after {
+      bottom: 0;
+      background: linear-gradient(to top, c.color('primary'), transparent);
+    }
+
+    &.is-scrollable-top::before {
+      opacity: 1;
+    }
+
+    &.is-scrollable-bottom::after {
+      opacity: 1;
+    }
     ul {
       list-style: none;
       // margin: fn.spacing('medium') 0;

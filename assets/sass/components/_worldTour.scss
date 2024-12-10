@@ -11,9 +11,9 @@
 //   <div class="world-title">Title</div>
 // </div>
 
-@use "../abstracts/functions" as fn;
-@use "../abstracts/colors" as c;
-@use "sass:map";
+@use '../abstracts/functions' as fn;
+@use '../abstracts/colors' as c;
+@use 'sass:map';
 
 // ==========================================================================
 // Container Layout
@@ -32,7 +32,8 @@
 
   svg {
     width: 100%;
-    aspect-ratio: 975/610;
+    height: 95%;
+    // aspect-ratio: 975/610;
   }
 
   .sphere {
@@ -63,12 +64,12 @@
     right: 0;
     text-align: center;
     font-size: 1.2em;
-    color: c.color("primary");
+    color: c.color('primary');
     transition: color var(--world-transition-duration) ease;
     padding: 10px;
 
     &.highlight {
-      color: c.color("accent");
+      color: c.color('accent');
     }
   }
 }

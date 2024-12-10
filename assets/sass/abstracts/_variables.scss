@@ -145,7 +145,7 @@ $component-vars: (
     'border-color': map.get(c.$colors, 'tertiary'),
     'ocean-color': map.get(c.$colors, 'primary-light'),
     'graticule-color': map.get(c.$colors, 'secondary-light'),
-    'flight-path-color': map.get(c.$colors, 'accent-light'),
+    'flight-path-color': map.get(c.$colors, 'accent-alt'),
     'transition-duration': '0.3s',
   ),
 );

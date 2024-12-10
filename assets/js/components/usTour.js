@@ -1,6 +1,19 @@
 import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 
+// Copyright 2020 Observable, Inc.
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
 // State name mapping (TopoJSON uses full names)
 const stateAbbreviations = {
   California: 'CA',
@@ -39,6 +52,11 @@ const visitedStates = {
   visitedStates: Object.keys(stateAbbreviations),
 };
 
+/**
+ * Retrieves the value of a CSS variable.
+ * @param {string} cssVar - The name of the CSS variable.
+ * @returns {string} The value of the CSS variable.
+ */
 function getColorValue(cssVar) {
   return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
 }

@@ -70,24 +70,36 @@ if ($titleBarToggle) {
 // Function to check and set header visibility based on breakpoints
 function checkHeaderVisibility() {
   const currentBreakpoint = breakpointInstance.getCurrent();
+  const wasVisible = $header.classList.contains('header-visible');
 
-  if (
-    (currentBreakpoint === 'large' || currentBreakpoint === 'xlarge') &&
-    !document.querySelector('#header.header-visible')
-  ) {
-    $header.classList.add('header-visible');
+  if (currentBreakpoint === 'large' || currentBreakpoint === 'xlarge') {
+    if (!wasVisible) {
+      // Store the pre-large state if we're just crossing into large
+      if (!$header.dataset.wasVisibleBeforeLarge) {
+        $header.dataset.wasVisibleBeforeLarge = 'false';
+      }
+      $header.classList.add('header-visible');
+    }
+  } else {
+    // When going below large breakpoint, restore previous state
+    if ($header.dataset.wasVisibleBeforeLarge === 'false') {
+      $header.classList.remove('header-visible');
+    }
   }
 
-  //   if (
-  //     currentBreakpoint === 'medium' ||
-  //   currentBreakpoint === 'small' ||
-  //   currentBreakpoint === 'xsmall'
-  // ) {
-  //   $header.classList.remove('header-visible'); // Hide header on medium and small screens
-  // } else {
-  //   $header.classList.add('header-visible'); // Show header on large and xlarge screens
-  // }
+  // Store visibility state when entering large breakpoint
+  if (currentBreakpoint === 'large' || currentBreakpoint === 'xlarge') {
+    if (!$header.dataset.wasVisibleBeforeLarge) {
+      $header.dataset.wasVisibleBeforeLarge = wasVisible.toString();
+    }
+  } else {
+    // Reset the stored state when leaving large/xlarge
+    delete $header.dataset.wasVisibleBeforeLarge;
+  }
 }
+
+// Initialize visibility tracking
+$header.dataset.wasVisibleBeforeLarge = $header.classList.contains('header-visible').toString();
 
 // Check visibility on load and resize
 $window.addEventListener('load', checkHeaderVisibility);
@@ -162,4 +174,37 @@ $window.addEventListener('scroll', () => {
       }
     }
   });
+});
+
+function updateNavScrollIndicators() {
+  const nav = document.querySelector('#header nav');
+  const wrapper = nav.parentElement;
+
+  requestAnimationFrame(() => {
+    const scrollTop = Math.round(nav.scrollTop);
+    const scrollHeight = Math.round(nav.scrollHeight);
+    const clientHeight = Math.round(nav.clientHeight);
+
+    wrapper.classList.toggle('is-scrollable-top', scrollTop > 0);
+    wrapper.classList.toggle('is-scrollable-bottom', scrollTop + clientHeight < scrollHeight);
+  });
+}
+
+// Update indicators on important events
+const nav = document.querySelector('#header nav');
+nav.addEventListener('scroll', updateNavScrollIndicators);
+window.addEventListener('resize', () => {
+  requestAnimationFrame(updateNavScrollIndicators);
+});
+window.addEventListener('load', updateNavScrollIndicators);
+
+// Add mutation observer to handle dynamic content changes
+const observer = new MutationObserver(() => {
+  requestAnimationFrame(updateNavScrollIndicators);
+});
+
+observer.observe(nav, {
+  childList: true,
+  subtree: true,
+  characterData: true,
 });
