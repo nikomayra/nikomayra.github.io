@@ -1,17 +1,18 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: "/",
+  base: '/',
+  root: 'src',
   build: {
-    outDir: "dist",
+    outDir: '../dist',
     rollupOptions: {
       input: {
-        main: "index.html",
+        main: '/index.html',
       },
     },
   },
   optimizeDeps: {
-    include: ["d3", "@fancyapps/ui"],
+    include: ['d3', '@fancyapps/ui'],
   },
   server: {
     open: true,
