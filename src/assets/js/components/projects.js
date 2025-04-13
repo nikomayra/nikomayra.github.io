@@ -11,8 +11,8 @@ class ProjectsCarousel {
     this.carousel = document.querySelector('.projects-carousel');
     this.projects = [
       {
-        title: 'Project 4',
-        subtitle: 'Real-time chat & sketch',
+        title: 'Chat & Sketch with Friends',
+        subtitle: 'Real-time chat, channels & sketching',
         image: rtc,
         description: 'Modern React SPA featuring real-time chat and collaborative drawing functionality. Built with an emphasis on foundational web technologies and minimal dependencies using GoLang for server-side processing, WebSockets for real-time communication, and PostgreSQL for data persistence.',
         tech: 'Go|React|Websockets|PostgreSQL|Tailwind',
