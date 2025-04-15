@@ -39,3 +39,7 @@ yarn-error.log*
 .sass-cache/
 .npm/
 .cache/
+
+# huh?
+inspiration/
+todo.txt
