@@ -1,9 +1,9 @@
-@use '../abstracts/functions' as fn;
+@use '../abstracts/breakpoints' as bp;
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as mx;
-@use '../abstracts/breakpoints' as bp;
+@use '../abstracts/functions' as fn;
 
-.work-accordion-container {
+.education-view-container {
   opacity: 0;
   transform: translateY(10px);
   transition: 
@@ -16,8 +16,8 @@
   }
 }
 
-// Work experience accordion
-.work-accordion {
+// Education accordion
+.education-accordion {
   width: 100%;
   margin: 2rem 0;
   
@@ -49,7 +49,7 @@
       }
       
       .accordion-content {
-        max-height: 2000px; // Higher value to accommodate all content
+        max-height: 500px; // Set a reasonable max height
       }
     }
   }
@@ -110,8 +110,7 @@
       color: c.lighten('text', 15%);
     }
     
-    .accordion-period, 
-    .accordion-location {
+    .accordion-period {
       margin: 0;
       font-size: 0.9em;
       opacity: 0.8;
@@ -168,56 +167,27 @@
       }
     }
   }
-
-  .company-description {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid c.alpha('border', 0.3);
-  }
   
-  .roles-container {
-    .role-item {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid c.alpha('border', 0.3);
+  .accordion-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+    
+    a {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      background-color: c.alpha('accent', 0.1);
+      color: c.color('accent');
+      border-radius: 4px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
       
-      &:last-child {
-        border-bottom: none;
-      }
-      
-      .role-title {
-        margin: 0 0 0.25rem;
-        color: c.color('text');
-      }
-      
-      .role-location,
-      .role-period {
-        margin: 0 0 0.25rem;
-        font-size: 0.9em;
-        opacity: 0.8;
-      }
-      
-      .role-details {
-        margin-top: 0.75rem;
-        
-        h5 {
-          margin: 0 0 0.5rem;
-          font-size: 0.9em;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          color: c.color('accent');
-        }
+      &:hover {
+        background-color: c.alpha('accent', 0.2);
       }
     }
-  }
-  
-  .skill-tag {
-    display: inline-block;
-    background-color: c.alpha('accent', 0.2);
-    color: c.color('accent');
-    padding: 3px 8px;
-    border-radius: 4px;
-    margin: 3px;
-    font-size: 0.8em;
-    font-weight: bold;
   }
   
   // Responsive adjustments for smaller screens
@@ -242,4 +212,4 @@
       }
     }
   }
-}
+} 

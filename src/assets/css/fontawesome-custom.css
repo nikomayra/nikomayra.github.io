@@ -18,47 +18,50 @@
 
 /* Brand Icons */
 .fab {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: "Font Awesome 5 Brands";
   font-weight: 400;
 }
 
 /* Solid Icons */
 .fas,
 .fa-solid {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-weight: 900;
 }
 
 /* Icon Content */
 .fa-github:before {
-  content: '\f09b';
+  content: "\f09b";
 }
 .fa-linkedin:before {
-  content: '\f08c';
+  content: "\f08c";
 }
 .fa-flickr:before {
-  content: '\f16e';
+  content: "\f16e";
 }
 .fa-deviantart:before {
-  content: '\f1bd';
+  content: "\f1bd";
 }
 .fa-instagram:before {
-  content: '\f16d';
+  content: "\f16d";
 }
 .fa-envelope:before {
-  content: '\f0e0';
+  content: "\f0e0";
 }
 .fa-bars:before {
-  content: '\f0c9';
+  content: "\f0c9";
 }
 .fa-chevron-left:before {
-  content: '\f053';
+  content: "\f053";
 }
 .fa-chevron-right:before {
-  content: '\f054';
+  content: "\f054";
 }
 .fa-sync-alt:before {
-  content: '\f2f1';
+  content: "\f2f1";
+}
+.fa-circle-chevron-up:before {
+  content: "\f139";
 }
 
 /* Icon Utilities */
@@ -73,19 +76,17 @@
 }
 
 @font-face {
-  font-family: 'Font Awesome 5 Brands';
+  font-family: "Font Awesome 5 Brands";
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url('../webfonts/fa-brands-400.woff2') format('woff2'),
-    url('../webfonts/fa-brands-400.woff') format('woff');
+  src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 900;
   font-display: block;
-  src: url('../webfonts/fa-solid-900.woff2') format('woff2'),
-    url('../webfonts/fa-solid-900.woff') format('woff');
+  src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.woff") format("woff");
 }

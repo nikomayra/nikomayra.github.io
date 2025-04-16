@@ -16,7 +16,9 @@ import "./components/worldTour.js";
 import "./skills.js";
 import "./components/usTour.js";
 import "./components/projects.js";
-import "./components/workExperience/index.js";
+import "./components/workExperience.js";
+import "./components/education.js";
+import "./components/contact.js";
 
 // DOM Elements
 const $window = window;

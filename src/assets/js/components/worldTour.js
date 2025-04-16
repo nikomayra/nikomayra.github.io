@@ -1,5 +1,5 @@
-import * as d3 from 'd3';
-import * as topojson from 'topojson-client';
+import * as d3 from "d3";
+import * as topojson from "topojson-client";
 
 // Copyright 2020 Observable, Inc.
 // Permission to use, copy, modify, and/or distribute this software for any
@@ -21,36 +21,44 @@ const ANIMATION = Object.freeze({
 });
 
 const visitedCountries = [
-  'United States of America',
-  'France',
-  'Italy',
-  'Spain',
-  'Germany',
-  'Portugal',
-  'Netherlands',
-  'Austria',
-  'Slovenia',
-  'Hungary',
-  'Croatia',
-  'Czechia',
-  'Japan',
-  'South Korea',
-  'Mexico',
-  'Chile',
-  'Uruguay',
-  'Puerto Rico',
-  'Vietnam',
-  'Morocco',
+  "United States of America",
+  "France",
+  "Italy",
+  "Spain",
+  "Germany",
+  "Portugal",
+  "Netherlands",
+  "Austria",
+  "Slovenia",
+  "Hungary",
+  "Croatia",
+  "Czechia",
+  "Japan",
+  "South Korea",
+  "Mexico",
+  "Chile",
+  "Uruguay",
+  "Puerto Rico",
+  "Vietnam",
+  "Morocco",
+  "Argentina",
 ];
+
+// Country arcs to exclude: [country name, array indices to exclude]
+const arcExclusions = {
+  France: [0, 2], // Exclude French territories - first is French Guiana, third is likely islands
+  Netherlands: [1, 2], // Exclude Dutch Caribbean territories
+  "United States of America": [1, 2, 3, 4, 5, 6, 7, 8, 9], // Exclude all but 50 states
+};
 
 // Cache color values
 const colors = {
-  ocean: getColorValue('--world-ocean-color'),
-  graticule: getColorValue('--world-graticule-color'),
-  border: getColorValue('--world-border-color'),
-  visited: getColorValue('--world-visited-country-color'),
-  land: getColorValue('--world-land-color'),
-  flight: getColorValue('--world-flight-path-color'),
+  ocean: getColorValue("--world-ocean-color"),
+  graticule: getColorValue("--world-graticule-color"),
+  border: getColorValue("--world-border-color"),
+  visited: getColorValue("--world-visited-country-color"),
+  land: getColorValue("--world-land-color"),
+  flight: getColorValue("--world-flight-path-color"),
 };
 
 // Versor class for smooth rotation interpolation
@@ -110,12 +118,7 @@ class Versor {
     (a2 -= a1), (b2 -= b1), (c2 -= c1), (d2 -= d1);
     const x = new Array(4);
     return (t) => {
-      const l = Math.hypot(
-        (x[0] = a1 + a2 * t),
-        (x[1] = b1 + b2 * t),
-        (x[2] = c1 + c2 * t),
-        (x[3] = d1 + d2 * t)
-      );
+      const l = Math.hypot((x[0] = a1 + a2 * t), (x[1] = b1 + b2 * t), (x[2] = c1 + c2 * t), (x[3] = d1 + d2 * t));
       (x[0] /= l), (x[1] /= l), (x[2] /= l), (x[3] /= l);
       return x;
     };
@@ -146,28 +149,28 @@ function getRandomCountry(countries, prevCountry) {
   return availableCountries[Math.floor(Math.random() * availableCountries.length)];
 }
 
-document.addEventListener('DOMContentLoaded', async function () {
-  const container = document.querySelector('.world-tour-container');
+document.addEventListener("DOMContentLoaded", async function () {
+  const container = document.querySelector(".world-tour-container");
   const width = container.clientWidth;
   const height = container.clientHeight;
   const tilt = 20;
 
   // Create title element
-  const title = d3.select('.world-tour-container').append('div').attr('class', 'world-title');
+  const title = d3.select(".world-tour-container").append("div").attr("class", "world-title");
 
   const svg = d3
-    .select('.world-tour-container')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('viewBox', [0, 0, width, height]);
+    .select(".world-tour-container")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height]);
 
   const projection = d3.geoOrthographic().fitExtent(
     [
       [10, 10],
       [width - 10, height - 10],
     ],
-    { type: 'Sphere' }
+    { type: "Sphere" }
   );
 
   const path = d3.geoPath(projection);
@@ -175,37 +178,51 @@ document.addEventListener('DOMContentLoaded', async function () {
   // const globe = svg.append('path').attr('class', 'sphere').attr('fill', colors.ocean);
 
   const graticule = svg
-    .append('path')
+    .append("path")
     .datum(d3.geoGraticule())
-    .attr('class', 'graticule')
-    .attr('fill', 'none')
-    .attr('stroke', colors.graticule)
-    .attr('stroke-width', '0.5px');
+    .attr("class", "graticule")
+    .attr("fill", "none")
+    .attr("stroke", colors.graticule)
+    .attr("stroke-width", "0.5px");
 
   async function render() {
-    const world = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+    const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+
+    // Apply arc exclusions
+    if (world && world.objects && world.objects.countries && world.objects.countries.geometries) {
+      // Loop through country geometries
+      world.objects.countries.geometries.forEach((geometry) => {
+        const countryName = geometry.properties.name;
+
+        // Check if this country has arc exclusions
+        if (arcExclusions[countryName] && geometry.type === "MultiPolygon") {
+          // Filter out the specified arc arrays
+          geometry.arcs = geometry.arcs.filter((_, index) => !arcExclusions[countryName].includes(index));
+        }
+      });
+    }
 
     const countries = topojson.feature(world, world.objects.countries);
     const borders = topojson.mesh(world, world.objects.countries, (a, b) => a !== b);
 
     svg
-      .selectAll('.country')
+      .selectAll(".country")
       .data(countries.features)
       .enter()
-      .append('path')
-      .attr('class', 'country')
-      .attr('fill', (d) =>
-        visitedCountries.includes(d.properties.name) ? colors.visited : colors.land
-      )
-      .attr('d', path);
+      .append("path")
+      .attr("class", "country")
+      .attr("fill", (d) => {
+        return visitedCountries.includes(d.properties.name) ? colors.visited : colors.land;
+      })
+      .attr("d", path);
 
     svg
-      .append('path')
+      .append("path")
       .datum(borders)
-      .attr('class', 'borders')
-      .attr('fill', 'none')
-      .attr('stroke', colors.border)
-      .attr('d', path);
+      .attr("class", "borders")
+      .attr("fill", "none")
+      .attr("stroke", colors.border)
+      .attr("d", path);
 
     let p1,
       p2 = [0, 0],
@@ -217,10 +234,10 @@ document.addEventListener('DOMContentLoaded', async function () {
       const country = getRandomCountry(countries, prevCountry);
 
       // Update title with country name
-      title.text(country.properties.name).classed('highlight', true);
+      title.text(country.properties.name).classed("highlight", true);
 
       // Remove highlight class after animation
-      setTimeout(() => title.classed('highlight', false), ANIMATION.FLIGHT + ANIMATION.PAUSE);
+      setTimeout(() => title.classed("highlight", false), ANIMATION.FLIGHT + ANIMATION.PAUSE);
 
       // Calculate rotation parameters
       p1 = p2;
@@ -240,25 +257,25 @@ document.addEventListener('DOMContentLoaded', async function () {
       await d3
         .transition()
         .duration(ANIMATION.FLIGHT)
-        .tween('render', () => (t) => {
+        .tween("render", () => (t) => {
           projection.rotate(Versor.interpolateAngles(r1, r2)(t));
 
           // Update all paths
-          svg.selectAll('path').attr('d', path);
+          svg.selectAll("path").attr("d", path);
 
           // Draw flight path
-          svg.select('.flight-path').remove();
+          svg.select(".flight-path").remove();
           svg
-            .append('path')
-            .attr('class', 'flight-path')
+            .append("path")
+            .attr("class", "flight-path")
             .datum({
-              type: 'LineString',
+              type: "LineString",
               coordinates: arcPoints.slice(0, Math.ceil(t * numPoints)),
             })
-            .attr('d', path)
-            .attr('fill', 'none')
-            .attr('stroke', colors.flight)
-            .attr('stroke-width', 2);
+            .attr("d", path)
+            .attr("fill", "none")
+            .attr("stroke", colors.flight)
+            .attr("stroke-width", 2);
         })
         .end();
 
