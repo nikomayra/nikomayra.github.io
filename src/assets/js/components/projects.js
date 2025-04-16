@@ -63,6 +63,9 @@ class ProjectsCarousel {
       },
     ];
     this.activeIndex = 0;
+    this.startX = 0;
+    this.isSwiping = false;
+    this.swipeThreshold = 50;
     this.init();
   }
 
@@ -72,8 +75,10 @@ class ProjectsCarousel {
     requestAnimationFrame(() => {
       this.setupNavigation();
       this.initializeFancybox();
-      this.setupCardFlip();
-      this.setActiveCard(this.activeIndex);
+      this.setupCards();
+      // Center the first card on init with a small delay to ensure proper rendering
+      setTimeout(() => this.setActiveCard(this.activeIndex), 100);
+      this.setupSwipeSupport();
     });
   }
 
@@ -84,6 +89,7 @@ class ProjectsCarousel {
       </div>
     `;
 
+    // Keep arrow navigation for accessibility but more subtle
     this.container.insertAdjacentHTML(
       "beforeend",
       `<div class="carousel-controls">
@@ -107,7 +113,7 @@ class ProjectsCarousel {
       .map((detail) => `<span class="detail">${detail.trim()}</span>`)
       .join("");
     return `
-      <div class="project-card">
+      <div class="project-card" data-index="${index}">
         <div class="card-inner">
           <div class="card-front">
             <img src="${project.image}" alt="${project.title}" class="project-image">
@@ -117,7 +123,7 @@ class ProjectsCarousel {
               ${techTags}
             </div>
             <div class="project-complexity">
-              <span class="complexity-label">Relative Complexity:</span>
+              <span class="complexity-label">Complexity:</span>
               <span class="complexity-value">${project.complexity}</span>
             </div>
             <div class="project-links">
@@ -134,14 +140,12 @@ class ProjectsCarousel {
                   : ""
               }
             </div>
-            <i class="flip-icon"></i>
           </div>
           <div class="card-back">
             <p class="project-description">${project.description}</p>
             <div class="project-details">
               ${details}
             </div>
-            <i class="flip-icon"></i>
           </div>
         </div>
       </div>
@@ -156,6 +160,15 @@ class ProjectsCarousel {
     this.nextButton.addEventListener("click", () => this.navigate("next"));
 
     this.updateNavigationVisibility();
+
+    // Add keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        this.navigate("prev");
+      } else if (e.key === "ArrowRight") {
+        this.navigate("next");
+      }
+    });
   }
 
   navigate(direction) {
@@ -167,8 +180,17 @@ class ProjectsCarousel {
   }
 
   setActiveCard(index) {
+    if (index < 0 || index >= this.projects.length) return;
+
     const cards = this.carousel.querySelectorAll(".project-card");
     const track = this.carousel.querySelector(".carousel-track");
+
+    // Flip back any cards that are no longer active
+    cards.forEach((card, i) => {
+      if (i !== index && card.classList.contains("flipped")) {
+        card.classList.remove("flipped");
+      }
+    });
 
     cards.forEach((card) => card.classList.remove("active"));
     cards[index].classList.add("active");
@@ -180,6 +202,7 @@ class ProjectsCarousel {
     const totalOffset = cardWidth * index;
     const centerOffset = (carouselWidth - cardWidth) / 2;
 
+    // Apply the transform with easing
     track.style.transform = `translateX(${centerOffset - totalOffset}px)`;
 
     this.activeIndex = index;
@@ -206,14 +229,113 @@ class ProjectsCarousel {
     });
   }
 
-  setupCardFlip() {
-    document.querySelectorAll(".project-card").forEach((card) => {
-      card.addEventListener("click", (e) => {
-        // Don't flip if clicking on a link
-        if (e.target.tagName === "A") return;
+  setupCards() {
+    const cards = this.carousel.querySelectorAll(".project-card");
 
-        card.classList.toggle("flipped");
+    // Set up click on inactive cards to navigate to them
+    cards.forEach((card) => {
+      card.addEventListener("click", (e) => {
+        const cardIndex = parseInt(card.dataset.index, 10);
+
+        // Don't handle navigation if clicking on links
+        if (e.target.tagName === "A") {
+          return;
+        }
+
+        // If clicking on an inactive card, make it active
+        if (cardIndex !== this.activeIndex) {
+          this.setActiveCard(cardIndex);
+          e.stopPropagation();
+          return;
+        }
+
+        // If clicking on the active card (and not on links), flip it
+        if (cardIndex === this.activeIndex) {
+          card.classList.toggle("flipped");
+          e.stopPropagation();
+        }
       });
+    });
+  }
+
+  setupSwipeSupport() {
+    const track = this.carousel.querySelector(".carousel-track");
+
+    // Touch events for mobile
+    track.addEventListener("touchstart", (e) => {
+      this.startX = e.touches[0].clientX;
+      this.isSwiping = true;
+    });
+
+    track.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!this.isSwiping) return;
+
+        const currentX = e.touches[0].clientX;
+        const diffX = this.startX - currentX;
+
+        // Prevent default to disable page scrolling while swiping
+        if (Math.abs(diffX) > 5) {
+          e.preventDefault();
+        }
+      },
+      { passive: false }
+    );
+
+    track.addEventListener("touchend", (e) => {
+      if (!this.isSwiping) return;
+
+      const endX = e.changedTouches[0].clientX;
+      const diffX = this.startX - endX;
+
+      if (Math.abs(diffX) > this.swipeThreshold) {
+        if (diffX > 0) {
+          // Swipe left, go next
+          this.navigate("next");
+        } else {
+          // Swipe right, go prev
+          this.navigate("prev");
+        }
+      }
+
+      this.isSwiping = false;
+    });
+
+    // Mouse events for desktop
+    track.addEventListener("mousedown", (e) => {
+      this.startX = e.clientX;
+      this.isSwiping = true;
+      // Prevent text selection while swiping
+      e.preventDefault();
+    });
+
+    track.addEventListener("mousemove", (e) => {
+      if (!this.isSwiping) return;
+    });
+
+    track.addEventListener("mouseup", (e) => {
+      if (!this.isSwiping) return;
+
+      const endX = e.clientX;
+      const diffX = this.startX - endX;
+
+      if (Math.abs(diffX) > this.swipeThreshold) {
+        if (diffX > 0) {
+          // Swipe left, go next
+          this.navigate("next");
+        } else {
+          // Swipe right, go prev
+          this.navigate("prev");
+        }
+      }
+
+      this.isSwiping = false;
+    });
+
+    // Cancel swipe on mouse leave
+    track.addEventListener("mouseleave", () => {
+      this.isSwiping = false;
     });
   }
 }

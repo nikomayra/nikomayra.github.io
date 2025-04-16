@@ -17,51 +17,80 @@
 @use '../abstracts/mixins' as mx;
 @use '../abstracts/breakpoints' as bp;
 
+:root {
+  --project-card-width: 300px;
+  --project-card-height: 420px;
+  --card-inactive-scale: 0.85;
+}
+
 .projects-container {
   width: 100%;
-  padding: 4rem 0 2rem;
+  padding: 2rem 0;
   position: relative;
+  overflow: hidden;
 }
 
 .carousel-controls {
   position: absolute;
-  top: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
   z-index: 2;
+  pointer-events: none;
 }
 
 .carousel-nav {
   width: 40px;
-  height: 40px;
-  background: c.color('primary');
-  border-radius: 50%;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all fn.duration('transition') ease;
-  opacity: 0.8;
+  pointer-events: auto;
+  background: linear-gradient(
+    to right,
+    rgba(c.color('primary-dark'), 0.8),
+    rgba(c.color('primary-dark'), 0)
+  );
+  opacity: 0.3;
+  
+  &.prev {
+    padding-left: 10px;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  &.next {
+    padding-right: 10px;
+    border-radius: 5px 0 0 5px;
+    background: linear-gradient(
+      to left,
+      rgba(c.color('primary-dark'), 0.8),
+      rgba(c.color('primary-dark'), 0)
+    );
+  }
 
   &.disabled {
-    opacity: 0.3;
+    opacity: 0.1;
     cursor: default;
     pointer-events: none;
   }
 
   &:not(.disabled):hover {
-    background: c.color('primary-dark');
-    opacity: 1;
+    opacity: 0.6;
   }
 
   .chevron-left {
     @include mx.icon('\f053', solid);
+    color: c.color('text');
   }
 
   .chevron-right {
     @include mx.icon('\f054', solid);
+    color: c.color('text');
   }
 }
 
@@ -70,12 +99,15 @@
   width: 100%;
   height: var(--project-card-height);
   overflow: hidden;
+  user-select: none;
 
   .carousel-track {
     position: absolute;
     display: flex;
-    transition: transform 0.5s ease-out;
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     will-change: transform;
+    height: 100%;
+    padding: 0;
   }
 }
 
@@ -86,38 +118,116 @@ p {
 .project-card {
   flex: 0 0 var(--project-card-width);
   height: var(--project-card-height);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   opacity: 0.5;
-  transform: scale(0.9);
-
+  transform: scale(var(--card-inactive-scale));
+  cursor: pointer;
+  padding: 0 0.5rem;
+  
   &.active {
     opacity: 1;
     transform: scale(1);
+    
+    .card-inner {
+      box-shadow: 0 8px 24px rgba(c.color('shadow'), 0.25);
+    }
+    
+    &:not(.flipped):after {
+      content: "Click to flip card";
+      position: absolute;
+      left: 50%;
+      top: 0.75rem;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      color: c.color('background');
+      background: c.color('accent');
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(c.color('shadow'), 0.3);
+      font-weight: 500;
+      z-index: 10;
+    }
+    
+    &:not(.flipped):hover:after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-5px);
+    }
   }
 
-  @include bp.breakpoint('<=small') {
+  &:not(.active):hover {
+    opacity: 0.8;
+    transform: scale(0.9);
+  }
+
+  @include bp.breakpoint('<=medium') {
     --project-card-width: 280px;
-    --project-card-height: 420px;
-  }
-
-  @include bp.breakpoint('<=xsmall') {
-    --project-card-width: 260px;
     --project-card-height: 400px;
   }
 
-  .flip-icon {
-    @include mx.icon('\f2f1', solid); // Font Awesome sync icon
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    color: c.color('text-light');
-    font-size: 1.2rem;
-    opacity: 0.7;
-    transition: opacity fn.duration('transition') ease;
+  @include bp.breakpoint('<=small') {
+    --project-card-width: 260px;
+    --project-card-height: 380px;
+  }
 
+  @include bp.breakpoint('<=xsmall') {
+    --project-card-width: 240px;
+    --project-card-height: 360px;
+  }
+
+  .flip-icon-wrapper {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    background: c.color('primary-dark');
+    transition: all fn.duration('transition') ease;
+    z-index: 10;
+    
     &:hover {
-      opacity: 1;
+      background: c.color('accent');
+      transform: scale(1.1);
+      
+      .flip-icon {
+        color: c.color('background');
+        opacity: 1;
+      }
+      
+      &:after {
+        opacity: 1;
+      }
     }
+    
+    &:after {
+      content: "Flip card";
+      position: absolute;
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-right: 8px;
+      white-space: nowrap;
+      font-size: 0.7rem;
+      color: c.color('text-light');
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+  }
+
+  .flip-icon {
+    @include mx.icon('\f2f1', solid);
+    color: c.color('text-light');
+    font-size: 0.8rem;
+    opacity: 0.8;
+    transition: all fn.duration('transition') ease;
   }
 
   .card-inner {
@@ -127,8 +237,8 @@ p {
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(c.color('shadow'), 1);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(c.color('shadow'), 0.15);
   }
 
   &.flipped .card-inner {
@@ -141,43 +251,49 @@ p {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 10px;
+    border-radius: 15px;
     background: c.color('primary');
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .card-front {
     .project-image {
       width: 100%;
-      height: 160px;
+      height: 150px;
       object-fit: cover;
-      border-radius: 5px;
-      margin-bottom: 1rem;
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      transition: transform 0.3s ease;
+      
+      .active &:hover {
+        transform: scale(1.02);
+      }
     }
 
     .project-title {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
       color: c.color('text');
     }
 
     .project-subtitle {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: c.color('text-light');
     }
 
     .project-tech-stack {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.3rem;
       justify-content: center;
-      margin: 0.75rem 0;
+      margin: 0.6rem 0;
 
       .tech-tag {
-        font-size: 0.7rem;
-        padding: 0.2rem 0.5rem;
+        font-size: 0.65rem;
+        padding: 0.15rem 0.4rem;
         background: c.color('primary-dark');
         color: c.color('text');
         border-radius: 12px;
@@ -187,7 +303,7 @@ p {
     }
 
     .project-complexity {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       margin-bottom: 0.5rem;
       display: flex;
       flex-direction: row;
@@ -201,18 +317,21 @@ p {
       justify-content: center;
       gap: 0.5rem;
       margin-top: auto;
+      margin-bottom: 1.5rem;
 
       a {
         padding: 0.3rem 0.7rem;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         border-radius: 5px;
         background: c.color('accent');
         color: c.color('background');
         text-decoration: none;
-        transition: background fn.duration('transition') ease;
+        transition: all fn.duration('transition') ease;
 
         &:hover {
           background: c.color('accent-dark');
+          transform: translateY(-2px);
+          box-shadow: 0 2px 5px rgba(c.color('shadow'), 0.2);
         }
       }
     }
@@ -220,24 +339,45 @@ p {
 
   .card-back {
     transform: rotateY(180deg);
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
 
     .project-description {
       font-size: 0.8rem;
-      line-height: 1.5;
+      line-height: 1.6;
       margin-bottom: 1rem;
+      text-align: left;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: c.color('accent');
+        border-radius: 4px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: c.color('primary-dark');
+        border-radius: 4px;
+      }
     }
 
     .project-details {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.3rem;
       justify-content: center;
-      margin: 1.25rem 0;
+      margin-top: auto;
+      padding-top: 1rem;
 
       .detail {
         font-size: 0.7rem;
-        padding: 0.2rem 0.5rem;
+        padding: 0.15rem 0.4rem;
         background: c.color('primary-dark');
         color: c.color('text');
         border-radius: 12px;
