@@ -10,8 +10,8 @@ class ProjectsCarousel {
     this.carousel = document.querySelector(".projects-carousel");
     this.projects = [
       {
-        title: "Chat & Sketch with Friends",
-        subtitle: "Real-time chat, channels & sketching",
+        title: "Chat & Sketch",
+        subtitle: "Real-time websocket chat, channels & sketching",
         image: rtc,
         description:
           "Modern React SPA featuring real-time chat and collaborative drawing functionality. Built with an emphasis on foundational web technologies and minimal dependencies using GoLang for server-side processing, WebSockets for real-time communication, and PostgreSQL for data persistence.",
@@ -23,13 +23,13 @@ class ProjectsCarousel {
         videoUrl: "https://youtu.be/AIZz2XFL1Kc",
       },
       {
-        title: "Serverless Image Processor",
-        subtitle: "Azure Serverless Architecture",
+        title: "Bizarre Gallery",
+        subtitle: "Azure Serverless Image Processor",
         image: serverlessImageProcessor,
         description:
           "Serverless image processor using a Azure Function App and Azure Blob Storage. Users can upload images tagged with start/middle/end from the frontend. The Function App takes 3 uploaded images, (if available) selects 1 each of start/middle/end tagged images randomly, generates a Gif, and assigns a random title. On load of the static frontend the last 20 gifs are loaded from the server. Just a tech demo showing some serverless image processing architecture turned into a fun little art project.",
-        tech: "HTML|CSS|JS|Azure Functions|Azure Blob Storage|AI/ML",
-        details: "Imagesharp|NSFWJS|Git Pages",
+        tech: "HTML|CSS|JS|Azure|AI/ML",
+        details: "Imagesharp|NSFWJS|Git Pages|Azure Functions|Azure Blob Storage",
         complexity: "⭐⭐",
         demoUrl: "https://nikomayra.github.io/sl-img-prcr/",
         repoUrl: "https://github.com/nikomayra/sl-img-prcr",
@@ -37,7 +37,7 @@ class ProjectsCarousel {
       },
       {
         title: "Places Central-Zoner",
-        subtitle: "Location-based Web Application",
+        subtitle: "Places clustering algorithm web app",
         image: placesCentralZoner,
         description:
           "Places Central Zoner is a web application that finds central zones which each contain at least one of each searched location within a minimized radius. For example, search for LA Fitness, Chipotle and Starbucks within the greater Seattle area and it will draw circular zones with a center point which is at a minimum distance to each of those three stores. In other words, this app helps find geographical areas which are minimally near at least one of each searched place. When I was living out of my car the original need was to find ideal areas to situate myself such that I had access to a multitude of places.",
@@ -50,7 +50,7 @@ class ProjectsCarousel {
       },
       {
         title: "Caboh: The Game",
-        subtitle: "Multiplayer Card Game",
+        subtitle: "Multiplayer RESTful Card Game",
         image: caboh,
         description:
           'This was my first project after completing the Fullstack Open fullstack coding bootcamp which focused on the MERN stack using REST API structure and CRUD style operations. My friend group used to like playing a card game called Cabo which is based on the game Golf or Cabo with our own extra rules. I felt it was a good game to practice implementing what I learned since the game is turn based and doesn\'t rely on dynamic "live" elements all players need to see and where websockets would be a better tool.',

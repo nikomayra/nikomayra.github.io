@@ -158,12 +158,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Create title element
   const title = d3.select(".world-tour-container").append("div").attr("class", "world-title");
 
-  const svg = d3
+  // Prepare canvas with device pixel ratio support
+  const dpr = window.devicePixelRatio ?? 1;
+  const canvas = d3
     .select(".world-tour-container")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("viewBox", [0, 0, width, height]);
+    .append("canvas")
+    .attr("width", dpr * width)
+    .attr("height", dpr * height)
+    .style("width", `${width}px`)
+    .style("height", `${height}px`);
+
+  const context = canvas.node().getContext("2d");
+  context.scale(dpr, dpr);
 
   const projection = d3.geoOrthographic().fitExtent(
     [
@@ -173,17 +179,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     { type: "Sphere" }
   );
 
-  const path = d3.geoPath(projection);
-
-  // const globe = svg.append('path').attr('class', 'sphere').attr('fill', colors.ocean);
-
-  const graticule = svg
-    .append("path")
-    .datum(d3.geoGraticule())
-    .attr("class", "graticule")
-    .attr("fill", "none")
-    .attr("stroke", colors.graticule)
-    .attr("stroke-width", "0.5px");
+  const path = d3.geoPath(projection, context);
 
   async function render() {
     const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
@@ -204,25 +200,73 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const countries = topojson.feature(world, world.objects.countries);
     const borders = topojson.mesh(world, world.objects.countries, (a, b) => a !== b);
+    const graticule = d3.geoGraticule();
 
-    svg
-      .selectAll(".country")
-      .data(countries.features)
-      .enter()
-      .append("path")
-      .attr("class", "country")
-      .attr("fill", (d) => {
-        return visitedCountries.includes(d.properties.name) ? colors.visited : colors.land;
-      })
-      .attr("d", path);
+    // Render function for drawing the globe
+    function renderGlobe(country, arc) {
+      // Clear the canvas
+      context.clearRect(0, 0, width, height);
 
-    svg
-      .append("path")
-      .datum(borders)
-      .attr("class", "borders")
-      .attr("fill", "none")
-      .attr("stroke", colors.border)
-      .attr("d", path);
+      // Draw ocean (sphere)
+      context.beginPath();
+      path({ type: "Sphere" });
+      context.fillStyle = colors.ocean;
+      context.fill();
+
+      // Draw graticule
+      context.beginPath();
+      path(graticule());
+      context.strokeStyle = colors.graticule;
+      context.lineWidth = 0.5;
+      context.stroke();
+
+      // Draw all countries
+      context.beginPath();
+      path(countries);
+      context.fillStyle = colors.land;
+      context.fill();
+
+      // Draw visited countries
+      countries.features
+        .filter((d) => visitedCountries.includes(d.properties.name))
+        .forEach((d) => {
+          context.beginPath();
+          path(d);
+          context.fillStyle = colors.visited;
+          context.fill();
+        });
+
+      // Highlight current country if provided
+      if (country) {
+        context.beginPath();
+        path(country);
+        context.fillStyle = colors.visited;
+        context.fill();
+      }
+
+      // Draw borders
+      context.beginPath();
+      path(borders);
+      context.strokeStyle = colors.border;
+      context.lineWidth = 0.5;
+      context.stroke();
+
+      // Draw flight path if provided
+      if (arc) {
+        context.beginPath();
+        path(arc);
+        context.strokeStyle = colors.flight;
+        context.lineWidth = 2;
+        context.stroke();
+      }
+
+      // Draw sphere outline
+      context.beginPath();
+      path({ type: "Sphere" });
+      context.strokeStyle = colors.border;
+      context.lineWidth = 1;
+      context.stroke();
+    }
 
     let p1,
       p2 = [0, 0],
@@ -239,19 +283,17 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Remove highlight class after animation
       setTimeout(() => title.classed("highlight", false), ANIMATION.FLIGHT + ANIMATION.PAUSE);
 
+      // Render current state before animation
+      renderGlobe(country);
+
       // Calculate rotation parameters
       p1 = p2;
       p2 = d3.geoCentroid(country);
       r1 = r2;
       r2 = [-p2[0], tilt - p2[1], 0];
 
-      // Create an arc generator for the flight path
+      // Create an arc for the flight path
       const interpolator = d3.geoInterpolate(p1, p2);
-      const numPoints = 100;
-      const arcPoints = Array.from({ length: numPoints }, (_, i) => {
-        const t = i / (numPoints - 1);
-        return interpolator(t);
-      });
 
       // First transition: rotate to country while drawing path
       await d3
@@ -259,34 +301,37 @@ document.addEventListener("DOMContentLoaded", async function () {
         .duration(ANIMATION.FLIGHT)
         .tween("render", () => (t) => {
           projection.rotate(Versor.interpolateAngles(r1, r2)(t));
+          const currentPoint = interpolator(t);
+          renderGlobe(country, {
+            type: "LineString",
+            coordinates: [p1, currentPoint],
+          });
+        })
+        .end();
 
-          // Update all paths
-          svg.selectAll("path").attr("d", path);
-
-          // Draw flight path
-          svg.select(".flight-path").remove();
-          svg
-            .append("path")
-            .attr("class", "flight-path")
-            .datum({
-              type: "LineString",
-              coordinates: arcPoints.slice(0, Math.ceil(t * numPoints)),
-            })
-            .attr("d", path)
-            .attr("fill", "none")
-            .attr("stroke", colors.flight)
-            .attr("stroke-width", 2);
+      // Short pause with completed flight path
+      await d3
+        .transition()
+        .duration(300)
+        .tween("render", () => (t) => {
+          renderGlobe(country, {
+            type: "LineString",
+            coordinates: [p1, p2],
+          });
         })
         .end();
 
       prevCountry = country;
 
       // Schedule next country
-      setTimeout(animateToCountry, ANIMATION.PAUSE + 150);
+      setTimeout(animateToCountry, ANIMATION.PAUSE - 300);
     }
 
+    // Start with initial render
+    renderGlobe();
+
     // Start the animation
-    animateToCountry();
+    setTimeout(animateToCountry, 500);
   }
 
   render();

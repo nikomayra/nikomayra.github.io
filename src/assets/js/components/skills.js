@@ -19,18 +19,19 @@ import { hexToHSL, HSLToHex } from "../colorConverter.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const levels = {
-    novice: 1,
-    intermediate: 2,
-    advanced: 3,
-    expert: 4,
-    master: 5,
+    introduced: 1,
+    novice: 2,
+    intermediate: 3,
+    advanced: 4,
+    expert: 5,
+    master: 6,
   };
 
   const softwareSkills = [
     // Programming Languages
     {
       name: "JavaScript",
-      level: levels.advanced,
+      level: levels.intermediate,
       category: "Languages",
       url: "https://www.javascript.com/",
     },
@@ -76,18 +77,24 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "Languages",
       url: "https://go.dev/",
     },
+    {
+      name: "SQL",
+      level: levels.intermediate,
+      category: "Languages",
+      url: "https://www.sql.com/",
+    },
 
     // Post/Pre Processing CSS
     {
       name: "SASS",
       level: levels.intermediate,
-      category: "Languages",
+      category: "Tools",
       url: "https://sass-lang.com/",
     },
     {
       name: "Tailwind",
       level: levels.intermediate,
-      category: "Languages",
+      category: "Tools",
       url: "https://tailwindcss.com/",
     },
 
@@ -95,37 +102,43 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       name: "React",
       level: levels.advanced,
-      category: "Frameworks",
+      category: "Tools",
       url: "https://react.dev/",
     },
     {
       name: "Vite",
       level: levels.intermediate,
-      category: "Frameworks",
+      category: "Tools",
       url: "https://vitejs.dev/",
     },
     {
+      name: "Docker",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://www.docker.com/",
+    },
+    {
       name: "Node",
-      level: levels.advanced,
-      category: "Frameworks",
+      level: levels.intermediate,
+      category: "Tools",
       url: "https://nodejs.org/docs/latest/api/",
     },
     {
       name: "Express",
       level: levels.intermediate,
-      category: "Frameworks",
+      category: "Tools",
       url: "https://expressjs.com/",
     },
     {
       name: "Flask",
       level: levels.intermediate,
-      category: "Frameworks",
+      category: "Tools",
       url: "https://flask.palletsprojects.com/",
     },
     {
       name: "Azure Functions",
       level: levels.novice,
-      category: "Frameworks",
+      category: "Tools",
       url: "https://learn.microsoft.com/en-us/azure/azure-functions/",
     },
 
@@ -133,25 +146,31 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       name: "MongoDB",
       level: levels.intermediate,
-      category: "Storage",
+      category: "Tools",
       url: "https://www.mongodb.com/docs/",
     },
     {
       name: "Postgres",
       level: levels.intermediate,
-      category: "Storage",
+      category: "Tools",
       url: "https://www.postgresql.org/docs/",
     },
     {
       name: "Azure Blob",
-      level: levels.novice,
-      category: "Storage",
+      level: levels.introduced,
+      category: "Tools",
       url: "https://learn.microsoft.com/en-us/azure/storage/blobs/",
     },
     {
+      name: "S3",
+      level: levels.introduced,
+      category: "Tools",
+      url: "https://aws.amazon.com/s3/",
+    },
+    {
       name: "DynamoDB",
-      level: levels.novice,
-      category: "Storage",
+      level: levels.introduced,
+      category: "Tools",
       url: "https://aws.amazon.com/dynamodb/",
     },
   ];
@@ -160,71 +179,174 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       name: "SAP",
       level: levels.intermediate,
-      category: "Management",
+      category: null,
       url: "https://help.sap.com/",
     },
     // CAD & Design
     {
       name: "Creo",
       level: levels.master,
-      category: "Design",
+      category: null,
       url: "https://www.ptc.com/en/products/creo",
     },
     {
       name: "CATIA",
       level: levels.master,
-      category: "Design",
+      category: null,
       url: "https://www.3ds.com/products-services/catia/",
     },
     {
       name: "Solidworks",
       level: levels.advanced,
-      category: "Design",
+      category: null,
       url: "https://www.solidworks.com/",
     },
     {
       name: "Unity3D",
       level: levels.intermediate,
-      category: "Design",
+      category: null,
       url: "https://docs.unity3d.com/",
     },
     // PLM Systems
     {
       name: "Windchill",
       level: levels.expert,
-      category: "PLM",
+      category: null,
       url: "https://www.ptc.com/en/products/windchill",
     },
     {
       name: "Enovia",
       level: levels.advanced,
-      category: "PLM",
+      category: null,
       url: "https://www.3ds.com/products-services/enovia/",
     },
     {
       name: "SmarTeam",
       level: levels.intermediate,
-      category: "PLM",
+      category: null,
       url: "https://www.3ds.com/products-services/smarteam/",
     },
     // Project Management
     {
       name: "Jira",
       level: levels.expert,
-      category: "Management",
+      category: null,
       url: "https://www.atlassian.com/software/jira",
     },
     {
       name: "Confluence",
       level: levels.expert,
-      category: "Management",
+      category: null,
       url: "https://www.atlassian.com/software/confluence",
     },
   ];
 
   function createSkillsChart() {
-    createSkillsSection(".skills-container.software", softwareSkills);
+    // For mechanical skills, use the standard approach
     createSkillsSection(".skills-container.mechanical", mechanicalSkills);
+
+    // For software skills, handle the categories separately
+    createSoftwareSkillsSections();
+  }
+
+  function createSoftwareSkillsSections() {
+    const container = document.querySelector(".skills-container.software");
+    if (!container) return;
+
+    // Clear container
+    container.innerHTML = "";
+
+    // Group skills by category
+    const languageSkills = softwareSkills.filter((skill) => skill.category === "Languages");
+    const toolSkills = softwareSkills.filter((skill) => skill.category === "Tools");
+
+    // Create the Tools section
+    const toolsSection = document.createElement("div");
+    toolsSection.className = "skills-subcategory tools";
+
+    const toolsTitle = document.createElement("h4");
+    toolsTitle.className = "skills-subcategory-title";
+    toolsTitle.textContent = "Tools";
+    toolsSection.appendChild(toolsTitle);
+
+    const toolsGrid = document.createElement("div");
+    toolsGrid.className = "skills-grid";
+    toolsSection.appendChild(toolsGrid);
+
+    // Create the Languages section
+    const languagesSection = document.createElement("div");
+    languagesSection.className = "skills-subcategory languages";
+
+    const languagesTitle = document.createElement("h4");
+    languagesTitle.className = "skills-subcategory-title";
+    languagesTitle.textContent = "Languages";
+    languagesSection.appendChild(languagesTitle);
+
+    const languagesGrid = document.createElement("div");
+    languagesGrid.className = "skills-grid";
+    languagesSection.appendChild(languagesGrid);
+
+    // Add both sections to the container
+    container.appendChild(toolsSection);
+    container.appendChild(languagesSection);
+
+    // Populate the sections with skills
+    populateSkillsGrid(toolsGrid, toolSkills);
+    populateSkillsGrid(languagesGrid, languageSkills);
+
+    // Add intersection observers for the animation
+    addIntersectionObservers();
+
+    // Check container heights and adjust if needed
+    setTimeout(() => {
+      adjustSkillsContainerHeights();
+    }, 100);
+  }
+
+  function populateSkillsGrid(grid, skills) {
+    // Sort skills by level (highest first)
+    const sortedSkills = [...skills].sort((a, b) => b.level - a.level);
+
+    // Find the highest level within this category of skills
+    const maxLevelInCategory = Math.max(...skills.map((skill) => skill.level));
+
+    // Create and add skill tags
+    sortedSkills.forEach((skillData) => {
+      const skill = document.createElement("div");
+      skill.className = "skill";
+
+      const link = document.createElement("a");
+      link.href = skillData.url;
+      link.target = "_blank";
+
+      // Create progress bar background
+      const progress = document.createElement("div");
+      progress.className = "skill-progress";
+      progress.style.width = `${(skillData.level / Object.keys(levels).length) * 100}%`;
+
+      // Add text
+      const text = document.createElement("span");
+      text.className = "skill-text";
+      text.textContent = skillData.name;
+
+      link.style.setProperty("--skill-level", `${(skillData.level / Object.keys(levels).length) * 100}%`);
+
+      const baseOpacity = 1;
+      const minOpacity = 0.4;
+      const opacityExponent = 1.3;
+
+      // Calculate opacity relative to the highest level in this category
+      const normalizedLevel = skillData.level / maxLevelInCategory;
+      const opacity = minOpacity + (baseOpacity - minOpacity) * Math.pow(normalizedLevel, opacityExponent);
+
+      // Set opacity on the link element
+      link.style.opacity = opacity;
+
+      link.appendChild(progress);
+      link.appendChild(text);
+      skill.appendChild(link);
+      grid.appendChild(skill);
+    });
   }
 
   function createSkillsSection(containerSelector, skills) {
@@ -283,6 +405,10 @@ document.addEventListener("DOMContentLoaded", function () {
       grid.appendChild(skill);
     });
 
+    addIntersectionObservers();
+  }
+
+  function addIntersectionObservers() {
     // Add intersection observer for fade-in effect
     const observer = new IntersectionObserver(
       (entries) => {
@@ -302,13 +428,49 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Add a new function to adjust heights if needed
+  function adjustSkillsContainerHeights() {
+    const container = document.querySelector(".skills-container.software");
+    if (!container) return;
+
+    // Reset any fixed heights that might have been set previously
+    document.querySelectorAll(".skills-subcategory").forEach((sub) => {
+      sub.style.minHeight = "auto";
+    });
+
+    // Make sure the container has enough height for all content
+    container.style.height = "auto";
+
+    // Check if any skills are being cut off and adjust if needed
+    const toolsSection = container.querySelector(".skills-subcategory.tools");
+    const languagesSection = container.querySelector(".skills-subcategory.languages");
+
+    if (toolsSection && languagesSection) {
+      // Calculate the actual height needed for each section's content
+      const toolsContent = toolsSection.querySelector(".skills-grid");
+      const languagesContent = languagesSection.querySelector(".skills-grid");
+
+      if (toolsContent && languagesContent) {
+        // Add extra padding to ensure all content is visible
+        const toolsRequiredHeight = toolsContent.scrollHeight + 60; // Adding padding for the title
+        const languagesRequiredHeight = languagesContent.scrollHeight + 60; // Adding padding for the title
+
+        toolsSection.style.minHeight = `${toolsRequiredHeight}px`;
+        languagesSection.style.minHeight = `${languagesRequiredHeight}px`;
+      }
+    }
+  }
+
   // Initial creation
   createSkillsChart();
 
-  // Handle window resizing
+  // Update window resize handler to also adjust heights
   let resizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(createSkillsChart, 250);
+    resizeTimeout = setTimeout(() => {
+      createSkillsChart();
+      adjustSkillsContainerHeights();
+    }, 250);
   });
 });

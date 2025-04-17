@@ -284,11 +284,24 @@ p {
       margin-bottom: 0.4rem;
       color: c.color('text-light');
       text-shadow: 1px 1px 3px c.alpha('background-dark', 0.6);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        height: 2px;
+        width: 60%;
+        background: linear-gradient(to right, c.alpha('accent', 0), c.color('accent'), c.alpha('accent', 0));
+      }
+      
     }
 
     .project-subtitle {
       font-size: 0.85rem;
       color: c.color('accent-light');
+      margin-top: fn.spacing('xsmall') * .8;
     }
 
     .project-tech-stack {

@@ -7,27 +7,24 @@
 
 // Core color definitions
 $base-colors: (
-  // Core colors
-  'primary': #5e42a6,
-  'primary-light': #7d61b2,
-  'primary-dark': #412d64,
-  'secondary': #b74e91,
-  'secondary-light': #e4c4ed,
-  'secondary-dark': #3a1745,
-  'accent': #00ffcc,
-  'accent-light': #b1d298,
-  'accent-dark': #3e9495,
-  'accent-alt': #e2c221,
-  'accent-alt-light': #f9e67b,
+  'primary': #3e2a37,
+  'primary-light': #684b63,
+  'primary-dark': #1d0e1a,
+  'secondary': #7c4694,
+  'secondary-light': #9a68b2,
+  'secondary-dark': #51256e,
+  'accent': #b1d298,
+  'accent-light': #cae4bf,
+  'accent-dark': #7aae70,
+  'accent-alt': #f9e67b,
+  'accent-alt-light': #debc4c,
   'accent-alt-dark': #b1973d,
-
-  // Base colors
-  'background': #312450,
-  'background-light': #51256e,
-  'background-dark': #1d0e1a,
+  'background': #1d0e1a,
+  'background-light': #3e2a37,
+  'background-dark': #18233c,
   'text': #f9fcee,
   'text-light': #ffffff,
-  'text-dark': #f5f3f7,
+  'text-dark': #e4c4ed,
 );
 
 // Generate color map with variants
@@ -57,10 +54,6 @@ $colors: map.merge(
     'input-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
     'header-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
     'shadow': color.change(map.get($colors, 'background-dark'), $alpha: 0.5),
-    'error': #ff3860,
-    'success': #23d160,
-    'warning': #ffdd57,
-    'info': #3298dc,
   )
 );
 
