@@ -12,9 +12,11 @@
       <header>
         <span class="image avatar"><img src="assets/images/avatar.jpg" alt="" /></span>
         <h1 id="logo">Nick Bassett</h1>
-        <a href="https://drive.google.com/file/d/1E6-GraFaqeYeqjUElqNOiMiZfu8TSBPv/view?usp=sharing"
-          target="_blank" rel="noopener noreferrer">Resume</a
-        >
+        <div class="resume-link-container">
+          <a href="https://drive.google.com/file/d/1E6-GraFaqeYeqjUElqNOiMiZfu8TSBPv/view?usp=sharing"
+            target="_blank" rel="noopener noreferrer">Resume</a
+          >
+        </div>
       </header>
       <div class="nav-wrapper">
         <nav id="nav">
@@ -75,21 +77,32 @@
           <div class="container">
             <header class="major">
               <h2>Hello! My name is Nick.</h2>
-              <p>Senior Mechanical Design Engineer turned Software Engineer.</p>
+              <p>Senior Mechanical Design Engineer turned <u>Software Engineer</u>.</p>
             </header>
-            <p>
-              Innovative Engineer with 7+ years of proven experience in Aerospace, Defense, and
-              Manufacturing industries deriving customer focused design requirements and building
-              complete, efficient and cost-effective end-to-end solutions. Strong eye for detail
-              with an extensive range of skills. Now looking to new horizons as a determined
-              Software Engineer with strong fundamental real world engineering skills.
-            </p>
-            <p>
-              In my spare time I enjoy spending time in nature, all forms of artistic expression
-              (drawing, painting and photography for myself so far!), traveling (20+ countries so
-              far!), learning about other cultures and generally being open and compassionate to
-              other views of life.
-            </p>
+            <div class="intro-content">
+              <p>
+                <span class="highlight">Innovative Engineer</span> with 7+ years of proven experience in 
+                Aerospace, Defense, and Manufacturing industries deriving customer focused design requirements and building
+                complete, efficient and cost-effective end-to-end solutions. Strong eye for detail
+                with an extensive range of skills. Now looking to new horizons as a determined
+                <span class="highlight">Software Engineer</span> with strong fundamental real world engineering skills.
+              </p>
+              <p>
+                In my spare time I enjoy spending time in nature, all forms of artistic expression
+                (drawing, painting and photography for myself so far!), traveling (20+ countries so
+                far!), learning about other cultures and generally being open and compassionate to
+                other views of life.
+              </p>
+            </div>
+            <div class="intro-footer">
+              <div class="personality-tags">
+                <span class="tag">Problem Solver</span>
+                <span class="tag">Creative</span>
+                <span class="tag">Detail-Oriented</span>
+                <span class="tag">Fast Learner</span>
+                <span class="tag">Adaptive</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -155,9 +168,12 @@
         <section id="seven" class="contact-section">
           <div class="container">
             <h3>Contact Me</h3>
-            <p>I'd love to hear from you! Feel free to reach out with any questions or opportunities.</p>
+            <!-- <p>I'd love to hear from you! Feel free to reach out with any questions or opportunities.</p> -->
             
             <form method="post" action="https://formspree.io/f/xzzpzrwr" id="contact-form">
+              <div class="form-group">
+                <label class="form-label">Feel free to reach out with any questions or opportunities.</label>
+              </div>
               <div class="form-group">
                 <label for="name" class="form-label">Name</label>
                 <div class="input-wrapper">

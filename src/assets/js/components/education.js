@@ -115,7 +115,7 @@ class Education {
       titleContainer.appendChild(title);
 
       if (education.subtitle) {
-        const subtitle = document.createElement("h5");
+        const subtitle = document.createElement("p");
         subtitle.textContent = education.subtitle;
         titleContainer.appendChild(subtitle);
       }

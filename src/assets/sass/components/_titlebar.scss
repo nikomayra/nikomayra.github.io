@@ -10,7 +10,7 @@
   @include bp.breakpoint('<=large') {
     & {
       backface-visibility: hidden;
-      background: c.color('background-dark');
+      background: linear-gradient(to right, c.color('background-dark'), c.color('primary-dark'));
       display: block;
       height: fn.layout('titlebar-height');
       left: 0;
@@ -19,6 +19,7 @@
       width: 100%;
       z-index: fn.z('header') + 1;
       transition: width fn.duration('transition') ease;
+      box-shadow: 0 2px 8px c.alpha('background-dark', 0.5);
     }
 
     body:has(#header.header-visible) & {
@@ -26,13 +27,15 @@
     }
 
     .title {
-      color: c.color('text');
+      color: c.color('text-light');
       display: block;
       font-weight: fn.font-weight('bold');
       height: fn.layout('titlebar-height');
       line-height: fn.layout('titlebar-height');
       padding: 0 1em;
       text-align: if(fn.layout('header-side') == 'right', 'left', 'right');
+      text-shadow: 1px 1px 2px c.alpha('background-dark', 0.7);
+      letter-spacing: 0.05em;
     }
 
     .toggle {
@@ -46,8 +49,8 @@
       #{if(fn.layout('header-side') == 'right', 'right', 'left')}: 0;
 
       &:before {
-        background: c.color('primary');
-        color: c.color('text');
+        background: linear-gradient(to right, c.color('primary-dark'), c.color('primary'));
+        color: c.color('text-light');
         content: '\f0c9';
         display: block;
         font-size: v.$titlebar-icon-size;
@@ -58,6 +61,13 @@
         top: 0;
         width: v.$titlebar-icon-width;
         #{if(fn.layout('header-side') == 'right', 'right', 'left')}: 0;
+        border-right: 1px solid c.alpha('accent', 0.2);
+        transition: background 0.3s ease, color 0.3s ease;
+        
+        &:hover {
+          background: c.color('accent-alt');
+          color: c.color('background-dark');
+        }
       }
     }
   }

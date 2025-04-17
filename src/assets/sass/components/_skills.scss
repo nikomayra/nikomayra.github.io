@@ -29,6 +29,7 @@
   display: flex;
   width: 100%;
   gap: 2rem;
+  position: relative;
 
   @include bp.breakpoint('<=medium') {
     flex-direction: column;
@@ -43,17 +44,43 @@
 
   &.software {
     flex: 3;
+    
+    .skills-section-title {
+      background: linear-gradient(to right, c.alpha('accent-alt', 0), c.alpha('secondary', 0.2), c.alpha('accent-alt', 0));
+      position: relative;
+    }
   }
 
   &.mechanical {
     flex: 2;
+    
+    .skills-section-title {
+      background: linear-gradient(to right, c.alpha('accent-alt', 0), c.alpha('secondary', 0.2), c.alpha('accent-alt', 0));
+    }
   }
 
   .skills-section-title {
     text-align: center;
-    color: c.color('accent');
+    color: c.color('accent-alt');
     font-size: 1.5em;
     margin: 0 0 1rem 0;
+    position: relative;
+    display: inline-block;
+    align-self: center;
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      right: auto;
+      bottom: -5px;
+      height: 2px;
+      width: 60%;
+      background: linear-gradient(to right, c.alpha('accent-alt', 0), c.color('accent-alt'), c.alpha('accent-alt', 0));
+    }
   }
 }
 
@@ -64,10 +91,33 @@
   border: 2px solid c.color('secondary');
   border-radius: 15px;
   overflow: hidden;
+  background: linear-gradient(135deg, c.alpha('secondary-dark', 0.3) 0%, c.alpha('primary-dark', 0.2) 100%);
+  box-shadow: 0 5px 15px c.alpha('background-dark', 0.5);
+  transition: all 0.3s ease;
 
   &:hover {
-    border-color: c.color('accent-alt');
-    transition: border-color fn.duration('transition') ease;
+    border-color: c.color('secondary-light');
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px c.alpha('background-dark', 0.7);
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: radial-gradient(circle at top right, c.alpha('secondary-light', 0.1), transparent 70%);
+    pointer-events: none;
+  }
+  
+  &.software {
+    border-left: 4px solid c.color('secondary');
+  }
+  
+  &.mechanical {
+    border-right: 4px solid c.color('secondary');
   }
 
   .skills-grid {
@@ -78,6 +128,8 @@
     align-items: center;
     padding: 1rem;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -98,14 +150,15 @@
     padding: 0.5rem 1rem;
     border-radius: 20px;
     text-decoration: none;
-    color: c.color('accent');
+    color: c.color('text');
     border: 2px solid c.color('accent');
     font-size: clamp(0.8rem, 2.5vw, 1rem);
     font-weight: fn.font-weight('bold');
-    background-color: var(--skill-base-color);
+    background-color: c.alpha('primary-light', 0.5);
     transition: all fn.duration('transition') cubic-bezier(0.175, 0.885, 0.32, 1.275),
       opacity fn.duration('transition') ease;
     overflow: hidden;
+    box-shadow: 0 3px 8px c.alpha('background-dark', 0.3);
 
     .skill-progress {
       position: absolute;
@@ -113,9 +166,19 @@
       left: 0;
       height: 100%;
       width: var(--skill-level);
-      background-color: c.color('accent');
+      background: linear-gradient(90deg, c.color('accent-dark'), c.color('accent'));
       opacity: var(--skill-progress-opacity);
       transition: all fn.duration('transition') ease;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 1px;
+        background: c.alpha('secondary', 0.5);
+      }
     }
 
     .skill-text {
@@ -125,12 +188,17 @@
 
     &:hover {
       transform: translateY(var(--skill-hover-translate)) scale(var(--skill-hover-scale));
-      border-color: c.color('accent-alt');
-      box-shadow: 0 4px 11px c.color('shadow');
+      border-color: c.color('secondary');
+      box-shadow: 0 8px 16px c.alpha('background-dark', 0.5), 
+                  0 0 10px c.alpha('secondary', 0.3);
 
       .skill-progress {
-        background-color: c.color('accent-alt');
+        background: linear-gradient(90deg, c.color('secondary-dark'), c.color('secondary'));
         opacity: var(--skill-progress-hover-opacity);
+      }
+      
+      .skill-text {
+        color: c.color('text-light');
       }
     }
   }

@@ -166,7 +166,7 @@ class WorkExperience {
       titleContainer.appendChild(title);
 
       if (company.location) {
-        const location = document.createElement("h5");
+        const location = document.createElement("p");
         location.className = "accordion-location";
         location.textContent = company.location;
         titleContainer.appendChild(location);

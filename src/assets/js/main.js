@@ -13,7 +13,7 @@ Fancybox.bind("[data-fancybox]", {
 
 // Import other visualization modules
 import "./components/worldTour.js";
-import "./skills.js";
+import "./components/skills.js";
 import "./components/usTour.js";
 import "./components/projects.js";
 import "./components/workExperience.js";

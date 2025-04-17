@@ -9,13 +9,25 @@
 $base-colors: (
   // Core colors
   'primary': #5e42a6,
+  'primary-light': #7d61b2,
+  'primary-dark': #412d64,
   'secondary': #b74e91,
+  'secondary-light': #e4c4ed,
+  'secondary-dark': #3a1745,
   'accent': #00ffcc,
+  'accent-light': #b1d298,
+  'accent-dark': #3e9495,
   'accent-alt': #e2c221,
+  'accent-alt-light': #f9e67b,
+  'accent-alt-dark': #b1973d,
 
   // Base colors
   'background': #312450,
-  'text': #ffffff
+  'background-light': #51256e,
+  'background-dark': #1d0e1a,
+  'text': #f9fcee,
+  'text-light': #ffffff,
+  'text-dark': #f5f3f7,
 );
 
 // Generate color map with variants
@@ -25,9 +37,14 @@ $colors: ();
   // Base color
   $colors: map.set($colors, $name, $color);
 
-  // Light/dark variants
-  $colors: map.set($colors, '#{$name}-light', color.scale($color, $lightness: 20%));
-  $colors: map.set($colors, '#{$name}-dark', color.scale($color, $lightness: -20%));
+  // Add light/dark variants if not already defined
+  @if not map.has-key($base-colors, '#{$name}-light') {
+    $colors: map.set($colors, '#{$name}-light', color.scale($color, $lightness: 20%));
+  }
+  
+  @if not map.has-key($base-colors, '#{$name}-dark') {
+    $colors: map.set($colors, '#{$name}-dark', color.scale($color, $lightness: -20%));
+  }
 }
 
 // Add semantic color aliases
@@ -39,7 +56,11 @@ $colors: map.merge(
     'border': color.change(map.get($colors, 'text'), $alpha: 0.5),
     'input-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
     'header-bg': color.scale(map.get($colors, 'background'), $lightness: 15%),
-    'shadow': color.change(map.get($colors, 'background-dark'), $alpha: 0.1),
+    'shadow': color.change(map.get($colors, 'background-dark'), $alpha: 0.5),
+    'error': #ff3860,
+    'success': #23d160,
+    'warning': #ffdd57,
+    'info': #3298dc,
   )
 );
 
@@ -80,4 +101,31 @@ $colors: map.merge(
 /// @return {Color} Color with adjusted opacity
 @function alpha($key, $amount) {
   @return color.change(color($key), $alpha: $amount);
+}
+
+/// Mix two colors
+/// @param {String} $key1 - First color key
+/// @param {String} $key2 - Second color key
+/// @param {Number} $weight - Weight of the first color (0-100)
+/// @return {Color} Mixed color
+@function mix-colors($key1, $key2, $weight: 50%) {
+  @return color.mix(color($key1), color($key2), $weight);
+}
+
+/// Create a linear gradient
+/// @param {String} $direction - Direction of the gradient
+/// @param {String} $key1 - First color key
+/// @param {String} $key2 - Second color key
+/// @return {String} Gradient CSS value
+@function gradient($direction, $key1, $key2) {
+  @return linear-gradient($direction, color($key1), color($key2));
+}
+
+/// Create a radial gradient
+/// @param {String} $shape - Shape of the gradient
+/// @param {String} $key1 - First color key
+/// @param {String} $key2 - Second color key
+/// @return {String} Gradient CSS value
+@function radial-gradient($shape, $key1, $key2) {
+  @return radial-gradient($shape, color($key1), color($key2));
 }

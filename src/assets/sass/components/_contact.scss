@@ -14,22 +14,24 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, c.alpha('primary-dark', 0.2) 0%, c.alpha('primary', 0.1) 100%);
+    background: linear-gradient(135deg, c.alpha('primary-dark', 0.2) 0%, c.alpha('background-light', 0.1) 100%);
     z-index: -1;
     pointer-events: none;
   }
   
   form {
     position: relative;
-    background: c.alpha('primary-dark', 0.3);
+    background: linear-gradient(to bottom, c.alpha('primary-dark', 0.4), c.alpha('background-dark', 0.5));
     border-radius: 10px;
     padding: 2rem;
-    box-shadow: 0 8px 32px c.alpha('shadow', 0.2);
+    box-shadow: 0 8px 32px c.alpha('shadow', 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid c.alpha('accent', 0.1);
     
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 12px 40px c.alpha('shadow', 0.3);
+      box-shadow: 0 15px 40px c.alpha('shadow', 0.4);
+      border-color: c.alpha('accent-alt', 0.2);
     }
     
     .form-group {
@@ -38,7 +40,7 @@
       
       &.focused {
         .form-label {
-          color: c.color('accent');
+          color: c.color('accent-alt');
           transform: translateY(-5px);
         }
       }
@@ -54,8 +56,9 @@
         margin-bottom: 0.5rem;
         font-weight: 600;
         font-size: 0.9rem;
-        color: c.color('accent');
+        color: c.color('accent-alt-light');
         transition: all 0.3s ease;
+        letter-spacing: 0.05em;
       }
       
       .input-wrapper {
@@ -68,7 +71,7 @@
           left: 0;
           width: 0;
           height: 2px;
-          background-color: c.color('accent');
+          background: linear-gradient(to right, c.color('accent-alt'), c.color('accent'));
           transition: width 0.3s ease;
         }
         
@@ -80,19 +83,19 @@
       input, 
       textarea {
         width: 100%;
-        background: c.alpha('primary', 0.2);
+        background: c.alpha('primary-dark', 0.2);
         border: 1px solid c.alpha('border', 0.3);
         border-radius: 6px;
         padding: 0.75rem 1rem;
-        color: c.color('text');
+        color: c.color('text-light');
         font-size: 1rem;
         transition: all 0.3s ease;
         
         &:focus {
           outline: none;
-          border-color: c.color('accent');
-          background: c.alpha('primary-light', 0.2);
-          box-shadow: 0 0 0 3px c.alpha('accent', 0.2);
+          border-color: c.color('accent-alt');
+          background: c.alpha('primary-light', 0.1);
+          box-shadow: 0 0 0 3px c.alpha('accent-alt', 0.2);
         }
         
         &::placeholder {
@@ -116,8 +119,8 @@
       .btn {
         position: relative;
         overflow: hidden;
-        background: c.color('primary');
-        color: c.color('text');
+        background: linear-gradient(to right, c.color('primary-dark'), c.color('primary'));
+        color: c.color('text-light');
         border: none;
         border-radius: 6px;
         padding: 0.75rem 1.5rem;
@@ -134,15 +137,15 @@
           left: -100%;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, c.alpha('accent', 0.4), transparent);
+          background: linear-gradient(90deg, transparent, c.alpha('accent-alt', 0.4), transparent);
           transition: left 0.5s ease;
           z-index: -1;
         }
         
         &:hover {
-          background: c.lighten('primary', 5%);
-          transform: translateY(-2px);
-          box-shadow: 0 6px 15px c.alpha('shadow', 0.3);
+          background: linear-gradient(to right, c.color('primary'), c.color('primary-light'));
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px c.alpha('shadow', 0.4);
           
           &::before {
             left: 100%;
@@ -168,11 +171,12 @@
         }
         
         &.primary {
-          background: c.color('accent');
+          background: linear-gradient(to right, c.color('accent-dark'), c.color('accent'));
           color: c.color('background-dark');
           
           &:hover {
-            background: c.lighten('accent', 10%);
+            background: linear-gradient(to right, c.color('accent'), c.color('accent-light'));
+            box-shadow: 0 8px 20px c.alpha('accent', 0.3);
           }
         }
         
@@ -182,7 +186,7 @@
           
           &:hover {
             background: c.alpha('primary-light', 0.2);
-            border-color: c.color('text');
+            border-color: c.color('text-light');
           }
         }
       }
@@ -209,14 +213,16 @@
     
     &.success {
       background: c.alpha('accent', 0.2);
-      color: c.color('accent');
+      color: c.color('accent-light');
       border: 1px solid c.alpha('accent', 0.3);
+      box-shadow: 0 3px 10px c.alpha('accent', 0.1);
     }
     
     &.error {
       background: c.alpha('secondary', 0.2);
-      color: c.lighten('secondary', 20%);
+      color: c.lighten('secondary-light', 20%);
       border: 1px solid c.alpha('secondary', 0.3);
+      box-shadow: 0 3px 10px c.alpha('secondary', 0.1);
     }
     
     &.visible {

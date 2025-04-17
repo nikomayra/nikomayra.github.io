@@ -35,7 +35,7 @@ body {
   margin: 0;
   min-height: 100%;
   overflow: hidden;
-  background: c.color('background');
+  background: linear-gradient(135deg, c.color('background'), c.color('background-dark'));
   color: c.color('text');
   font-family: fn.font-family('primary');
   font-size: fn.font-size('base');
@@ -69,67 +69,133 @@ h3,
 h4,
 h5,
 h6 {
-  color: c.color('text');
+  color: c.color('text-light');
   font-weight: fn.font-weight('bold');
   line-height: 1em;
   margin: 0 0 fn.spacing('small');
+  
+  &::after {
+    content: '';
+    display: block;
+    height: 2px;
+    // width: 50px;
+    background: linear-gradient(to right, c.color('accent'), c.alpha('accent', 0));
+    margin-top: 0.3em;
+  }
 }
 
 h1 {
   font-size: fn.font-size('h1');
+  color: c.color('text-light');
+  text-shadow: 1px 1px 3px c.alpha('background-dark', 0.7);
+  
+  &::after {
+    width: 100px;
+    background: linear-gradient(to right, c.color('accent-alt'), c.alpha('accent-alt', 0));
+  }
 }
+
 h2 {
   font-size: fn.font-size('h2');
   margin: 0 0 fn.spacing('medium') * 1.2;
-}
-h3 {
-  font-size: fn.font-size('h3');
-}
-h4 {
-  font-size: fn.font-size('h4');
-}
-h5 {
-  font-size: fn.font-size('h5');
-}
-h6 {
-  font-size: fn.font-size('h6');
+  position: relative;
+  
+  &::after {
+    width: 80px;
+    background: linear-gradient(to right, c.color('accent'), c.alpha('accent', 0));
+  }
 }
 
-p {
-  margin: 0 0 fn.spacing('medium');
+h3 {
+  font-size: fn.font-size('h3');
+  
+  &::after {
+    width: 60px;
+  }
+}
+
+h4 {
+  font-size: fn.font-size('h4');
+  
+  &::after {
+    width: 40px;
+  }
 }
 
 // Links
 a {
-  color: c.color('link');
+  color: c.color('accent-light');
   text-decoration: none;
-  transition: color fn.duration('standard') ease-in-out;
-
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+  
   &:hover {
-    color: c.color('link-hover');
+    color: c.color('accent-alt');
+    text-decoration: underline;
+  }
+}
+
+// Paragraph
+p {
+  margin: 0 0 fn.spacing('medium');
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Strong and emphasis
+strong, b {
+  color: c.color('text-light');
+  font-weight: fn.font-weight('bold');
+}
+
+em, i {
+  font-style: italic;
+}
+
+// Code blocks
+code {
+  background: c.alpha('primary-dark', 0.3);
+  border-radius: 4px;
+  font-family: fn.font-family('code');
+  font-size: 0.9em;
+  padding: 0.25em 0.5em;
+  color: c.color('accent-light');
+}
+
+pre {
+  background: c.alpha('primary-dark', 0.3);
+  border-radius: 4px;
+  padding: 1em;
+  overflow-x: auto;
+  
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+// Horizontal rule
+hr {
+  border: 0;
+  border-bottom: 1px solid c.alpha('border', 0.3);
+  margin: fn.spacing('large') 0;
+  
+  &.accent {
+    height: 2px;
+    background: linear-gradient(to right, c.alpha('accent', 0), c.color('accent'), c.alpha('accent', 0));
+    border: none;
   }
 }
 
 // Lists
-ul,
-ol {
-  // margin: 0 0 fn.spacing('medium');
-  padding-left: 1em;
-}
-
-ul {
-  list-style: disc;
-
-  // li {
-  //   padding-left: 0.5em;
-  // }
-}
-
-ol {
-  list-style: decimal;
-
+ul, ol {
+  margin: 0 0 fn.spacing('medium') fn.spacing('small');
+  padding-left: fn.spacing('medium');
+  
   li {
-    padding-left: 0.25em;
+    padding-left: 0.5em;
+    margin-bottom: 0.5em;
   }
 }
 

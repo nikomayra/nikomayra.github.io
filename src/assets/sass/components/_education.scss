@@ -136,6 +136,8 @@
     
     &:hover {
       transform: scale(1.1);
+      outline: none !important;
+      outline-offset: 0 !important;
     }
     
     .plus {
