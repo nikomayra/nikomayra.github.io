@@ -168,7 +168,7 @@
   min-height: auto;
   
   @include bp.breakpoint('<=small') {
-    padding-top: fn.spacing('medium');
+    padding-top: fn.spacing('large');
   }
   
   .skills-subcategory-title {

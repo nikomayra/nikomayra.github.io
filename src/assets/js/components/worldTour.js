@@ -73,7 +73,6 @@ let path = null;
 let canvas = null;
 let context = null;
 let globeContainer = null;
-let resizeTimer = null;
 let isInitialized = false; // Flag to track if setup has run
 
 // Versor class for smooth rotation interpolation
@@ -451,23 +450,26 @@ async function goToNextCountry() {
  * Handle window resize
  */
 function handleResize() {
-  // Avoid excessive resizing
-  if (resizeTimer) clearTimeout(resizeTimer);
+  // Avoid excessive resizing - REMOVED setTimeout
+  // if (resizeTimer) clearTimeout(resizeTimer);
 
-  resizeTimer = setTimeout(() => {
-    // Refresh the colors in case theme has changed
-    colors = {
-      ocean: getColorValue("--world-ocean-color"),
-      graticule: getColorValue("--world-graticule-color"),
-      border: getColorValue("--world-border-color"),
-      visited: getColorValue("--world-visited-country-color"),
-      land: getColorValue("--world-land-color"),
-      flight: getColorValue("--world-flight-path-color"),
-    };
+  // resizeTimer = setTimeout(() => {
+  // Refresh the colors in case theme has changed
+  colors = {
+    ocean: getColorValue("--world-ocean-color"),
+    graticule: getColorValue("--world-graticule-color"),
+    border: getColorValue("--world-border-color"),
+    visited: getColorValue("--world-visited-country-color"),
+    land: getColorValue("--world-land-color"),
+    flight: getColorValue("--world-flight-path-color"),
+  };
 
-    // Only update dimensions and projection, don't re-initialize or redraw here
-    updateGlobeDimensionsAndProjection(); // Call renamed function
-  }, 250);
+  // Only update dimensions and projection, don't re-initialize or redraw here
+  updateGlobeDimensionsAndProjection(); // Call renamed function
+
+  // Redraw the globe immediately after updating dimensions
+  drawGlobe();
+  // }, 250); // REMOVED setTimeout delay
 }
 
 // Initialize when DOM is ready

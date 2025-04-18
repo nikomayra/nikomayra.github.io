@@ -296,11 +296,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add intersection observers for the animation
     addIntersectionObservers();
-
-    // Check container heights and adjust if needed
-    setTimeout(() => {
-      adjustSkillsContainerHeights();
-    }, 100);
   }
 
   function populateSkillsGrid(grid, skills) {
@@ -428,39 +423,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Add a new function to adjust heights if needed
-  function adjustSkillsContainerHeights() {
-    const container = document.querySelector(".skills-container.software");
-    if (!container) return;
-
-    // Reset any fixed heights that might have been set previously
-    document.querySelectorAll(".skills-subcategory").forEach((sub) => {
-      sub.style.minHeight = "auto";
-    });
-
-    // Make sure the container has enough height for all content
-    container.style.height = "auto";
-
-    // Check if any skills are being cut off and adjust if needed
-    const toolsSection = container.querySelector(".skills-subcategory.tools");
-    const languagesSection = container.querySelector(".skills-subcategory.languages");
-
-    if (toolsSection && languagesSection) {
-      // Calculate the actual height needed for each section's content
-      const toolsContent = toolsSection.querySelector(".skills-grid");
-      const languagesContent = languagesSection.querySelector(".skills-grid");
-
-      if (toolsContent && languagesContent) {
-        // Add extra padding to ensure all content is visible
-        const toolsRequiredHeight = toolsContent.scrollHeight + 60; // Adding padding for the title
-        const languagesRequiredHeight = languagesContent.scrollHeight + 60; // Adding padding for the title
-
-        toolsSection.style.minHeight = `${toolsRequiredHeight}px`;
-        languagesSection.style.minHeight = `${languagesRequiredHeight}px`;
-      }
-    }
-  }
-
   // Initial creation
   createSkillsChart();
 
@@ -470,7 +432,6 @@ document.addEventListener("DOMContentLoaded", function () {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       createSkillsChart();
-      adjustSkillsContainerHeights();
     }, 250);
   });
 });

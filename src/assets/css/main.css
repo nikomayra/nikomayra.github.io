@@ -1771,7 +1771,7 @@ header.major h2 + p {
 }
 @media (max-width: 576px) {
   .skills-subcategory {
-    padding-top: 2rem;
+    padding-top: 3rem;
   }
 }
 .skills-subcategory .skills-subcategory-title {

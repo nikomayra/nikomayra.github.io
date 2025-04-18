@@ -1,3 +1,7 @@
+import faulogo from "../../images/education/fau.webp";
+import purduelogo from "../../images/education/PU-V-Full-RGB.webp";
+import fullstacklogo from "../../images/education/fullstack.webp";
+
 class Education {
   constructor() {
     this.container = document.querySelector("#education-section");
@@ -6,7 +10,7 @@ class Education {
     this.educationData = [
       {
         id: "fullstack",
-        logo: "assets/images/education/fullstack.webp",
+        logo: fullstacklogo,
         title: "Full Stack Open - Core Course",
         subtitle: "",
         period: "2022 - 2023",
@@ -32,7 +36,7 @@ class Education {
       },
       {
         id: "purdue",
-        logo: "assets/images/education/PU-V-Full-RGB.webp",
+        logo: purduelogo,
         title: "Purdue University",
         subtitle: "Masters in Mechanical Engineering",
         period: "2018 - 2020",
@@ -53,7 +57,7 @@ class Education {
       },
       {
         id: "fau",
-        logo: "assets/images/education/fau.webp",
+        logo: faulogo,
         title: "Florida Atlantic University",
         subtitle: "Bachelors in Mechanical Engineering",
         period: "2013 - 2016",
