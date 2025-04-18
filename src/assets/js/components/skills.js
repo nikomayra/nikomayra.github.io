@@ -349,9 +349,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Populate the sections with skills using the helper
     populateSkillsGrid(toolsGrid, toolSkills);
     populateSkillsGrid(languagesGrid, languageSkills);
-
-    // Add intersection observers for the animation
-    addIntersectionObservers();
   }
 
   function populateSkillsGrid(grid, skills) {
@@ -391,8 +388,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const skillElement = createSkillElement(skillData, maxLevelInCategory); // Pass maxLevelInCategory
       grid.appendChild(skillElement);
     });
-
-    addIntersectionObservers();
   }
 
   function addIntersectionObservers() {
@@ -420,13 +415,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initial creation
   createSkillsChart();
+  // Add observers ONCE after initial creation
+  addIntersectionObservers();
 
   // Update window resize handler to also adjust heights
   let resizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      createSkillsChart();
+      // If specific resize adjustments are needed later, add them here.
+      // For now, CSS should handle responsiveness.
     }, 250);
   });
 });
