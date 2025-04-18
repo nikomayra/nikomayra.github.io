@@ -10,21 +10,26 @@ $base-colors: (
   'primary': #3e2a37,
   'primary-light': #684b63,
   'primary-dark': #1d0e1a,
-  'secondary': #7c4694,
-  'secondary-light': #9a68b2,
-  'secondary-dark': #51256e,
+
+  'secondary': #412d64, //#3e9495, //#7c4694,
+  'secondary-light': #7d61b2, //#609691, //#7d61b2,
+  'secondary-dark': #3a1745, //#1b5a5e, //#51256e,
+
   'accent': #b1d298,
   'accent-light': #cae4bf,
   'accent-dark': #7aae70,
-  'accent-alt': #f9e67b,
-  'accent-alt-light': #debc4c,
+
+  'accent-alt': #debc4c,
+  'accent-alt-light': #f9e67b,
   'accent-alt-dark': #b1973d,
+
   'background': #1d0e1a,
   'background-light': #3e2a37,
   'background-dark': #18233c,
+
   'text': #f9fcee,
-  'text-light': #ffffff,
-  'text-dark': #e4c4ed,
+  'text-light': #f5f3f7,
+  'text-dark': #b49a29, //#e4c4ed,
 );
 
 // Generate color map with variants

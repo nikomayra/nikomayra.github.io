@@ -1,8 +1,8 @@
 import { Fancybox } from "@fancyapps/ui";
-import caboh from "../../images/projects/caboh.png";
-import placesCentralZoner from "../../images/projects/PCZ.png";
-import serverlessImageProcessor from "../../images/projects/BG.png";
-import rtc from "../../images/projects/rtc.jpg";
+import caboh from "../../images/projects/caboh.webp";
+import placesCentralZoner from "../../images/projects/PCZ.webp";
+import serverlessImageProcessor from "../../images/projects/BG.webp";
+import rtc from "../../images/projects/rtc.webp";
 
 class ProjectsCarousel {
   constructor() {

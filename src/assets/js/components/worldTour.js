@@ -52,7 +52,7 @@ const arcExclusions = {
 };
 
 // Cache color values
-const colors = {
+let colors = {
   ocean: getColorValue("--world-ocean-color"),
   graticule: getColorValue("--world-graticule-color"),
   border: getColorValue("--world-border-color"),
@@ -60,6 +60,21 @@ const colors = {
   land: getColorValue("--world-land-color"),
   flight: getColorValue("--world-flight-path-color"),
 };
+
+// Global variables to maintain state across resize events
+let worldData = null;
+let currentCountry = null;
+let currentPath = null;
+let isAnimating = false;
+let rotationAngles = [0, 0, 0];
+let animationTimer = null;
+let projection = null;
+let path = null;
+let canvas = null;
+let context = null;
+let globeContainer = null;
+let resizeTimer = null;
+let isInitialized = false; // Flag to track if setup has run
 
 // Versor class for smooth rotation interpolation
 class Versor {
@@ -149,190 +164,316 @@ function getRandomCountry(countries, prevCountry) {
   return availableCountries[Math.floor(Math.random() * availableCountries.length)];
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.querySelector(".world-tour-container");
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-  const tilt = 20;
+/**
+ * Updates the globe dimensions, projection, and redraws the canvas.
+ */
+function updateGlobeDimensionsAndProjection() {
+  if (!globeContainer || !canvas || !context || !projection || !path) return;
 
-  // Create title element
-  const title = d3.select(".world-tour-container").append("div").attr("class", "world-title");
+  // Get container dimensions
+  const containerWidth = globeContainer.clientWidth;
+  const containerHeight = globeContainer.clientHeight;
 
-  // Prepare canvas with device pixel ratio support
-  const dpr = window.devicePixelRatio ?? 1;
-  const canvas = d3
-    .select(".world-tour-container")
-    .append("canvas")
-    .attr("width", dpr * width)
-    .attr("height", dpr * height)
-    .style("width", `${width}px`)
-    .style("height", `${height}px`);
+  // Determine ideal globe size (always 1:1 aspect ratio)
+  // Use the smaller dimension of the container, with padding on larger screens
+  const baseSize = Math.min(containerWidth, containerHeight);
+  let globeSize = baseSize;
+  if (containerWidth > 600) {
+    // Apply padding only on larger screens
+    globeSize = baseSize * 0.9;
+  }
 
-  const context = canvas.node().getContext("2d");
+  // Set canvas size with device pixel ratio support
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = globeSize * dpr;
+  canvas.height = globeSize * dpr;
+  canvas.style.width = `${globeSize}px`;
+  canvas.style.height = `${globeSize}px`;
+
+  // Reset context transform and scale for retina
+  context.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
   context.scale(dpr, dpr);
 
-  const projection = d3.geoOrthographic().fitExtent(
-    [
-      [10, 10],
-      [width - 10, height - 10],
-    ],
-    { type: "Sphere" }
-  );
+  // Update projection
+  projection.scale(globeSize / 2 - 5).translate([globeSize / 2, globeSize / 2]);
 
-  const path = d3.geoPath(projection, context);
+  // Redraw the globe -- REMOVED drawGlobe() call from here
+  // drawGlobe();
+}
 
-  async function render() {
-    const world = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+/**
+ * Initialize the world map visualization ONCE.
+ */
+async function setupGlobe() {
+  // Prevent multiple initializations
+  if (isInitialized) return;
+
+  // Find the container
+  globeContainer = document.querySelector(".world-tour-container");
+  if (!globeContainer) return;
+
+  // Clean up any existing canvas (just in case of HMR or similar)
+  const existingCanvas = globeContainer.querySelector("canvas");
+  if (existingCanvas) {
+    existingCanvas.remove();
+  }
+
+  // Create or find the title element
+  let titleElement = globeContainer.querySelector(".world-title");
+  if (!titleElement) {
+    titleElement = document.createElement("div");
+    titleElement.className = "world-title";
+    globeContainer.appendChild(titleElement);
+  }
+
+  // Create a new canvas (only once)
+  canvas = document.createElement("canvas");
+  globeContainer.appendChild(canvas);
+
+  // Get drawing context (only once)
+  context = canvas.getContext("2d");
+
+  // Set up the projection (only once)
+  projection = d3.geoOrthographic().rotate(rotationAngles); // Initial rotation
+
+  path = d3.geoPath(projection, context);
+
+  // Load world data if not already loaded
+  const dataLoaded = await loadWorldData();
+  if (!dataLoaded) return; // Stop if data failed to load
+
+  // Set initial dimensions and projection (without drawing yet)
+  updateGlobeDimensionsAndProjection();
+
+  // Draw the initial state once before starting animation
+  drawGlobe();
+
+  // Mark as initialized
+  isInitialized = true;
+
+  // Start animation loop
+  startAnimation();
+}
+
+/**
+ * Load world map data
+ */
+async function loadWorldData() {
+  try {
+    const data = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
 
     // Apply arc exclusions
-    if (world && world.objects && world.objects.countries && world.objects.countries.geometries) {
-      // Loop through country geometries
-      world.objects.countries.geometries.forEach((geometry) => {
+    if (data && data.objects && data.objects.countries && data.objects.countries.geometries) {
+      data.objects.countries.geometries.forEach((geometry) => {
         const countryName = geometry.properties.name;
-
-        // Check if this country has arc exclusions
         if (arcExclusions[countryName] && geometry.type === "MultiPolygon") {
-          // Filter out the specified arc arrays
           geometry.arcs = geometry.arcs.filter((_, index) => !arcExclusions[countryName].includes(index));
         }
       });
     }
 
-    const countries = topojson.feature(world, world.objects.countries);
-    const borders = topojson.mesh(world, world.objects.countries, (a, b) => a !== b);
-    const graticule = d3.geoGraticule();
+    // Save the processed data
+    worldData = {
+      countries: topojson.feature(data, data.objects.countries),
+      borders: topojson.mesh(data, data.objects.countries, (a, b) => a !== b),
+      graticule: d3.geoGraticule(),
+    };
 
-    // Render function for drawing the globe
-    function renderGlobe(country, arc) {
-      // Clear the canvas
-      context.clearRect(0, 0, width, height);
+    return true;
+  } catch (error) {
+    console.error("Error loading world data:", error);
+    return false;
+  }
+}
 
-      // Draw ocean (sphere)
+/**
+ * Draw the globe with current state
+ */
+function drawGlobe() {
+  if (!context || !worldData) return;
+
+  const width = canvas.width / (window.devicePixelRatio || 1);
+  const height = canvas.height / (window.devicePixelRatio || 1);
+
+  // Clear canvas based on scaled size
+  context.clearRect(0, 0, width, height);
+
+  // Draw ocean (sphere)
+  context.beginPath();
+  path({ type: "Sphere" });
+  context.fillStyle = colors.ocean;
+  context.fill();
+
+  // Draw graticule
+  context.beginPath();
+  path(worldData.graticule());
+  context.strokeStyle = colors.graticule;
+  context.lineWidth = 0.5;
+  context.stroke();
+
+  // Draw all countries
+  context.beginPath();
+  path(worldData.countries);
+  context.fillStyle = colors.land;
+  context.fill();
+
+  // Draw visited countries
+  worldData.countries.features
+    .filter((d) => visitedCountries.includes(d.properties.name))
+    .forEach((d) => {
       context.beginPath();
-      path({ type: "Sphere" });
-      context.fillStyle = colors.ocean;
+      path(d);
+      context.fillStyle = colors.visited;
       context.fill();
+    });
 
-      // Draw graticule
-      context.beginPath();
-      path(graticule());
-      context.strokeStyle = colors.graticule;
-      context.lineWidth = 0.5;
-      context.stroke();
-
-      // Draw all countries
-      context.beginPath();
-      path(countries);
-      context.fillStyle = colors.land;
-      context.fill();
-
-      // Draw visited countries
-      countries.features
-        .filter((d) => visitedCountries.includes(d.properties.name))
-        .forEach((d) => {
-          context.beginPath();
-          path(d);
-          context.fillStyle = colors.visited;
-          context.fill();
-        });
-
-      // Highlight current country if provided
-      if (country) {
-        context.beginPath();
-        path(country);
-        context.fillStyle = colors.visited;
-        context.fill();
-      }
-
-      // Draw borders
-      context.beginPath();
-      path(borders);
-      context.strokeStyle = colors.border;
-      context.lineWidth = 0.5;
-      context.stroke();
-
-      // Draw flight path if provided
-      if (arc) {
-        context.beginPath();
-        path(arc);
-        context.strokeStyle = colors.flight;
-        context.lineWidth = 2;
-        context.stroke();
-      }
-
-      // Draw sphere outline
-      context.beginPath();
-      path({ type: "Sphere" });
-      context.strokeStyle = colors.border;
-      context.lineWidth = 1;
-      context.stroke();
-    }
-
-    let p1,
-      p2 = [0, 0],
-      r1,
-      r2 = [0, 0, 0];
-    let prevCountry = null;
-
-    async function animateToCountry() {
-      const country = getRandomCountry(countries, prevCountry);
-
-      // Update title with country name
-      title.text(country.properties.name).classed("highlight", true);
-
-      // Remove highlight class after animation
-      setTimeout(() => title.classed("highlight", false), ANIMATION.FLIGHT + ANIMATION.PAUSE);
-
-      // Render current state before animation
-      renderGlobe(country);
-
-      // Calculate rotation parameters
-      p1 = p2;
-      p2 = d3.geoCentroid(country);
-      r1 = r2;
-      r2 = [-p2[0], tilt - p2[1], 0];
-
-      // Create an arc for the flight path
-      const interpolator = d3.geoInterpolate(p1, p2);
-
-      // First transition: rotate to country while drawing path
-      await d3
-        .transition()
-        .duration(ANIMATION.FLIGHT)
-        .tween("render", () => (t) => {
-          projection.rotate(Versor.interpolateAngles(r1, r2)(t));
-          const currentPoint = interpolator(t);
-          renderGlobe(country, {
-            type: "LineString",
-            coordinates: [p1, currentPoint],
-          });
-        })
-        .end();
-
-      // Short pause with completed flight path
-      await d3
-        .transition()
-        .duration(300)
-        .tween("render", () => (t) => {
-          renderGlobe(country, {
-            type: "LineString",
-            coordinates: [p1, p2],
-          });
-        })
-        .end();
-
-      prevCountry = country;
-
-      // Schedule next country
-      setTimeout(animateToCountry, ANIMATION.PAUSE - 300);
-    }
-
-    // Start with initial render
-    renderGlobe();
-
-    // Start the animation
-    setTimeout(animateToCountry, 500);
+  // Highlight current country if provided
+  if (currentCountry) {
+    context.beginPath();
+    path(currentCountry);
+    context.fillStyle = colors.visited;
+    context.fill();
   }
 
-  render();
+  // Draw borders
+  context.beginPath();
+  path(worldData.borders);
+  context.strokeStyle = colors.border;
+  context.lineWidth = 0.5;
+  context.stroke();
+
+  // Draw flight path if provided
+  if (currentPath) {
+    context.beginPath();
+    path(currentPath);
+    context.strokeStyle = colors.flight;
+    context.lineWidth = 2;
+    context.stroke();
+  }
+
+  // Draw sphere outline
+  context.beginPath();
+  path({ type: "Sphere" });
+  context.strokeStyle = colors.border;
+  context.lineWidth = 1;
+  context.stroke();
+}
+
+/**
+ * Start the country animation sequence
+ */
+function startAnimation() {
+  isAnimating = true;
+  goToNextCountry(); // Start the sequence directly
+}
+
+/**
+ * Animate to a new random country
+ */
+async function goToNextCountry() {
+  if (!worldData || !isAnimating) return;
+
+  const tilt = 20;
+  const prevCountry = currentCountry;
+  const nextCountry = getRandomCountry(worldData.countries, prevCountry);
+
+  // Update title with country name
+  const titleElement = globeContainer.querySelector(".world-title");
+  if (titleElement) {
+    titleElement.textContent = nextCountry.properties.name;
+    titleElement.classList.add("highlight");
+
+    // Remove highlight class after animation
+    setTimeout(() => {
+      titleElement.classList.remove("highlight");
+    }, ANIMATION.FLIGHT + ANIMATION.PAUSE);
+  }
+
+  // Get start and end coordinates
+  const startCoords = prevCountry ? d3.geoCentroid(prevCountry) : [0, 0];
+  const endCoords = d3.geoCentroid(nextCountry);
+
+  // Calculate rotation parameters
+  const startRotation = projection.rotate();
+  const endRotation = [-endCoords[0], tilt - endCoords[1], 0];
+
+  // Create an interpolator for the path
+  const pathInterpolator = d3.geoInterpolate(startCoords, endCoords);
+
+  // Create a rotation interpolator
+  const rotationInterpolator = Versor.interpolateAngles(startRotation, endRotation);
+
+  // Duration of the flight animation
+  const duration = ANIMATION.FLIGHT;
+  const startTime = Date.now();
+
+  // Start the animation frame loop
+  function animate() {
+    const elapsed = Date.now() - startTime;
+    const t = Math.min(elapsed / duration, 1);
+
+    // Update rotation
+    rotationAngles = rotationInterpolator(t);
+    projection.rotate(rotationAngles);
+
+    // Update the current path
+    const currentCoord = pathInterpolator(t);
+    currentPath = {
+      type: "LineString",
+      coordinates: [startCoords, currentCoord],
+    };
+
+    // Set current country
+    currentCountry = nextCountry;
+
+    // Redraw the globe
+    drawGlobe();
+
+    // Continue animation if not complete
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Show completed path for a moment
+      setTimeout(() => {
+        if (isAnimating) {
+          // Schedule next country after pause
+          animationTimer = setTimeout(goToNextCountry, ANIMATION.PAUSE - 300);
+        }
+      }, 300);
+    }
+  }
+
+  // Begin animation
+  animate();
+}
+
+/**
+ * Handle window resize
+ */
+function handleResize() {
+  // Avoid excessive resizing
+  if (resizeTimer) clearTimeout(resizeTimer);
+
+  resizeTimer = setTimeout(() => {
+    // Refresh the colors in case theme has changed
+    colors = {
+      ocean: getColorValue("--world-ocean-color"),
+      graticule: getColorValue("--world-graticule-color"),
+      border: getColorValue("--world-border-color"),
+      visited: getColorValue("--world-visited-country-color"),
+      land: getColorValue("--world-land-color"),
+      flight: getColorValue("--world-flight-path-color"),
+    };
+
+    // Only update dimensions and projection, don't re-initialize or redraw here
+    updateGlobeDimensionsAndProjection(); // Call renamed function
+  }, 250);
+}
+
+// Initialize when DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  setupGlobe(); // Call setupGlobe instead of initGlobe
+
+  // Add resize listener
+  window.addEventListener("resize", handleResize);
 });

@@ -114,7 +114,7 @@
   }
   
   &.software {
-    border-left: 4px solid c.color('secondary');
+    // border-left: 4px solid c.color('secondary');
     display: flex;
     flex-direction: column;
     gap: fn.spacing('medium');
@@ -127,7 +127,7 @@
   }
   
   &.mechanical {
-    border-right: 4px solid c.color('secondary');
+    // border-right: 4px solid c.color('secondary');
     height: auto;
     
     @include bp.breakpoint('<=medium') {
@@ -265,9 +265,9 @@
 
     &:hover {
       transform: translateY(var(--skill-hover-translate)) scale(var(--skill-hover-scale));
-      border-color: c.color('secondary');
+      border-color: c.color('accent-alt');
       box-shadow: 0 8px 16px c.alpha('background-dark', 0.5), 
-                  0 0 10px c.alpha('secondary', 0.3);
+                  0 0 10px c.alpha('accent-alt', 0.3);
 
       .skill-progress {
         background: linear-gradient(90deg, c.color('secondary-dark'), c.color('secondary'));

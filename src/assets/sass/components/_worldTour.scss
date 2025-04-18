@@ -7,12 +7,13 @@
 //
 // Usage:
 // <div class="world-tour-container">
-//   <svg>...</svg>
+//   <canvas></canvas>
 //   <div class="world-title">Title</div>
 // </div>
 
 @use '../abstracts/functions' as fn;
 @use '../abstracts/colors' as c;
+@use '../abstracts/breakpoints' as bp;
 @use 'sass:map';
 
 // ==========================================================================
@@ -27,13 +28,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   padding-top: 40px;
-
-  svg {
-    width: 100%;
-    height: 95%;
-    // aspect-ratio: 975/610;
+  box-sizing: border-box;
+  width: 100%;
+  
+  // Set proper container dimension to maintain aspect ratio
+  canvas {
+    display: block;
+    max-width: 100%;
+    position: relative;
+    z-index: 1; // Ensure canvas is above background
   }
 
   .sphere {
@@ -65,11 +70,40 @@
     text-align: center;
     font-size: 1.2em;
     color: c.color('primary');
-    transition: color var(--world-transition-duration) ease;
+    transition: color 0.3s ease;
     padding: 10px;
+    z-index: 2; // Ensure title is above canvas
 
     &.highlight {
       color: c.color('accent');
+    }
+  }
+}
+
+// Responsive adjustments
+@include bp.breakpoint('<=medium') {
+  .world-tour-container {
+    min-height: 450px;
+    
+    canvas {
+      // Ensure canvas is properly centered
+      margin: 0 auto;
+    }
+  }
+}
+
+@include bp.breakpoint('<=small') {
+  .world-tour-container {
+    min-height: 350px;
+    
+    canvas {
+      // Ensure canvas uses full width on mobile
+      width: 100% !important;
+      max-width: 100%;
+    }
+    
+    .world-title {
+      font-size: 1em;
     }
   }
 }

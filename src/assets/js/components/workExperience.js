@@ -1,7 +1,7 @@
-import airbusLogo from "../../images/work/airbus.png";
-import lockheedLogo from "../../images/work/LM-logo.png";
-import decimalLogo from "../../images/work/decimalEngineering.png";
-import canonLogo from "../../images/work/CanonSolutionsAmerica.png";
+import airbusLogo from "../../images/work/airbus.webp";
+import lockheedLogo from "../../images/work/LM-logo.webp";
+import decimalLogo from "../../images/work/decimalEngineering.webp";
+import canonLogo from "../../images/work/CanonSolutionsAmerica.webp";
 
 class WorkExperience {
   constructor() {

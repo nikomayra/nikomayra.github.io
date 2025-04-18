@@ -6,7 +6,7 @@ class Education {
     this.educationData = [
       {
         id: "fullstack",
-        logo: "assets/images/education/fullstack.png",
+        logo: "assets/images/education/fullstack.webp",
         title: "Full Stack Open - Core Course",
         subtitle: "",
         period: "2022 - 2023",
@@ -32,7 +32,7 @@ class Education {
       },
       {
         id: "purdue",
-        logo: "assets/images/education/PU-V-Full-RGB.png",
+        logo: "assets/images/education/PU-V-Full-RGB.webp",
         title: "Purdue University",
         subtitle: "Masters in Mechanical Engineering",
         period: "2018 - 2020",
@@ -53,7 +53,7 @@ class Education {
       },
       {
         id: "fau",
-        logo: "assets/images/education/fau.png",
+        logo: "assets/images/education/fau.webp",
         title: "Florida Atlantic University",
         subtitle: "Bachelors in Mechanical Engineering",
         period: "2013 - 2016",
