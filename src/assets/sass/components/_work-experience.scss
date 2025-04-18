@@ -256,18 +256,17 @@
   
   .skill-tag {
     display: inline-block;
-    background: linear-gradient(
-      135deg,
-      c.alpha('accent', 0.1) 0%,
-      c.alpha('accent', 0.3) 100%
-    );
-    color: c.color('accent');
-    padding: 3px 8px;
-    border-radius: 4px;
     margin: 3px;
-    font-size: 0.8em;
-    font-weight: bold;
-    box-shadow: 0 1px 3px c.alpha('shadow', 0.2);
+    font-size: fn.font-size('small') * .8;
+    padding: fn.spacing('xsmall') * .5 fn.spacing('small');
+    background: c.alpha('secondary', 0.2);
+    color: c.color('text');
+    border-radius: 20px;
+    border: 1px solid c.alpha('accent-alt', 0.3);
+    font-weight: fn.font-weight('regular');
+    box-shadow: none;
+    cursor: default;
+    transition: none;
   }
   
   // Responsive adjustments for smaller screens

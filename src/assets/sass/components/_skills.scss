@@ -216,6 +216,13 @@
   transform: translateY(20px);
   transition: all fn.duration('transition') ease-out;
 
+  // Subtle highlight for the highest level skill(s) in a category
+  &[data-is-max-level="true"] a {
+    box-shadow: 
+      0 3px 8px c.alpha('background-dark', 0.3), // Existing shadow
+      0 0 5px 1px c.alpha('accent', 0.2); // Subtle glow effect
+  }
+
   &.visible {
     opacity: 1;
     transform: translateY(0);
@@ -263,19 +270,32 @@
       z-index: 1;
     }
 
-    &:hover {
-      transform: translateY(var(--skill-hover-translate)) scale(var(--skill-hover-scale));
-      border-color: c.color('accent-alt');
-      box-shadow: 0 8px 16px c.alpha('background-dark', 0.5), 
-                  0 0 10px c.alpha('accent-alt', 0.3);
+    // Hover state (only for devices that support hover)
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(var(--skill-hover-translate)) scale(var(--skill-hover-scale));
+        border-color: c.color('accent-alt');
+        box-shadow: 0 8px 16px c.alpha('background-dark', 0.5), 
+                    0 0 10px c.alpha('accent-alt', 0.3);
 
-      .skill-progress {
-        background: linear-gradient(90deg, c.color('secondary-dark'), c.color('secondary'));
-        opacity: var(--skill-progress-hover-opacity);
+        .skill-progress {
+          background: linear-gradient(90deg, c.color('secondary-dark'), c.color('secondary'));
+          opacity: var(--skill-progress-hover-opacity);
+        }
+        
+        .skill-text {
+          color: c.color('text-light');
+        }
       }
+    }
+    
+    // Active state (for tap/click feedback on all devices)
+    &:active {
+      transform: translateY(1px); // Simulate press
+      box-shadow: 0 2px 6px c.alpha('background-dark', 0.4); // Slightly reduced shadow
       
-      .skill-text {
-        color: c.color('text-light');
+      .skill-progress {
+         opacity: 0.9; // Slightly darken progress on press
       }
     }
   }

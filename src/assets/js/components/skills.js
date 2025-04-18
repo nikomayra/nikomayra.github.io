@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Post/Pre Processing CSS
     {
       name: "SASS",
-      level: levels.intermediate,
+      level: levels.novice,
       category: "Tools",
       url: "https://sass-lang.com/",
     },
@@ -135,12 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "Tools",
       url: "https://flask.palletsprojects.com/",
     },
-    {
-      name: "Azure Functions",
-      level: levels.novice,
-      category: "Tools",
-      url: "https://learn.microsoft.com/en-us/azure/azure-functions/",
-    },
 
     // Data Storage
     {
@@ -156,10 +150,10 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://www.postgresql.org/docs/",
     },
     {
-      name: "Azure Blob",
-      level: levels.introduced,
+      name: "Azure",
+      level: levels.novice,
       category: "Tools",
-      url: "https://learn.microsoft.com/en-us/azure/storage/blobs/",
+      url: "https://learn.microsoft.com/en-us/azure",
     },
     {
       name: "S3",
@@ -173,6 +167,12 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "Tools",
       url: "https://aws.amazon.com/dynamodb/",
     },
+    {
+      name: "Adobe Acrobat SDK",
+      level: levels.novice,
+      category: "Tools",
+      url: "https://opensource.adobe.com/dc-acrobat-sdk-docs/acrobatsdk/index.html",
+    },
   ];
 
   const mechanicalSkills = [
@@ -182,16 +182,22 @@ document.addEventListener("DOMContentLoaded", function () {
       category: null,
       url: "https://help.sap.com/",
     },
+    {
+      name: "MATLAB",
+      level: levels.novice,
+      category: null,
+      url: "https://www.mathworks.com/products/matlab.html",
+    },
     // CAD & Design
     {
       name: "Creo",
-      level: levels.master,
+      level: levels.expert,
       category: null,
       url: "https://www.ptc.com/en/products/creo",
     },
     {
       name: "CATIA",
-      level: levels.master,
+      level: levels.expert,
       category: null,
       url: "https://www.3ds.com/products-services/catia/",
     },
@@ -203,9 +209,15 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       name: "Unity3D",
-      level: levels.intermediate,
+      level: levels.novice,
       category: null,
       url: "https://docs.unity3d.com/",
+    },
+    {
+      name: "Anark Workstation",
+      level: levels.intermediate,
+      category: null,
+      url: "https://www.anark.com/products/anark-workstation",
     },
     // PLM Systems
     {
@@ -229,17 +241,61 @@ document.addEventListener("DOMContentLoaded", function () {
     // Project Management
     {
       name: "Jira",
-      level: levels.expert,
+      level: levels.advanced,
       category: null,
       url: "https://www.atlassian.com/software/jira",
     },
     {
       name: "Confluence",
-      level: levels.expert,
+      level: levels.advanced,
       category: null,
       url: "https://www.atlassian.com/software/confluence",
     },
   ];
+
+  // --- Refactored Helper Function ---
+  function createSkillElement(skillData, maxLevelInCategory) {
+    const skill = document.createElement("div");
+    skill.className = "skill";
+
+    const link = document.createElement("a");
+    link.href = skillData.url;
+    link.target = "_blank";
+
+    // Create progress bar background - Use total number of levels
+    const totalLevels = Object.keys(levels).length;
+    const progress = document.createElement("div");
+    progress.className = "skill-progress";
+    progress.style.width = `${(skillData.level / totalLevels) * 100}%`; // Use totalLevels
+
+    // Add text
+    const text = document.createElement("span");
+    text.className = "skill-text";
+    text.textContent = skillData.name;
+
+    // Calculate opacity based on MAX LEVEL IN CATEGORY
+    const baseOpacity = 1;
+    const minOpacity = 0.35; // Adjusted min opacity
+    const opacityExponent = 1.8; // Adjusted exponent for more emphasis on higher levels
+
+    const normalizedLevel = maxLevelInCategory > 0 ? skillData.level / maxLevelInCategory : 0; // Use maxLevelInCategory, handle division by zero
+    const opacity = minOpacity + (baseOpacity - minOpacity) * Math.pow(normalizedLevel, opacityExponent);
+
+    // Set opacity on the link element
+    link.style.opacity = opacity;
+
+    // Add data attribute if this skill is the max level in its category
+    if (skillData.level === maxLevelInCategory) {
+      skill.dataset.isMaxLevel = "true";
+    }
+
+    link.appendChild(progress);
+    link.appendChild(text);
+    skill.appendChild(link);
+
+    return skill;
+  }
+  // --- End Helper Function ---
 
   function createSkillsChart() {
     // For mechanical skills, use the standard approach
@@ -290,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
     container.appendChild(toolsSection);
     container.appendChild(languagesSection);
 
-    // Populate the sections with skills
+    // Populate the sections with skills using the helper
     populateSkillsGrid(toolsGrid, toolSkills);
     populateSkillsGrid(languagesGrid, languageSkills);
 
@@ -302,45 +358,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sort skills by level (highest first)
     const sortedSkills = [...skills].sort((a, b) => b.level - a.level);
 
-    // Find the highest level within this category of skills
-    const maxLevelInCategory = Math.max(...skills.map((skill) => skill.level));
+    // Find the highest level within THIS category of skills
+    const maxLevelInCategory = Math.max(0, ...skills.map((skill) => skill.level)); // Calculate here, ensure non-negative
 
-    // Create and add skill tags
+    // Create and add skill tags using the helper function
     sortedSkills.forEach((skillData) => {
-      const skill = document.createElement("div");
-      skill.className = "skill";
-
-      const link = document.createElement("a");
-      link.href = skillData.url;
-      link.target = "_blank";
-
-      // Create progress bar background
-      const progress = document.createElement("div");
-      progress.className = "skill-progress";
-      progress.style.width = `${(skillData.level / Object.keys(levels).length) * 100}%`;
-
-      // Add text
-      const text = document.createElement("span");
-      text.className = "skill-text";
-      text.textContent = skillData.name;
-
-      link.style.setProperty("--skill-level", `${(skillData.level / Object.keys(levels).length) * 100}%`);
-
-      const baseOpacity = 1;
-      const minOpacity = 0.4;
-      const opacityExponent = 1.3;
-
-      // Calculate opacity relative to the highest level in this category
-      const normalizedLevel = skillData.level / maxLevelInCategory;
-      const opacity = minOpacity + (baseOpacity - minOpacity) * Math.pow(normalizedLevel, opacityExponent);
-
-      // Set opacity on the link element
-      link.style.opacity = opacity;
-
-      link.appendChild(progress);
-      link.appendChild(text);
-      skill.appendChild(link);
-      grid.appendChild(skill);
+      const skillElement = createSkillElement(skillData, maxLevelInCategory); // Pass maxLevelInCategory
+      grid.appendChild(skillElement);
     });
   }
 
@@ -359,45 +383,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sort skills by level (highest first)
     const sortedSkills = [...skills].sort((a, b) => b.level - a.level);
 
-    // Find the highest level within this category of skills
-    const maxLevelInCategory = Math.max(...skills.map((skill) => skill.level));
+    // Find the highest level within THIS category of skills
+    const maxLevelInCategory = Math.max(0, ...skills.map((skill) => skill.level)); // Calculate here, ensure non-negative
 
-    // Create and add skill tags
+    // Create and add skill tags using the helper function
     sortedSkills.forEach((skillData) => {
-      const skill = document.createElement("div");
-      skill.className = "skill";
-
-      const link = document.createElement("a");
-      link.href = skillData.url;
-      link.target = "_blank";
-
-      // Create progress bar background
-      const progress = document.createElement("div");
-      progress.className = "skill-progress";
-      progress.style.width = `${(skillData.level / Object.keys(levels).length) * 100}%`;
-
-      // Add text
-      const text = document.createElement("span");
-      text.className = "skill-text";
-      text.textContent = skillData.name;
-
-      link.style.setProperty("--skill-level", `${(skillData.level / Object.keys(levels).length) * 100}%`);
-
-      const baseOpacity = 1;
-      const minOpacity = 0.4;
-      const opacityExponent = 1.3;
-
-      // Calculate opacity relative to the highest level in this category
-      const normalizedLevel = skillData.level / maxLevelInCategory;
-      const opacity = minOpacity + (baseOpacity - minOpacity) * Math.pow(normalizedLevel, opacityExponent);
-
-      // Set opacity on the link element
-      link.style.opacity = opacity;
-
-      link.appendChild(progress);
-      link.appendChild(text);
-      skill.appendChild(link);
-      grid.appendChild(skill);
+      const skillElement = createSkillElement(skillData, maxLevelInCategory); // Pass maxLevelInCategory
+      grid.appendChild(skillElement);
     });
 
     addIntersectionObservers();
@@ -409,8 +401,11 @@ document.addEventListener("DOMContentLoaded", function () {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
+            // Check if the class is already present before adding it
+            if (!entry.target.classList.contains("visible")) {
+              entry.target.classList.add("visible");
+            }
+            observer.unobserve(entry.target); // Unobserve after first intersection
           }
         });
       },

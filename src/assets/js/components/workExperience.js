@@ -46,7 +46,7 @@ class WorkExperience {
               "Conducted design trade studies and feasibility studies for advanced systems",
               "Served as Lead for Model Based Definition conversion of largest MFC legacy CATIA V5 production program",
             ],
-            skills: ["Senior Design", "Leadership", "Mechanical Engineering"],
+            skills: ["Senior Tech Lead", "Leadership", "Mechanical & System Eng."],
           },
           {
             title: "Mechanical Design Engineer",
@@ -59,7 +59,7 @@ class WorkExperience {
               "Led trade studies on missile canister ejection methods for novel palletized system",
               "Designed novel space-efficient, high-strength hinge mechanism for tailfin deploy & control actuation system",
             ],
-            skills: ["Leadership", "Design & Analysis", "Mechanical & System Engineering", "Optimization"],
+            skills: ["Leadership", "Mechanical & System Eng.", "Design & Analysis", "Optimization"],
           },
           {
             title: "Asc. Quality Engineer",

@@ -423,4 +423,65 @@ p {
       }
     }
   }
+
+  // "Click to flip" indicator
+  &:not(.flipped):after {
+    content: "Click to flip card";
+    position: absolute;
+    left: 50%;
+    top: 0.75rem;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    color: c.color('background-dark');
+    background: linear-gradient(to right, c.color('accent'), c.color('accent-light'));
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    opacity: 0; // Hidden by default
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(c.color('shadow'), 0.3);
+    font-weight: 500;
+    z-index: 10;
+  }
+  
+  // Show on hover for hover devices
+  @media (hover: hover) {
+    &:not(.flipped):hover:after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+  
+  // Show permanently when active for touch devices
+  @media (hover: none) {
+    &:not(.flipped).active:after {
+       opacity: 1;
+       // No Y transform needed, just appear
+    }
+  }
+}
+
+.project-links {
+  a {
+    transition: 
+      background-color 0.2s ease, 
+      transform 0.2s ease, 
+      box-shadow 0.2s ease;
+    
+    @media (hover: hover) {
+      &:hover {
+        background-color: c.color('accent-alt');
+        color: c.color('text-light');
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px c.alpha('shadow', 0.3);
+      }
+    }
+
+    &:active {
+      background-color: c.darken('accent-alt', 10%);
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px c.alpha('shadow', 0.2);
+    }
+  }
 }
