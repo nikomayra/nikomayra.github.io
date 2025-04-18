@@ -1,6 +1,6 @@
 import faulogo from "../../images/education/fau.webp";
 import purduelogo from "../../images/education/PU-V-Full-RGB.webp";
-import fullstacklogo from "../../images/education/fullstack.webp";
+import fullstacklogo from "../../images/education/fso.webp";
 
 class Education {
   constructor() {

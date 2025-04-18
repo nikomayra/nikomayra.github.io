@@ -1,7 +1,8 @@
 import airbusLogo from "../../images/work/airbus.webp";
 import lockheedLogo from "../../images/work/LM-logo.webp";
-import decimalLogo from "../../images/work/decimalEngineering.webp";
+import decimalLogo from "../../images/work/de.webp";
 import canonLogo from "../../images/work/CanonSolutionsAmerica.webp";
+import sentricaLogo from "../../images/work/sentrica.webp";
 
 class WorkExperience {
   constructor() {
@@ -9,6 +10,32 @@ class WorkExperience {
     if (!this.container) return;
 
     this.companies = [
+      {
+        id: "sentrica",
+        name: "Sentrica",
+        logo: sentricaLogo,
+        location: "Santiago, Chile",
+        period: "3 months - 2025",
+        description:
+          "A technology partner that delivers solutions for the capture, management and analysis of metrics and performance of IT Services",
+        roles: [
+          {
+            title: "Software Intern",
+            period: "2025 [3 months]",
+            responsibilities: [
+              "Built a user feedback system integrated with GitLab Issues, allowing customers to report bugs and suggestions via a modal form with image uploads, label selection, and automatic metadata tagging; implemented with GitLab API v4, FilePond, and a responsive UI.",
+              "Developed a full-featured HTML email templating engine in Go, including account recovery and alarm notification templates, using Go’s standard library templating and a modular folder structure to support easy future expansion and consistent branding.",
+              "Added tooling and developer UX improvements, such as a mobile-aware tooltip component, WCAG-compliant dynamic label contrast, robust error handling, and a testing for validating rendered emails across clients.",
+            ],
+            skills: [
+              "Next.js & React UI Eng.",
+              "Go Lang Backend Dev.",
+              "HTML Email Rendering & Template Systems",
+              "GitLab API Integration & Automation",
+            ],
+          },
+        ],
+      },
       {
         id: "airbus",
         name: "Airbus",

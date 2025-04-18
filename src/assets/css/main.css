@@ -2623,7 +2623,6 @@ p {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 8px;
 }
 @media (max-width: 576px) {
   .work-accordion .accordion-logo img {
@@ -2840,7 +2839,6 @@ p {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 8px;
 }
 @media (max-width: 576px) {
   .education-accordion .accordion-logo img {
