@@ -15,7 +15,7 @@ class WorkExperience {
         name: "Sentrica",
         logo: sentricaLogo,
         location: "Santiago, Chile",
-        period: "3 months - 2025",
+        period: "Jan. 2025 - TBD",
         description:
           "A technology partner that delivers solutions for the capture, management and analysis of metrics and performance of IT Services",
         roles: [
