@@ -21,7 +21,7 @@ class WorkExperience {
         roles: [
           {
             title: "Software Intern",
-            period: "2025 [3 months]",
+            period: "Jan. 2025 - As neeeded",
             responsibilities: [
               "Built a user feedback system integrated with GitLab Issues, allowing customers to report bugs and suggestions via a modal form with image uploads, label selection, and automatic metadata tagging; implemented with GitLab API v4, FilePond, and a responsive UI.",
               "Developed a full-featured HTML email templating engine in Go, including account recovery and alarm notification templates, using Go’s standard library templating and a modular folder structure to support easy future expansion and consistent branding.",
