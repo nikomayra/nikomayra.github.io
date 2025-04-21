@@ -3,6 +3,7 @@ import lockheedLogo from "../../images/work/LM-logo.webp";
 import decimalLogo from "../../images/work/de.webp";
 import canonLogo from "../../images/work/CanonSolutionsAmerica.webp";
 import sentricaLogo from "../../images/work/sentrica.webp";
+import auroxLogo from "../../images/work/aurox.webp";
 
 class WorkExperience {
   constructor() {
@@ -10,6 +11,22 @@ class WorkExperience {
     if (!this.container) return;
 
     this.companies = [
+      {
+        id: "aurox",
+        name: "Aurox",
+        logo: auroxLogo,
+        location: "New York, NY, USA (Remote)",
+        period: "April. 2025 - TBD",
+        description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
+        roles: [
+          {
+            title: "Software Engineering Intern",
+            period: "April. 2025 - TBD (As needed)",
+            responsibilities: ["TBD"],
+            skills: ["TBD"],
+          },
+        ],
+      },
       {
         id: "sentrica",
         name: "Sentrica",
@@ -20,8 +37,8 @@ class WorkExperience {
           "A technology partner that delivers solutions for the capture, management and analysis of metrics and performance of IT Services",
         roles: [
           {
-            title: "Software Intern",
-            period: "Jan. 2025 - As neeeded",
+            title: "Software Engineering Intern",
+            period: "Jan. 2025 - TBD (As needed)",
             responsibilities: [
               "Built a user feedback system integrated with GitLab Issues, allowing customers to report bugs and suggestions via a modal form with image uploads, label selection, and automatic metadata tagging; implemented with GitLab API v4, FilePond, and a responsive UI.",
               "Developed a full-featured HTML email templating engine in Go, including account recovery and alarm notification templates, using Go’s standard library templating and a modular folder structure to support easy future expansion and consistent branding.",
