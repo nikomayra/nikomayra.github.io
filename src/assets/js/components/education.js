@@ -13,7 +13,7 @@ class Education {
         logo: fullstacklogo,
         title: "Full Stack Open - Core Course",
         subtitle: "",
-        period: "2022 - 2023",
+        period: "May. 2024 - Jul. 2024",
         description: "Covered the following major topics,",
         items: [
           "Fundamentals of Web Apps using JavaScript",
