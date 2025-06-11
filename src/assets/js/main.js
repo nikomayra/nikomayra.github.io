@@ -18,6 +18,7 @@ import "./components/usTour.js";
 import "./components/projects.js";
 import "./components/workExperience.js";
 import "./components/education.js";
+import "./components/testimonials.js";
 import "./components/contact.js";
 
 // DOM Elements

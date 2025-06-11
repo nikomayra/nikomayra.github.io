@@ -1,0 +1,112 @@
+@use '../abstracts/colors' as c;
+@use '../abstracts/functions' as fn;
+@use '../abstracts/breakpoints' as bp;
+@use '../abstracts/mixins' as mx;
+
+#seven {
+  .testimonials-container {
+    position: relative;
+    overflow: hidden;
+    padding: fn.spacing('small') 0;
+    margin-bottom: fn.spacing('medium');
+    
+    // Simple, subtle fading edges
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      z-index: 5;
+      pointer-events: none;
+    }
+    
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, c.alpha('background', 0.5), transparent);
+      border-radius: 10px;
+    }
+    
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, c.alpha('background', 0.5), transparent);
+      border-radius: 10px;
+    }
+  }
+
+  // Swiper container
+  .testimonials-swiper {
+    overflow: visible;
+    padding: fn.spacing('xsmall') 0;
+  }
+
+  // Swiper slides wrapper
+  .swiper-wrapper {
+    align-items: center;
+    transition-timing-function: linear !important;
+  }
+
+  // Individual slides
+  .swiper-slide {
+    width: 300px;
+    transition: transform 0.3s ease;
+    
+    @include bp.breakpoint('>=small') {
+      width: 320px;
+    }
+    
+    @include bp.breakpoint('>=medium') {
+      width: 340px;
+    }
+    
+    @include bp.breakpoint('>=large') {
+      width: 360px;
+    }
+  }
+  
+  // Testimonial card styling
+  .testimonial-card {
+    height: 100%;
+    background: rgba(40, 45, 60, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: fn.spacing('medium');
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    .testimonial-quote {
+      font-style: italic;
+      color: c.color('text-light');
+      margin-bottom: fn.spacing('small');
+      font-size: fn.font-size('base');
+      line-height: 1.6;
+
+      &::before {
+        content: '"';
+        font-size: 2em;
+        color: c.color('accent');
+        opacity: 0.6;
+        margin-right: fn.spacing('xsmall');
+        vertical-align: -0.3em;
+        line-height: 0;
+      }
+    }
+
+    .testimonial-author-info {
+      margin-top: fn.spacing('small');
+      text-align: right;
+      opacity: 0.9;
+    }
+
+    .testimonial-author {
+      font-weight: fn.font-weight('bold');
+      color: c.color('accent-alt');
+    }
+
+    .testimonial-title {
+      font-size: fn.font-size('small');
+      opacity: 0.7;
+    }
+  }
+} 
