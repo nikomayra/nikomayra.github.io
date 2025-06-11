@@ -16,14 +16,22 @@ class WorkExperience {
         name: "Aurox",
         logo: auroxLogo,
         location: "New York, NY, USA (Remote)",
-        period: "April. 2025 - TBD",
+        period: "April 2025 - May 2025",
         description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
         roles: [
           {
             title: "Software Engineering Intern",
-            period: "April. 2025 - TBD (As needed)",
-            responsibilities: ["TBD"],
-            skills: ["TBD"],
+            period: "April 2025 - May 2025",
+            responsibilities: ["Designed and implemented a complete Django/React application with a microservices architecture using Docker, integrating PostgreSQL, Redis, and MinIO/S3 for a scalable computer vision pipeline that processes thousands of agricultural image uploads daily.",
+                              "Built a robust system that extracts frames from videos, processes images through Label Studio for AI annotation, and generates comprehensive analytical reports on feed inventory and livestock activity patterns.",
+                              "Implemented a modern TypeScript React application with Tailwind CSS, featuring infinite scroll components, responsive carousels, real-time progress tracking, and interactive data visualization using Recharts.",
+                              "Developed a complete payment workflow using Stripe API integration with transaction management, and implemented JWT authentication with multi-factor authentication (MFA) for enterprise-grade security.",
+                              "Created a comprehensive RESTful API with Django REST Framework, backed by a Celery task queue for handling resource-intensive operations like video frame extraction, file conversion, and report generation."],
+            skills: ["Full-Stack Dev. & Architecture",
+                    "ML Labeling Integration & Automated Analysis",
+                    "React/Django",
+                    "Secure Payment & Authentication System",
+                    "API Design & Asynchronous Processing"],
           },
         ],
       },
@@ -32,13 +40,13 @@ class WorkExperience {
         name: "Sentrica",
         logo: sentricaLogo,
         location: "Santiago, Chile",
-        period: "Jan. 2025 - TBD",
+        period: "Start Jan. 2025 (As needed)",
         description:
           "A technology partner that delivers solutions for the capture, management and analysis of metrics and performance of IT Services",
         roles: [
           {
             title: "Software Engineering Intern",
-            period: "Jan. 2025 - TBD (As needed)",
+            period: "Start Jan. 2025 (As needed)",
             responsibilities: [
               "Built a user feedback system integrated with GitLab Issues, allowing customers to report bugs and suggestions via a modal form with image uploads, label selection, and automatic metadata tagging; implemented with GitLab API v4, FilePond, and a responsive UI.",
               "Developed a full-featured HTML email templating engine in Go, including account recovery and alarm notification templates, using Go’s standard library templating and a modular folder structure to support easy future expansion and consistent branding.",
