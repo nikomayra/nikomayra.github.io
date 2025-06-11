@@ -1,21 +1,4 @@
-import * as d3 from "d3";
 import { hexToHSL, HSLToHex } from "../colorConverter.js";
-
-// Modified version of https://observablehq.com/@d3/bubble-chart/2
-// ISC License
-
-// Copyright 2017–2023 Observable, Inc.
-// Permission to use, copy, modify, and/or distribute this software for any
-// purpose with or without fee is hereby granted, provided that the above
-// copyright notice and this permission notice appear in all copies.
-
-// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 document.addEventListener("DOMContentLoaded", function () {
   const levels = {
@@ -130,6 +113,12 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://expressjs.com/",
     },
     {
+      name: "Django",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://www.djangoproject.com/",
+    },
+    {
       name: "Flask",
       level: levels.intermediate,
       category: "Tools",
@@ -167,9 +156,16 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "Tools",
       url: "https://aws.amazon.com/dynamodb/",
     },
+    // Other misc
+    {
+      name: "Label Studio SDK",
+      level: levels.novice,
+      category: "Tools",
+      url: "https://labelstud.io/guide/",
+    },
     {
       name: "Adobe Acrobat SDK",
-      level: levels.novice,
+      level: levels.introduced,
       category: "Tools",
       url: "https://opensource.adobe.com/dc-acrobat-sdk-docs/acrobatsdk/index.html",
     },
