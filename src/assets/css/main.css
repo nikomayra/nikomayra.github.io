@@ -1940,18 +1940,9 @@ header.major h2 + p {
 }
 
 .state {
-  fill: var(--us-tour-state-unvisited-color);
-  stroke: var(--us-tour-state-border-color);
   stroke-width: 1;
   transition: fill 0.2s ease;
 }
-.state.visited {
-  fill: var(--us-tour-state-visited-color);
-}
-.state:hover {
-  fill: var(--us-tour-state-hover-color);
-}
-
 .world-tour-container {
   flex: 60%;
   position: relative;
