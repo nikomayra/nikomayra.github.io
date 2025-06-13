@@ -20,7 +20,7 @@ $header-side: fn.layout('header-side');
   flex-direction: column;
   justify-content: flex-start;
   background: linear-gradient(to bottom, c.color('primary-light'), c.color('primary'), c.color('primary-dark'));
-  gap: fn.spacing('small');
+  gap: 0;
   color: c.color('text');
   height: 100%;
   position: fixed;
@@ -65,6 +65,7 @@ $header-side: fn.layout('header-side');
   }
 
   #logo {
+    margin: 0 !important;
     &::after {
       content: '';
       position: absolute;
@@ -187,8 +188,8 @@ $header-side: fn.layout('header-side');
     left: 0;
     #{if($header-side == 'right', 'right', 'left')}: 0;
     width: 100%;
-    padding-top: fn.spacing('small');
-    padding-bottom: fn.spacing('small');
+    // padding-top: fn.spacing('small');
+    // padding-bottom: fn.spacing('small');
 
     ol,
     ul {
@@ -198,7 +199,7 @@ $header-side: fn.layout('header-side');
       flex-wrap: nowrap;
       gap: fn.spacing('small');
       list-style: none;
-      padding: fn.spacing('small');
+      padding: 0 fn.spacing('small') 0 fn.spacing('small');
       margin: 0;
       > li {
         font-size: fn.font-size('large') * 1.5;
