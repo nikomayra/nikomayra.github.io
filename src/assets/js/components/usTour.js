@@ -53,7 +53,12 @@ const visitedStates = {
 };
 
 // Cache for color values.
-let colors = {};
+let colors = {
+    border: getColorValue("--us-tour-state-border-color"),
+    unvisited: getColorValue("--us-tour-state-unvisited-color"),
+    visited: getColorValue("--us-tour-state-visited-color"),
+    hover: getColorValue("--us-tour-state-hover-color"),
+  };
 
 /**
  * Retrieves the value of a CSS variable.
@@ -64,25 +69,10 @@ function getColorValue(cssVar) {
   return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
 }
 
-/**
- * Fetches and caches the color values from CSS variables.
- */
-function cacheColors() {
-  colors = {
-    border: getColorValue("--us-tour-state-border-color"),
-    unvisited: getColorValue("--us-tour-state-unvisited-color"),
-    visited: getColorValue("--us-tour-state-visited-color"),
-    hover: getColorValue("--us-tour-state-hover-color"),
-  };
-}
-
 document.addEventListener("DOMContentLoaded", async function () {
   // Constants for the visualization
   const width = 975;
   const height = 610;
-
-  // Fetch and cache colors once the DOM is loaded.
-  cacheColors();
 
   // Create tooltip
   const tooltip = d3.select("#us-tour").append("div").attr("class", "tooltip");
