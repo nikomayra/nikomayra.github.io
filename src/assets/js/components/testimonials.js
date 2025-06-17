@@ -16,13 +16,13 @@ class Testimonials {
       },
       {
         quote:
-          "A creative and insightful problem-solver. Nick consistently delivered high-quality work and was always willing to go the extra mile to help his colleagues. I highly recommend him.",
+          "Nick is a rare blend of talent, diligence, and creativity. Any organization would benefit from his technical prowess and growth mindset. I strongly endorse their candidacy and welcome further inquiries.",
         author: "Dante Garin",
         title: "Director of Engineering, Sentrica",
       },
       {
         quote:
-          "Nick's transition from mechanical to software engineering has been remarkable. His strong engineering fundamentals combined with his passion for software make him a unique and valuable talent.",
+          "It’s rare to find developers who truly understand the problem and can translate that understanding into an effective technical solution - but Nick is one of them. Beyond his technical skills, he’s professional, reliable, and easy to work with. I’d recommend him for any project or team.",
         author: "Adam Durrin",
         title: "CEO, Aurox",
       },
