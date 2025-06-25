@@ -68,7 +68,12 @@ class Education {
           "Modified and Calibrated RepRap Prusa i3 3D printer",
           "Mini-dumpster attachment for pick-up trucks",
         ],
-        links: [],
+        links: [
+          {
+            text: "Diploma",
+            url: "https://drive.google.com/file/d/1DAIl1fWIiY4vcUgBvu3nB9TBZh8HIomu/view?usp=sharing",
+          },
+        ],
       },
     ];
 
