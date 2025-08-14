@@ -74,6 +74,8 @@ let canvas = null;
 let context = null;
 let globeContainer = null;
 let isInitialized = false; // Flag to track if setup has run
+let animationFrameId = null; // Track current RAF id
+let isInViewport = true; // Track intersection state
 
 // Versor class for smooth rotation interpolation
 class Versor {
@@ -366,6 +368,25 @@ function startAnimation() {
   goToNextCountry(); // Start the sequence directly
 }
 
+function pauseAnimation() {
+  isAnimating = false;
+  if (animationTimer) {
+    clearTimeout(animationTimer);
+    animationTimer = null;
+  }
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+}
+
+function resumeAnimation() {
+  if (!isAnimating && isInViewport && document.visibilityState === "visible") {
+    isAnimating = true;
+    goToNextCountry();
+  }
+}
+
 /**
  * Animate to a new random country
  */
@@ -408,6 +429,7 @@ async function goToNextCountry() {
 
   // Start the animation frame loop
   function animate() {
+    if (!isAnimating) return; // Guard when paused
     const elapsed = Date.now() - startTime;
     const t = Math.min(elapsed / duration, 1);
 
@@ -430,7 +452,7 @@ async function goToNextCountry() {
 
     // Continue animation if not complete
     if (t < 1) {
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     } else {
       // Show completed path for a moment
       setTimeout(() => {
@@ -450,32 +472,57 @@ async function goToNextCountry() {
  * Handle window resize
  */
 function handleResize() {
-  // Avoid excessive resizing - REMOVED setTimeout
-  // if (resizeTimer) clearTimeout(resizeTimer);
+  // Throttle resize work to next animation frame
+  if (handleResize._scheduled) return;
+  handleResize._scheduled = true;
+  requestAnimationFrame(() => {
+    // Refresh the colors in case theme has changed
+    colors = {
+      ocean: getColorValue("--world-ocean-color"),
+      graticule: getColorValue("--world-graticule-color"),
+      border: getColorValue("--world-border-color"),
+      visited: getColorValue("--world-visited-country-color"),
+      land: getColorValue("--world-land-color"),
+      flight: getColorValue("--world-flight-path-color"),
+    };
 
-  // resizeTimer = setTimeout(() => {
-  // Refresh the colors in case theme has changed
-  colors = {
-    ocean: getColorValue("--world-ocean-color"),
-    graticule: getColorValue("--world-graticule-color"),
-    border: getColorValue("--world-border-color"),
-    visited: getColorValue("--world-visited-country-color"),
-    land: getColorValue("--world-land-color"),
-    flight: getColorValue("--world-flight-path-color"),
-  };
-
-  // Only update dimensions and projection, don't re-initialize or redraw here
-  updateGlobeDimensionsAndProjection(); // Call renamed function
-
-  // Redraw the globe immediately after updating dimensions
-  drawGlobe();
-  // }, 250); // REMOVED setTimeout delay
+    // Only update dimensions and projection, then redraw
+    updateGlobeDimensionsAndProjection();
+    drawGlobe();
+    handleResize._scheduled = false;
+  });
 }
 
 // Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
-  setupGlobe(); // Call setupGlobe instead of initGlobe
+  setupGlobe();
 
   // Add resize listener
   window.addEventListener("resize", handleResize);
+
+  // Pause/resume animation based on visibility
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      pauseAnimation();
+    } else {
+      resumeAnimation();
+    }
+  });
+
+  // Observe viewport intersection to pause when offscreen
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      isInViewport = entry.isIntersecting;
+      if (!isInViewport) {
+        pauseAnimation();
+      } else {
+        resumeAnimation();
+      }
+    },
+    { root: null, threshold: 0.2 }
+  );
+
+  const container = document.querySelector(".world-tour-container");
+  if (container) observer.observe(container);
 });

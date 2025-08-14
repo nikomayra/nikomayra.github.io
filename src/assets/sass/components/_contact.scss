@@ -57,7 +57,7 @@
         font-weight: 600;
         font-size: 0.9rem;
         color: c.color('accent-alt-light');
-        transition: all 0.3s ease;
+        transition: color 0.3s ease, transform 0.3s ease;
         letter-spacing: 0.05em;
       }
       
@@ -89,7 +89,7 @@
         padding: 0.75rem 1rem;
         color: c.color('text-light');
         font-size: 1rem;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         
         &:focus {
           outline: none;
@@ -127,7 +127,7 @@
         font-size: 0.95rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
         z-index: 1;
         
         &::before {
@@ -209,7 +209,7 @@
     text-align: center;
     transform: translateY(20px);
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     
     &.success {
       background: c.alpha('accent', 0.2);

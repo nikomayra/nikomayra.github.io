@@ -63,7 +63,31 @@ class Testimonials {
       },
     ];
 
-    this.init();
+    this._initialized = false;
+    this._setupObserver();
+  }
+
+  _setupObserver() {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (!this._initialized) {
+            this.init();
+            this._initialized = true;
+          }
+          this._resume();
+        } else {
+          this._pause();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(this.container);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") this._pause();
+      else this._resume();
+    });
   }
 
   init() {
@@ -72,24 +96,13 @@ class Testimonials {
   }
 
   render() {
-    // Clear previous content
     this.container.innerHTML = "";
-
-    // Create Swiper container structure
     const swiperEl = document.createElement("div");
     swiperEl.className = "swiper testimonials-swiper";
-
     const swiperWrapper = document.createElement("div");
     swiperWrapper.className = "swiper-wrapper";
     swiperEl.appendChild(swiperWrapper);
 
-    // Add slides - duplicate them to ensure smooth looping
-    this.testimonialsData.forEach((testimonial) => {
-      const slide = this.createTestimonialSlide(testimonial);
-      swiperWrapper.appendChild(slide);
-    });
-
-    // Add duplicate slides to ensure smooth looping
     this.testimonialsData.forEach((testimonial) => {
       const slide = this.createTestimonialSlide(testimonial);
       swiperWrapper.appendChild(slide);
@@ -101,7 +114,6 @@ class Testimonials {
   createTestimonialSlide(testimonial) {
     const slide = document.createElement("div");
     slide.className = "swiper-slide testimonial-card";
-
     slide.innerHTML = `
       <div class="testimonial-quote">"${testimonial.quote}"</div>
       <div class="testimonial-author-info">
@@ -109,33 +121,32 @@ class Testimonials {
         <div class="testimonial-title">${testimonial.title}</div>
       </div>
     `;
-
     return slide;
   }
 
   initSwiper() {
-    // Initialize Swiper with minimal configuration for reliable performance
     this.swiper = new Swiper(".testimonials-swiper", {
       modules: [Autoplay],
       slidesPerView: "auto",
       spaceBetween: 20,
       loop: true,
-      speed: 5000,
+      speed: 8000,
       grabCursor: true,
       a11y: false,
-      freeMode: true,
       autoplay: {
-        delay: 0.5,
+        delay: 0,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       },
     });
+  }
 
-    // Implement manual infinite loop behavior
-    this.swiper.on("reachEnd", () => {
-      // When we reach the end, quietly reset to the start
-      this.swiper.slideTo(0, 0, false);
-    });
+  _pause() {
+    if (this.swiper && this.swiper.autoplay) this.swiper.autoplay.stop();
+  }
+
+  _resume() {
+    if (this.swiper && this.swiper.autoplay && document.visibilityState === "visible") this.swiper.autoplay.start();
   }
 }
 

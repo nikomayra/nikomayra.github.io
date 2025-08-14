@@ -68,8 +68,8 @@
   .testimonial-card {
     height: 100%;
     background: rgba(40, 45, 60, 0.3);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    // backdrop-filter: blur(8px); Expensive and you can't even see it...
+    // -webkit-backdrop-filter: blur(8px);
     border-radius: 10px;
     padding: fn.spacing('medium');
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

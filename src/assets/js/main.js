@@ -113,8 +113,8 @@ $window.addEventListener("resize", checkHeaderVisibility);
 scrolly("#nav a", {
   speed: 1000,
   offset: function () {
-    if (breakpoints.active("<=medium")) return titleBar.offsetHeight;
-    return 0;
+    const bp = breakpointInstance.getCurrent();
+    return bp === "medium" || bp === "small" || bp === "xsmall" ? titleBar.offsetHeight : 0;
   },
 });
 
@@ -162,24 +162,6 @@ $navLinks.forEach((link) => {
   }
 });
 
-// Highlight active section on scroll
-$window.addEventListener("scroll", () => {
-  let scrollPosition = $window.scrollY + 50; // Adjust offset as needed
-
-  $navLinks.forEach((link) => {
-    const section = document.querySelector(link.getAttribute("href"));
-    if (section) {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        $navLinks.forEach((navLink) => navLink.classList.remove("active"));
-        link.classList.add("active");
-      }
-    }
-  });
-});
-
 function updateNavScrollIndicators() {
   const nav = document.querySelector("#header nav");
   const wrapper = nav.parentElement;
@@ -196,7 +178,7 @@ function updateNavScrollIndicators() {
 
 // Update indicators on important events
 const nav = document.querySelector("#header nav");
-nav.addEventListener("scroll", updateNavScrollIndicators);
+nav.addEventListener("scroll", updateNavScrollIndicators, { passive: true });
 window.addEventListener("resize", () => {
   requestAnimationFrame(updateNavScrollIndicators);
 });
@@ -212,3 +194,17 @@ observer.observe(nav, {
   subtree: true,
   characterData: true,
 });
+
+// Pause banner CSS animations when offscreen
+const banner = document.querySelector(".banner");
+if (banner) {
+  const bannerIO = new IntersectionObserver(
+    (entries) => {
+      const e = entries[0];
+      if (e.isIntersecting) banner.classList.remove("paused");
+      else banner.classList.add("paused");
+    },
+    { threshold: 0.1 }
+  );
+  bannerIO.observe(banner);
+}

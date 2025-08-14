@@ -54,11 +54,11 @@ const visitedStates = {
 
 // Cache for color values.
 let colors = {
-    border: getColorValue("--us-tour-state-border-color"),
-    unvisited: getColorValue("--us-tour-state-unvisited-color"),
-    visited: getColorValue("--us-tour-state-visited-color"),
-    hover: getColorValue("--us-tour-state-hover-color"),
-  };
+  border: getColorValue("--us-tour-state-border-color"),
+  unvisited: getColorValue("--us-tour-state-unvisited-color"),
+  visited: getColorValue("--us-tour-state-visited-color"),
+  hover: getColorValue("--us-tour-state-hover-color"),
+};
 
 /**
  * Retrieves the value of a CSS variable.
@@ -130,8 +130,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     .attr("d", path);
 
   // Hide tooltip on scroll or mouse movement
-  document.addEventListener("scroll", () => {
-    const tooltip = document.querySelector(".tooltip");
-    if (tooltip) tooltip.classList.remove("visible");
-  });
+  document.addEventListener(
+    "scroll",
+    () => {
+      const tooltip = document.querySelector(".tooltip");
+      if (tooltip) tooltip.classList.remove("visible");
+    },
+    { passive: true }
+  );
 });

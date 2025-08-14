@@ -4,25 +4,25 @@
  * @returns {string} HTML string of processed navigation links
  */
 export function createNavList(element) {
-  const links = element.querySelectorAll('a');
+  const links = element.querySelectorAll("a");
   return Array.from(links)
     .map((link) => {
-      const indent = Math.max(0, link.closest('li')?.parentElement?.children.length ?? 0);
-      const href = link.getAttribute('href');
-      const target = link.getAttribute('target');
+      const indent = Math.max(0, link.closest("li")?.parentElement?.children.length ?? 0);
+      const href = link.getAttribute("href");
+      const target = link.getAttribute("target");
 
       return `
         <a 
           class="link depth-${indent}"
-          ${target ? ` target="${target}"` : ''}
-          ${href ? ` href="${href}"` : ''}
+          ${target ? ` target="${target}"` : ""}
+          ${href ? ` href="${href}"` : ""}
         >
           <span class="indent-${indent}"></span>
           ${link.textContent}
         </a>
       `;
     })
-    .join('');
+    .join("");
 }
 
 /**
@@ -42,12 +42,12 @@ export function createPanel(element, userConfig = {}) {
     resetForms: false,
     side: null,
     target: element,
-    visibleClass: 'visible',
+    visibleClass: "visible",
     ...userConfig,
   };
 
   // Convert target to HTMLElement if it's a selector
-  if (typeof config.target === 'string') {
+  if (typeof config.target === "string") {
     config.target = document.querySelector(config.target);
   }
 
@@ -64,7 +64,7 @@ export function createPanel(element, userConfig = {}) {
     setTimeout(() => {
       if (config.resetScroll) element.scrollTop = 0;
       if (config.resetForms) {
-        element.querySelectorAll('form').forEach((form) => form.reset());
+        element.querySelectorAll("form").forEach((form) => form.reset());
       }
     }, config.delay);
   };
@@ -91,16 +91,16 @@ export function createPanel(element, userConfig = {}) {
       let result = false;
 
       switch (config.side) {
-        case 'left':
+        case "left":
           result = diffY < boundary && diffY > -boundary && diffX > delta;
           break;
-        case 'right':
+        case "right":
           result = diffY < boundary && diffY > -boundary && diffX < -delta;
           break;
-        case 'top':
+        case "top":
           result = diffX < boundary && diffX > -boundary && diffY > delta;
           break;
-        case 'bottom':
+        case "bottom":
           result = diffX < boundary && diffX > -boundary && diffY < -delta;
           break;
       }
@@ -117,28 +117,25 @@ export function createPanel(element, userConfig = {}) {
     const height = element.offsetHeight;
     const scrollHeight = element.scrollHeight;
 
-    if (
-      (element.scrollTop <= 0 && diffY < 0) ||
-      (scrollHeight - height <= element.scrollTop + 2 && diffY > 0)
-    ) {
+    if ((element.scrollTop <= 0 && diffY < 0) || (scrollHeight - height <= element.scrollTop + 2 && diffY > 0)) {
       event.preventDefault();
       event.stopPropagation();
     }
   };
 
   // Event Listeners
-  element.style.msOverflowStyle = '-ms-autohiding-scrollbar';
-  element.style.webkitOverflowScrolling = 'touch';
+  element.style.msOverflowStyle = "-ms-autohiding-scrollbar";
+  element.style.webkitOverflowScrolling = "touch";
 
   if (config.hideOnClick) {
-    element.querySelectorAll('a').forEach((a) => {
-      a.style.webkitTapHighlightColor = 'rgba(0,0,0,0)';
+    element.querySelectorAll("a").forEach((a) => {
+      a.style.webkitTapHighlightColor = "rgba(0,0,0,0)";
 
-      a.addEventListener('click', (event) => {
-        const href = a.getAttribute('href');
-        const target = a.getAttribute('target');
+      a.addEventListener("click", (event) => {
+        const href = a.getAttribute("href");
+        const target = a.getAttribute("target");
 
-        if (!href || href === '#' || href === '' || href === `#${element.id}`) return;
+        if (!href || href === "#" || href === "" || href === `#${element.id}`) return;
 
         event.preventDefault();
         event.stopPropagation();
@@ -146,7 +143,7 @@ export function createPanel(element, userConfig = {}) {
         hide();
 
         setTimeout(() => {
-          if (target === '_blank') {
+          if (target === "_blank") {
             window.open(href);
           } else {
             window.location.href = href;
@@ -157,17 +154,17 @@ export function createPanel(element, userConfig = {}) {
   }
 
   // Touch events
-  element.addEventListener('touchstart', handleTouchStart);
-  element.addEventListener('touchmove', handleTouchMove);
+  element.addEventListener("touchstart", handleTouchStart, { passive: true });
+  element.addEventListener("touchmove", handleTouchMove, { passive: false });
 
   // Prevent event bubbling
-  ['click', 'touchend', 'touchstart', 'touchmove'].forEach((eventType) => {
+  ["click", "touchend", "touchstart", "touchmove"].forEach((eventType) => {
     element.addEventListener(eventType, (e) => e.stopPropagation());
   });
 
   // Hide panel on anchor click
   element.querySelectorAll(`a[href="#${element.id}"]`).forEach((anchor) => {
-    anchor.addEventListener('click', (e) => {
+    anchor.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
       hide();

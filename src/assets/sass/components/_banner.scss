@@ -312,3 +312,8 @@
     }
   }
 } 
+
+// Pause support
+.banner.paused, .banner.paused * {
+  animation-play-state: paused !important;
+} 

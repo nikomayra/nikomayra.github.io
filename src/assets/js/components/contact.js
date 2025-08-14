@@ -133,13 +133,17 @@ class Contact {
     });
 
     // Show/hide button based on scroll position
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        this.backToTopButton.classList.add("visible");
-      } else {
-        this.backToTopButton.classList.remove("visible");
-      }
-    });
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (window.scrollY > 300) {
+          this.backToTopButton.classList.add("visible");
+        } else {
+          this.backToTopButton.classList.remove("visible");
+        }
+      },
+      { passive: true }
+    );
   }
 }
 

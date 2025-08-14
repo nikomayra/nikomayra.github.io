@@ -84,17 +84,18 @@
   }
 }
 
-.skills-container {
-  flex: 1;
-  position: relative;
-  padding: fn.spacing('small');
-  border: 2px solid c.color('secondary');
-  border-radius: map.get(vars.$layout, 'border-radius') * 3;
-  background: linear-gradient(135deg, c.alpha('secondary-dark', 0.3) 0%, c.alpha('primary-dark', 0.2) 100%);
-  box-shadow: 0 5px 15px c.alpha('background-dark', 0.5);
-  transition: all fn.duration('transition') ease;
-  min-height: auto;
-  height: auto;
+  .skills-container {
+    flex: 1;
+    position: relative;
+    padding: fn.spacing('small');
+    border: 2px solid c.color('secondary');
+    border-radius: map.get(vars.$layout, 'border-radius') * 3;
+    background: linear-gradient(135deg, c.alpha('secondary-dark', 0.3) 0%, c.alpha('primary-dark', 0.2) 100%);
+    box-shadow: 0 5px 15px c.alpha('background-dark', 0.5);
+    transition: transform fn.duration('transition') ease, box-shadow fn.duration('transition') ease, border-color fn.duration('transition') ease;
+    will-change: transform;
+    min-height: auto;
+    height: auto;
 
   &:hover {
     border-color: c.color('secondary-light');
@@ -211,10 +212,11 @@
 }
 
 // Skill Tags
-.skill {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all fn.duration('transition') ease-out;
+  .skill {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform fn.duration('transition') ease-out, opacity fn.duration('transition') ease-out;
+    will-change: transform, opacity;
 
   // Subtle highlight for the highest level skill(s) in a category
   &[data-is-max-level="true"] a {
@@ -239,7 +241,10 @@
     font-size: clamp(0.8rem, 2.5vw, fn.font-size('base'));
     font-weight: fn.font-weight('bold');
     background-color: c.alpha('primary-light', 0.5);
-    transition: all fn.duration('transition') cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    transition: transform fn.duration('transition') cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      border-color fn.duration('transition') ease,
+      box-shadow fn.duration('transition') ease,
+      color fn.duration('transition') ease,
       opacity fn.duration('transition') ease;
     overflow: hidden;
     box-shadow: 0 3px 8px c.alpha('background-dark', 0.3);
@@ -252,7 +257,7 @@
       width: var(--skill-level);
       background: linear-gradient(90deg, c.color('accent-dark'), c.color('accent'));
       opacity: var(--skill-progress-opacity);
-      transition: all fn.duration('transition') ease;
+      transition: opacity fn.duration('transition') ease, background fn.duration('transition') ease;
       
       &::after {
         content: '';
