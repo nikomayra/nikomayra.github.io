@@ -16,7 +16,7 @@ class WorkExperience {
         name: "Aurox",
         logo: auroxLogo,
         location: "New York, NY, USA (Remote)",
-        period: "April 2025 - May 2025",
+        period: "March 2025 - May 2025",
         description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
         roles: [
           {
@@ -346,3 +346,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export default WorkExperience;
+
