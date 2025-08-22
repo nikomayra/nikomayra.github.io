@@ -27,7 +27,7 @@ class Education {
           "Playwright end-to-end testing",
         ],
         links: [
-          { text: "Course Website", url: "https://fullstackopen.com/en" },
+          { text: "Course Website", url: "https://fullstackopen.com/en/#course-contents" },
           {
             text: "Certificate",
             url: "https://drive.google.com/file/d/19T4m4IhEqeUx-vSB17Ac0SuA-thPHvw4/view?usp=sharing",
@@ -216,4 +216,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export default Education;
+
 
