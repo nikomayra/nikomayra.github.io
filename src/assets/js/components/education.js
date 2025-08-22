@@ -1,6 +1,6 @@
 import faulogo from "../../images/education/fau.webp";
 import purduelogo from "../../images/education/PU-V-Full-RGB.webp";
-import fullstacklogo from "../../images/education/fso.webp";
+import helsinkilogo from "../../images/education/uh.webp";
 
 class Education {
   constructor() {
@@ -9,11 +9,11 @@ class Education {
 
     this.educationData = [
       {
-        id: "fullstack",
-        logo: fullstacklogo,
-        title: "Full Stack Open - Core Course",
+        id: "helsinki",
+        logo: helsinkilogo,
+        title: "Full Stack Web Development (CSM141081)",
         subtitle: "",
-        period: "May. 2024 - Jul. 2024",
+        period: "Mar. 2024 - May. 2024",
         description: "Covered the following major topics,",
         items: [
           "Fundamentals of Web Apps using JavaScript",
@@ -216,3 +216,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export default Education;
+
