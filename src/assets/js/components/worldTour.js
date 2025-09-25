@@ -42,6 +42,7 @@ const visitedCountries = [
   "Vietnam",
   "Morocco",
   "Argentina",
+  "Peru",
 ];
 
 // Country arcs to exclude: [country name, array indices to exclude]
