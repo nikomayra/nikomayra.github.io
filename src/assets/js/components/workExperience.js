@@ -16,7 +16,7 @@ class WorkExperience {
       name: "Aurox",
       logo: auroxLogo,
       location: "New York, NY, USA (Remote)",
-      period: "October 2025 - Present",
+      period: "April 2025 - Present",
       description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
       roles: [
         {
@@ -26,18 +26,8 @@ class WorkExperience {
             "Leading full-stack development for production AgTech platform: refactored monolithic architecture, rebuilt core inventory system, delivered customer operations portal, and modernized billing infrastructure using Stripe.",
             "See resume for detailed technical contributions and impact metrics."
           ],
-          skills: ["Full-Stack Development", "System Architecture", "React/Django", "Product Delivery"],
+          skills: ["Full-Stack Development", "System Architecture", "React/Django", "Product Delivery", "Computer Vision Pipeline", "Docker/Redis/S3"],
         },
-      ],
-    },
-    {
-      id: "aurox-intern",
-      name: "Aurox",
-      logo: auroxLogo,
-      location: "New York, NY, USA (Remote)",
-      period: "April 2025 - May 2025",
-      description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
-      roles: [
         {
           title: "Software Engineering Intern",
           period: "April 2025 - May 2025",
@@ -339,5 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export default WorkExperience;
+
 
 
