@@ -11,165 +11,158 @@ class WorkExperience {
     if (!this.container) return;
 
     this.companies = [
-      {
-        id: "aurox",
-        name: "Aurox",
-        logo: auroxLogo,
-        location: "New York, NY, USA (Remote)",
-        period: "March 2025 - May 2025",
-        description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
-        roles: [
-          {
-            title: "Software Engineering Intern",
-            period: "April 2025 - May 2025",
-            responsibilities: ["Designed and implemented a complete Django/React application with a microservices architecture using Docker, integrating PostgreSQL, Redis, and MinIO/S3 for a scalable computer vision pipeline that processes thousands of agricultural image uploads daily.",
-                              "Built a robust system that extracts frames from videos, processes images through Label Studio for AI annotation, and generates comprehensive analytical reports on feed inventory and livestock activity patterns.",
-                              "Implemented a modern TypeScript React application with Tailwind CSS, featuring infinite scroll components, responsive carousels, real-time progress tracking, and interactive data visualization using Recharts.",
-                              "Developed a complete payment workflow using Stripe API integration with transaction management, and implemented JWT authentication with multi-factor authentication (MFA) for enterprise-grade security.",
-                              "Created a comprehensive RESTful API with Django REST Framework, backed by a Celery task queue for handling resource-intensive operations like video frame extraction, file conversion, and report generation."],
-            skills: ["Full-Stack Dev. & Architecture",
-                    "ML Labeling Integration & Automated Analysis",
-                    "React/Django",
-                    "Secure Payment & Authentication System",
-                    "API Design & Asynchronous Processing"],
-          },
-        ],
-      },
-      {
-        id: "sentrica",
-        name: "Sentrica",
-        logo: sentricaLogo,
-        location: "Santiago, Chile",
-        period: "Start Jan. 2025 (As needed)",
-        description:
-          "A technology partner that delivers solutions for the capture, management and analysis of metrics and performance of IT Services",
-        roles: [
-          {
-            title: "Software Engineering Intern",
-            period: "Start Jan. 2025 (As needed)",
-            responsibilities: [
-              "Built a user feedback system integrated with GitLab Issues, allowing customers to report bugs and suggestions via a modal form with image uploads, label selection, and automatic metadata tagging; implemented with GitLab API v4, FilePond, and a responsive UI.",
-              "Developed a full-featured HTML email templating engine in Go, including account recovery and alarm notification templates, using Go’s standard library templating and a modular folder structure to support easy future expansion and consistent branding.",
-              "Added tooling and developer UX improvements, such as a mobile-aware tooltip component, WCAG-compliant dynamic label contrast, robust error handling, and a testing for validating rendered emails across clients.",
-            ],
-            skills: [
-              "Next.js & React UI Eng.",
-              "Go Lang Backend Dev.",
-              "HTML Email Rendering & Template Systems",
-              "GitLab API Integration & Automation",
-            ],
-          },
-        ],
-      },
-      {
-        id: "airbus",
-        name: "Airbus",
-        logo: airbusLogo,
-        location: "Augsburg, Germany",
-        period: "Offer Accepted (Dec. 2023)",
-        description: "Global leader in aeronautics, space and related services.",
-        roles: [
-          {
-            title: "Design Engineer - Authorizer",
-            period: "No Start (Dec. 2023) - Refer to resume",
-            responsibilities: [
-              "Planned: Authorize engineering designs for composite aircraft components",
-              "Planned: Collaborate on technical specifications",
-              "Planned: Ensure compliance with aerospace standards",
-            ],
-            skills: ["Aerospace Design", "Engineering", "Authorization"],
-          },
-        ],
-      },
-      {
-        id: "lockheed",
-        name: "Lockheed Martin",
-        logo: lockheedLogo,
-        location: "Multiple Locations, USA",
-        period: "Nov. 2016 - Jun. 2023",
-        description: "American aerospace, defense, arms, security, and advanced technologies company.",
-        roles: [
-          {
-            title: "Senior Mechanical Design Engineer",
-            location: "Orlando, Florida",
-            period: "Nov. 2022 - Jun. 2023",
-            responsibilities: [
-              "Led mechanical design for Internal Research And Development (IRAD) program on Machine Determinate fuel tank designs & airframe integration",
-              "Conducted design trade studies and feasibility studies for advanced systems",
-              "Served as Lead for Model Based Definition conversion of largest MFC legacy CATIA V5 production program",
-            ],
-            skills: ["Senior Tech Lead", "Leadership", "Mechanical & System Eng."],
-          },
-          {
-            title: "Mechanical Design Engineer",
-            location: "Orlando, Florida",
-            period: "Mar. 2018 - Nov. 2022",
-            responsibilities: [
-              "Product Owner and Technical Lead for MFC's CATIA Model Based Definition development team, leading 6-8 engineers",
-              "Generated well over $100,000 in savings as Cost Target Owner for Guidance & Control subsystem production affordability initiatives",
-              "Built Python script using Confluence REST API to improve training review/maintenance",
-              "Led trade studies on missile canister ejection methods for novel palletized system",
-              "Designed novel space-efficient, high-strength hinge mechanism for tailfin deploy & control actuation system",
-            ],
-            skills: ["Leadership", "Mechanical & System Eng.", "Design & Analysis", "Optimization"],
-          },
-          {
-            title: "Asc. Quality Engineer",
-            location: "Troy, Alabama",
-            period: "Nov. 2016 - Mar. 2018",
-            responsibilities: [
-              "Led team monitoring internal environmental conditions of all production buildings on site",
-              "Developed extensive Excel VBA macro tools for quality assurance and manufacturing optimization, generating over $300,000 in contract savings",
-              "Performed First Article Inspections (FAI), QNote management, and Foreign Object Damage/Debris (FOD) walk-downs",
-              "Improved production process efficiency through customized data visualization tools for leadership",
-            ],
-            skills: ["Quality Assurance", "Process Improvement", "Manufacturing"],
-          },
-        ],
-      },
-      {
-        id: "decimal",
-        name: "Decimal Engineering",
-        logo: decimalLogo,
-        location: "Pompano Beach, Florida",
-        period: "Sep. 2015 - Mar. 2016",
-        description: "Specialized engineering firm focusing on precision components.",
-        roles: [
-          {
-            title: "Engineering Intern",
-            period: "Sep. 2015 - Mar. 2016",
-            responsibilities: [
-              "Revised Bill of Materials (BOM) and Routings for over 50 detail parts and assemblies",
-              "Generated dozens of CAD models for dimension verification from drawings",
-              "Created and modified over 10 punching/laser g-code programs using RADAN software",
-              "Worked on initiative to modify Bystronic machine forming program to use extensive coining tool inventory",
-            ],
-            skills: ["Engineering", "Production", "Manufacturing"],
-          },
-        ],
-      },
-      {
-        id: "canon",
-        name: "Canon Solutions America",
-        logo: canonLogo,
-        location: "Boca Raton, Florida",
-        period: "Jul. 2015 - Aug. 2015",
-        description: "Provider of industry leading enterprise, production, and large format printing solutions.",
-        roles: [
-          {
-            title: "Technical Intern",
-            period: "Jul. 2015 - Aug. 2015",
-            responsibilities: [
-              "Designed and 3D printed digital microscope mount and alignment jig for automatic Printhead analysis program",
-              "Designed Printhead analysis tool using electro-audio signal with oscilloscope and LabVIEW",
-              "Revised company test process for rejected Printheads improving test yield by nearly 100%",
-              "Produced test reports using linear regression for Director of Operations",
-            ],
-            skills: ["Tools Engineering", "Process Improvement", "Research"],
-          },
-        ],
-      },
-    ];
+    {
+      id: "aurox",
+      name: "Aurox",
+      logo: auroxLogo,
+      location: "New York, NY, USA (Remote)",
+      period: "October 2025 - Present",
+      description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
+      roles: [
+        {
+          title: "Software Engineer",
+          period: "October 2025 - Present",
+          responsibilities: [
+            "Leading full-stack development for production AgTech platform: refactored monolithic architecture, rebuilt core inventory system, delivered customer operations portal, and modernized billing infrastructure using Stripe.",
+            "See resume for detailed technical contributions and impact metrics."
+          ],
+          skills: ["Full-Stack Development", "System Architecture", "React/Django", "Product Delivery"],
+        },
+      ],
+    },
+    {
+      id: "aurox-intern",
+      name: "Aurox",
+      logo: auroxLogo,
+      location: "New York, NY, USA (Remote)",
+      period: "April 2025 - May 2025",
+      description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
+      roles: [
+        {
+          title: "Software Engineering Intern",
+          period: "April 2025 - May 2025",
+          responsibilities: [
+            "Built containerized Django/React application with computer vision pipeline processing thousands of daily image uploads, including Label Studio integration, real-time dashboards, and secure payment workflows.",
+            "See resume for detailed technical contributions."
+          ],
+          skills: ["Full-Stack Development", "Computer Vision Pipeline", "React/Django", "Docker/Redis/S3"],
+        },
+      ],
+    },
+    {
+      id: "sentrica",
+      name: "Sentrica",
+      logo: sentricaLogo,
+      location: "Santiago, Chile",
+      period: "January 2025 - February 2025",
+      description: "Technology partner delivering solutions for IT service metrics and performance analysis",
+      roles: [
+        {
+          title: "Software Engineering Intern",
+          period: "January 2025 - February 2025",
+          responsibilities: [
+            "Developed GitLab-integrated user feedback system and built HTML email templating engine in Go with WCAG-compliant UI enhancements.",
+            "See resume for detailed technical contributions."
+          ],
+          skills: ["Next.js/React", "Go Backend Development", "GitLab API Integration", "Accessibility (WCAG)"],
+        },
+      ],
+    },
+    {
+      id: "airbus",
+      name: "Airbus",
+      logo: airbusLogo,
+      location: "Augsburg, Germany",
+      period: "Offer Accepted (Dec. 2023)",
+      description: "Global leader in aeronautics, space and related services",
+      roles: [
+        {
+          title: "Design Engineer - Authorizer",
+          period: "Offer Accepted (Contract Mutually Cancelled)",
+          responsibilities: [
+            "Hired after multi-round interviews for composite aircraft component authorization role; contract mutually cancelled due to family emergency."
+          ],
+          skills: ["Aerospace Design", "Engineering Authorization"],
+        },
+      ],
+    },
+    {
+      id: "lockheed",
+      name: "Lockheed Martin",
+      logo: lockheedLogo,
+      location: "Multiple Locations, USA",
+      period: "November 2016 - June 2023",
+      description: "American aerospace, defense, arms, security, and advanced technologies company",
+      roles: [
+        {
+          title: "Senior Mechanical Design Engineer",
+          location: "Orlando, Florida",
+          period: "November 2022 - June 2023",
+          responsibilities: [
+            "Led Model-Based Definition modernization for legacy CATIA V5 production programs and conducted IRAD concept development for advanced fuel tank and airframe integration.",
+            "See resume for detailed contributions and cost savings."
+          ],
+          skills: ["Technical Leadership", "MBD/CAD Automation", "System Engineering"],
+        },
+        {
+          title: "Mechanical Design Engineer",
+          location: "Orlando, Florida",
+          period: "March 2018 - November 2022",
+          responsibilities: [
+            "Product Owner and Technical Lead for 6-8 engineer team driving digital transformation. Generated $100K+ in cost savings, built Python automation tools, and designed advanced mechanical subsystems.",
+            "See resume for detailed contributions and awards."
+          ],
+          skills: ["Product Ownership", "Technical Leadership", "Python Automation", "Systems Design"],
+        },
+        {
+          title: "Asc. Quality Engineer",
+          location: "Troy, Alabama",
+          period: "November 2016 - March 2018",
+          responsibilities: [
+            "Developed VBA automation suite generating $300K+ in contract savings and led environmental monitoring team with custom data visualization tools.",
+            "See resume for detailed contributions."
+          ],
+          skills: ["Quality Assurance", "VBA Automation", "Process Improvement"],
+        },
+      ],
+    },
+    {
+      id: "decimal",
+      name: "Decimal Engineering",
+      logo: decimalLogo,
+      location: "Pompano Beach, Florida",
+      period: "September 2015 - March 2016",
+      description: "Specialized engineering firm focusing on precision components",
+      roles: [
+        {
+          title: "Engineering Intern",
+          period: "September 2015 - March 2016",
+          responsibilities: [
+            "Revised BOMs/routings for 50+ parts, generated CAD models, and created laser g-code programs using RADAN software."
+          ],
+          skills: ["CAD Modeling", "Manufacturing Engineering", "G-Code Programming"],
+        },
+      ],
+    },
+    {
+      id: "canon",
+      name: "Canon Solutions America",
+      logo: canonLogo,
+      location: "Boca Raton, Florida",
+      period: "July 2015 - August 2015",
+      description: "Provider of industry leading enterprise, production, and large format printing solutions",
+      roles: [
+        {
+          title: "Technical Intern",
+          period: "July 2015 - August 2015",
+          responsibilities: [
+            "Designed 3D-printed microscope mount, developed Printhead analysis tool using LabVIEW, and improved test yield by nearly 100%."
+          ],
+          skills: ["3D Printing", "LabVIEW", "Process Improvement"],
+        },
+      ],
+    },
+  ];
 
     this.init();
   }
@@ -346,4 +339,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 export default WorkExperience;
+
 
