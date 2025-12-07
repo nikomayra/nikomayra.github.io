@@ -124,6 +124,48 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "Tools",
       url: "https://flask.palletsprojects.com/",
     },
+    {
+      name: "Celery",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://docs.celeryq.dev/en/main/getting-started/introduction.html",
+    },
+    {
+      name: "Redis",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://redis.io/",
+    },
+    {
+      name: "Redux",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://redux.js.org/",
+    },
+    {
+      name: "SWR",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://swr.vercel.app/",
+    },
+    {
+      name: "React Query",
+      level: levels.novice,
+      category: "Tools",
+      url: "https://tanstack.com/query",
+    },
+    {
+      name: "Vitest",
+      level: levels.novice,
+      category: "Tools",
+      url: "https://vitest.dev/",
+    },
+    {
+      name: "Playwright",
+      level: levels.novice,
+      category: "Tools",
+      url: "https://tanstack.com/query",
+    },
 
     // Data Storage
     {
@@ -146,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       name: "S3",
-      level: levels.introduced,
+      level: levels.novice,
       category: "Tools",
       url: "https://aws.amazon.com/s3/",
     },
