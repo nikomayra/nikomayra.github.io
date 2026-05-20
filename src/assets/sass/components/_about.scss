@@ -29,7 +29,7 @@
   
   .intro-content {
     position: relative;
-    background: linear-gradient(135deg, c.alpha('background-light', 0.2), c.alpha('secondary-dark', 0.15));
+    background: linear-gradient(135deg, c.alpha('background-light', 0.2), c.alpha('primary-dark', 0.15));
     border-radius: 15px;
     padding: fn.spacing('medium');
     margin-top: fn.spacing('small') * 1.5;
@@ -58,7 +58,7 @@
     align-items: center;
     margin-top: fn.spacing('small');
     padding: fn.spacing('small');
-    background: linear-gradient(to right, c.alpha('background-light', 0.1), c.alpha('secondary-dark', 0.1));
+    background: linear-gradient(to right, c.alpha('background-light', 0.1), c.alpha('primary-dark', 0.1));
     border-radius: 8px;
     
     .personality-tags {
@@ -69,14 +69,14 @@
       .tag {
         font-size: fn.font-size('small') * .8;
         padding: fn.spacing('xsmall') * .5 fn.spacing('small');
-        background: c.alpha('secondary', 0.2);
+        background: c.alpha('primary-light', 0.3);
         color: c.color('text');
         border-radius: 20px;
         border: 1px solid c.alpha('accent-alt', 0.3);
         transition: all 0.3s ease;
         
         &:hover {
-          background: c.color('secondary');
+          background: c.color('primary-light');
           color: c.color('text-light');
           transform: translateY(-2px);
         }

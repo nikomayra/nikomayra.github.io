@@ -35,7 +35,7 @@ body {
   margin: 0;
   min-height: 100%;
   overflow: hidden;
-  background: linear-gradient(135deg, c.color('background'), c.color('background-dark'));
+  background: linear-gradient(135deg, c.color('background'), c.color('primary'));
   color: c.color('text');
   font-family: fn.font-family('primary');
   font-size: fn.font-size('base');

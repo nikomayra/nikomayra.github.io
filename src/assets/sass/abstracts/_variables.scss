@@ -135,13 +135,13 @@ $component-vars: (
   ),
   'us-tour': (
     'state-unvisited-color': map.get(c.$colors, 'primary'),
-    'state-visited-color': map.get(c.$colors, 'background-dark'),
+    'state-visited-color': map.get(c.$colors, 'accent-dark'),
     'state-hover-color': map.get(c.$colors, 'accent'),
     'state-border-color': map.get(c.$colors, 'accent-alt-dark'),
   ),
   'world-tour': (
     'land-color': map.get(c.$colors, 'primary'),
-    'visited-country-color': map.get(c.$colors, 'background-dark'),
+    'visited-country-color': map.get(c.$colors, 'accent-dark'),
     'current-country-color': map.get(c.$colors, 'accent'),
     'border-color': map.get(c.$colors, 'accent-alt-dark'),
     'ocean-color': map.get(c.$colors, 'background'),

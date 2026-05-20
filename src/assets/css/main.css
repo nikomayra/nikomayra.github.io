@@ -6,11 +6,11 @@
   --skill-hover-scale: 1.05;
   --skill-hover-translate: -2px;
   --us-tour-state-unvisited-color: #3e2a37;
-  --us-tour-state-visited-color: #18233c;
+  --us-tour-state-visited-color: #4e7645;
   --us-tour-state-hover-color: #b1d298;
   --us-tour-state-border-color: #b1973d;
   --world-land-color: #3e2a37;
-  --world-visited-country-color: #18233c;
+  --world-visited-country-color: #4e7645;
   --world-current-country-color: #b1d298;
   --world-border-color: #b1973d;
   --world-ocean-color: #1d0e1a;
@@ -260,7 +260,7 @@ body {
   margin: 0;
   min-height: 100%;
   overflow: hidden;
-  background: linear-gradient(135deg, #1d0e1a, #18233c);
+  background: linear-gradient(135deg, #1d0e1a, #3e2a37);
   color: #f9fcee;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
@@ -1557,7 +1557,7 @@ header.major h2 + p {
 }
 #one .intro-content {
   position: relative;
-  background: linear-gradient(135deg, rgba(62, 42, 55, 0.2), rgba(58, 23, 69, 0.15));
+  background: linear-gradient(135deg, rgba(62, 42, 55, 0.2), rgba(29, 14, 26, 0.15));
   border-radius: 15px;
   padding: 2rem;
   margin-top: 1.5rem;
@@ -1582,7 +1582,7 @@ header.major h2 + p {
   align-items: center;
   margin-top: 1rem;
   padding: 1rem;
-  background: linear-gradient(to right, rgba(62, 42, 55, 0.1), rgba(58, 23, 69, 0.1));
+  background: linear-gradient(to right, rgba(62, 42, 55, 0.1), rgba(29, 14, 26, 0.1));
   border-radius: 8px;
 }
 #one .intro-footer .personality-tags {
@@ -1593,14 +1593,14 @@ header.major h2 + p {
 #one .intro-footer .personality-tags .tag {
   font-size: 0.7rem;
   padding: 0.3rem 1rem;
-  background: rgba(65, 45, 100, 0.2);
+  background: rgba(104, 75, 99, 0.3);
   color: #f9fcee;
   border-radius: 20px;
   border: 1px solid rgba(222, 188, 76, 0.3);
   transition: all 0.3s ease;
 }
 #one .intro-footer .personality-tags .tag:hover {
-  background: #412d64;
+  background: #684b63;
   color: #f5f3f7;
   transform: translateY(-2px);
 }
@@ -3251,7 +3251,7 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #3e2a37 0%, #412d64 100%);
+  background: linear-gradient(135deg, #1d0e1a 0%, #684b63 100%);
   z-index: 1;
 }
 .banner .banner-accent {
