@@ -4,6 +4,7 @@ import decimalLogo from "../../images/work/de.webp";
 import canonLogo from "../../images/work/CanonSolutionsAmerica.webp";
 import sentricaLogo from "../../images/work/sentrica.webp";
 import auroxLogo from "../../images/work/aurox.webp";
+import adituLogo from "../../images/work/aditu.webp";
 
 class WorkExperience {
   constructor() {
@@ -12,30 +13,55 @@ class WorkExperience {
 
     this.companies = [
     {
+      id: "aditu",
+      name: "Aditu",
+      logo: adituLogo,
+      location: "Boca Raton, FL, USA (Remote)",
+      period: "April 2026 - Present",
+      description: "Solo-founded AI-powered call quality assurance (QA) platform for teams reviewing recorded customer calls",
+      roles: [
+        {
+          title: "Founder & Builder",
+          period: "April 2026 - Present",
+          responsibilities: [
+            "Built, launched, marketed, and operated an AI-powered call QA web app end-to-end: product discovery, full-stack development (Next.js, FastAPI, PostgreSQL, Celery), deployment, Stripe metered billing, vendor benchmarking, pricing model, and customer onboarding workflow.",
+            "Delivered ~8x lower cost per call and ~12x faster processing than the manual review baseline, with 100% review coverage and bilingual (English/Spanish) support.",
+            "See project Report on this site (Projects section) for the full case study, benchmarks, and sample outputs."
+          ],
+          skills: ["Product Discovery", "Full-Stack Development", "FastAPI/Next.js", "Stripe Metered Billing", "AI/LLM Integration", "Unit Economics", "Market Research", "Production Operations"],
+        },
+      ],
+    },
+    {
       id: "aurox",
       name: "Aurox",
       logo: auroxLogo,
       location: "New York, NY, USA (Remote)",
-      period: "April 2025 - Present",
+      period: "April 2025 - March 2026",
       description: "All-in-one solution for capturing, measuring, and analyzing farm forage inventory",
       roles: [
         {
           title: "Software Engineer",
-          period: "October 2025 - Present",
+          period: "October 2025 - March 2026",
           responsibilities: [
-            "Leading full-stack development for production AgTech platform: refactored monolithic architecture, rebuilt core inventory system, delivered customer operations portal, and modernized billing infrastructure using Stripe.",
-            "See resume for detailed technical contributions and impact metrics."
+            "Architecture Modernization: refactored 3,000+ line legacy single-file components into a maintainable, feature-first structure; removed dead code, standardized patterns, and established contribution and architectural guidelines for the team.",
+            "System Stabilization (Inventory 2.0): rebuilt the core Inventory Management System, resolving long-standing state-sync issues and crash loops; new implementation is mobile-friendly and supports upcoming forecasting features.",
+            "Product Delivery (Flight Hub 2.0): delivered the full Customer Operations Portal, including responsive layouts, flight visualization tools, usage tracking, and secure invitation logic.",
+            "Data Integrity: reworked Flight Management & Scheduling tools with clear validation, optimistic UI updates, and backend fixes to prevent data corruption.",
+            "Billing Infrastructure: replaced fragile custom billing logic with a Stripe-based subscription workflow and customer portal, significantly reducing maintenance overhead and payment issues."
           ],
-          skills: ["Full-Stack Development", "System Architecture", "React/Django", "Product Delivery", "Computer Vision Pipeline", "Docker/Redis/S3"],
+          skills: ["Full-Stack Development", "System Architecture", "React/Django", "Stripe Subscriptions", "Mobile-Friendly UX", "Product Delivery"],
         },
         {
           title: "Software Engineering Intern",
           period: "April 2025 - May 2025",
           responsibilities: [
-            "Built containerized Django/React application with computer vision pipeline processing thousands of daily image uploads, including Label Studio integration, real-time dashboards, and secure payment workflows.",
-            "See resume for detailed technical contributions."
+            "Containerized Cloud Architecture: designed and implemented a full-stack Django/React application (Docker, Redis, S3) to process thousands of agricultural image uploads daily.",
+            "Computer Vision Pipeline: built a system for video frame extraction and image processing via Label Studio, generating analytical reports on feed inventory.",
+            "Interactive Dashboard: developed a modern TypeScript application using Tailwind and Recharts for real-time visualization of livestock activity.",
+            "Secure Payments: implemented Stripe API transaction management with MFA-secured JWT authentication."
           ],
-          skills: ["Full-Stack Development", "Computer Vision Pipeline", "React/Django", "Docker/Redis/S3"],
+          skills: ["Full-Stack Development", "Computer Vision Pipeline", "React/Django", "Docker/Redis/S3", "Stripe API"],
         },
       ],
     },

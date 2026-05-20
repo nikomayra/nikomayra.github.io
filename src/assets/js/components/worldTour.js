@@ -58,6 +58,7 @@ let colors = {
   graticule: getColorValue("--world-graticule-color"),
   border: getColorValue("--world-border-color"),
   visited: getColorValue("--world-visited-country-color"),
+  current: getColorValue("--world-current-country-color"),
   land: getColorValue("--world-land-color"),
   flight: getColorValue("--world-flight-path-color"),
 };
@@ -329,11 +330,12 @@ function drawGlobe() {
       context.fill();
     });
 
-  // Highlight current country if provided
+  // Highlight current country (the one being "visited" right now) in accent green.
+  // Drawn after the visited block so it paints over the same shape.
   if (currentCountry) {
     context.beginPath();
     path(currentCountry);
-    context.fillStyle = colors.visited;
+    context.fillStyle = colors.current;
     context.fill();
   }
 
@@ -483,6 +485,7 @@ function handleResize() {
       graticule: getColorValue("--world-graticule-color"),
       border: getColorValue("--world-border-color"),
       visited: getColorValue("--world-visited-country-color"),
+      current: getColorValue("--world-current-country-color"),
       land: getColorValue("--world-land-color"),
       flight: getColorValue("--world-flight-path-color"),
     };

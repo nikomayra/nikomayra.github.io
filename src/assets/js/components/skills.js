@@ -119,6 +119,12 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://www.djangoproject.com/",
     },
     {
+      name: "FastAPI",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://fastapi.tiangolo.com/",
+    },
+    {
       name: "Flask",
       level: levels.intermediate,
       category: "Tools",
@@ -161,10 +167,28 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://vitest.dev/",
     },
     {
+      name: "PyTest",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://docs.pytest.org/",
+    },
+    {
       name: "Playwright",
       level: levels.novice,
       category: "Tools",
-      url: "https://tanstack.com/query",
+      url: "https://playwright.dev/",
+    },
+    {
+      name: "GitHub Actions",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://docs.github.com/en/actions",
+    },
+    {
+      name: "Stripe",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://stripe.com/docs",
     },
 
     // Data Storage

@@ -142,6 +142,7 @@ $component-vars: (
   'world-tour': (
     'land-color': map.get(c.$colors, 'primary'),
     'visited-country-color': map.get(c.$colors, 'background-dark'),
+    'current-country-color': map.get(c.$colors, 'accent'),
     'border-color': map.get(c.$colors, 'accent-alt-dark'),
     'ocean-color': map.get(c.$colors, 'background'),
     'graticule-color': map.get(c.$colors, 'background-light'),
@@ -170,6 +171,7 @@ $component-vars: (
   // World Tour component
   --world-land-color: #{map.get($component-vars, 'world-tour', 'land-color')};
   --world-visited-country-color: #{map.get($component-vars, 'world-tour', 'visited-country-color')};
+  --world-current-country-color: #{map.get($component-vars, 'world-tour', 'current-country-color')};
   --world-border-color: #{map.get($component-vars, 'world-tour', 'border-color')};
   --world-ocean-color: #{map.get($component-vars, 'world-tour', 'ocean-color')};
   --world-graticule-color: #{map.get($component-vars, 'world-tour', 'graticule-color')};

@@ -1,4 +1,5 @@
 import { Fancybox } from "@fancyapps/ui";
+import aditu from "../../images/projects/aditu_p.webp";
 import caboh from "../../images/projects/caboh.webp";
 import placesCentralZoner from "../../images/projects/PCZ.webp";
 import serverlessImageProcessor from "../../images/projects/BG.webp";
@@ -9,6 +10,20 @@ class ProjectsCarousel {
     this.container = document.querySelector(".projects-container");
     this.carousel = document.querySelector(".projects-carousel");
     this.projects = [
+      {
+        title: "Aditu",
+        subtitle: "AI-powered call quality assurance platform",
+        image: aditu,
+        description:
+          "Solo-founded B2B SaaS that ingests batches of recorded customer calls, transcribes them, scores each call against a custom QA rubric, surfaces evidence quotes from the transcript, and produces per-call and batch-level reports with PDF/spreadsheet export. End-to-end ownership: product discovery, full-stack build, vendor benchmarking, Stripe metered billing, market research, and production cutover. Roughly 8x lower cost and 12x faster than the manual review baseline, bilingual (English/Spanish), with 100% review coverage. Live operations paused — see Report button for the full case study and sample reports.",
+        tech: "Next.js|FastAPI|PostgreSQL|Celery|Stripe|Claude",
+        details: "Clerk|Cloudflare R2|ElevenLabs Scribe|Deepgram Nova-3|Docker|Sentry|Playwright",
+        complexity: "⭐⭐⭐⭐",
+        demoUrl: null,
+        repoUrl: null,
+        videoUrl: null,
+        reportUrl: "https://drive.google.com/open?id=1XvE_k-gDJtM2Q4Vu0xZoXS3yPuCC9gNF&usp=drive_fs",
+      },
       {
         title: "Chat & Sketch",
         subtitle: "Real-time websocket chat, channels & sketching",
@@ -127,16 +142,18 @@ class ProjectsCarousel {
               <span class="complexity-value">${project.complexity}</span>
             </div>
             <div class="project-links">
-              <a href="${project.demoUrl}" target="_blank">Demo</a>
-              <a href="${project.repoUrl}" target="_blank">Repo</a>
+              ${project.demoUrl ? `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer">Demo</a>` : ""}
+              ${project.repoUrl ? `<a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer">Repo</a>` : ""}
               ${
                 project.videoUrl
-                  ? `
-              <a href="${project.videoUrl}" 
-                 data-fancybox 
-                 data-type="iframe">
-                 Video
-              </a>`
+                  ? `<a href="${project.videoUrl}"
+                       data-fancybox
+                       data-type="iframe">Video</a>`
+                  : ""
+              }
+              ${
+                project.reportUrl
+                  ? `<a href="${project.reportUrl}" target="_blank" rel="noopener noreferrer">Report</a>`
                   : ""
               }
             </div>
