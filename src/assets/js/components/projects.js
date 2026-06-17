@@ -16,8 +16,8 @@ class ProjectsCarousel {
         image: aditu,
         description:
           "Solo-founded B2B SaaS that ingests batches of recorded customer calls, transcribes them, scores each call against a custom QA rubric, surfaces evidence quotes from the transcript, and produces per-call and batch-level reports with PDF/spreadsheet export. End-to-end ownership: product discovery, full-stack build, vendor benchmarking, Stripe metered billing, market research, and production cutover. Roughly 8x lower cost and 12x faster than the manual review baseline, bilingual (English/Spanish), with 100% review coverage. Live operations paused — see Report button for the full case study and sample reports.",
-        tech: "Next.js|FastAPI|PostgreSQL|Celery|Stripe|Claude",
-        details: "Clerk|Cloudflare R2|ElevenLabs Scribe|Deepgram Nova-3|Docker|Sentry|Playwright",
+        tech: "Next.js|FastAPI|PostgreSQL|Tailwind",
+        details: "Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|Sentry|Vercel",
         complexity: "⭐⭐⭐⭐",
         demoUrl: null,
         repoUrl: null,
