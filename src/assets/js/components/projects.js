@@ -9,29 +9,34 @@ class ProjectsCarousel {
   constructor() {
     this.container = document.querySelector(".projects-container");
     this.carousel = document.querySelector(".projects-carousel");
+
     this.projects = [
       {
         title: "Aditu",
         subtitle: "AI-powered call quality assurance platform",
         image: aditu,
         description:
-          "Solo-founded B2B SaaS that ingests batches of recorded customer calls, transcribes them, scores each call against a custom QA rubric, surfaces evidence quotes from the transcript, and produces per-call and batch-level reports with PDF/spreadsheet export. End-to-end ownership: product discovery, full-stack build, vendor benchmarking, Stripe metered billing, market research, and production cutover. Roughly 8x lower cost and 12x faster than the manual review baseline, bilingual (English/Spanish), with 100% review coverage. Live operations paused — see Report button for the full case study and sample reports.",
-        tech: "Next.js|FastAPI|PostgreSQL|Celery|Stripe|Claude",
-        details: "Clerk|Cloudflare R2|ElevenLabs Scribe|Deepgram Nova-3|Docker|Sentry|Playwright",
+          "Solo-founded B2B SaaS for recorded-call quality assurance. The platform processes audio batches through transcription and configurable rubric-based AI evaluation, anchors results to transcript evidence, and generates call-level and batch reports with PDF/spreadsheet exports. I owned product discovery, system design, full-stack delivery, vendor benchmarking, Stripe metered billing, pricing, market research, and production operations. Internal benchmarks showed roughly 8x lower cost and 12x faster processing than the manual review baseline, with English and Spanish support. Live operations are paused; the Report includes the full case study, benchmarks, and sample outputs.",
+        tech: "Next.js|FastAPI|PostgreSQL|Celery|Redis|Tailwind",
+        details:
+          "Stripe|Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|GitHub Actions|Sentry|Vercel",
         complexity: "⭐⭐⭐⭐",
         demoUrl: null,
         repoUrl: null,
         videoUrl: null,
-        reportUrl: "https://drive.google.com/open?id=1XvE_k-gDJtM2Q4Vu0xZoXS3yPuCC9gNF&usp=drive_fs",
+        reportUrl:
+          "https://drive.google.com/open?id=1XvE_k-gDJtM2Q4Vu0xZoXS3yPuCC9gNF&usp=drive_fs",
       },
       {
         title: "Chat & Sketch",
-        subtitle: "Real-time websocket chat, channels & sketching",
+        subtitle: "Real-time chat and collaborative drawing platform",
         image: rtc,
         description:
-          "Modern React SPA featuring real-time chat and collaborative drawing functionality. Built with an emphasis on foundational web technologies and minimal dependencies using GoLang for server-side processing, WebSockets for real-time communication, and PostgreSQL for data persistence.",
-        tech: "Go|React|Websockets|PostgreSQL|Tailwind",
-        details: "Gorilla|Docker|Axios|Zod|Jest|Vite",
+          "Full-stack multi-channel collaboration platform built with Go, React/TypeScript, PostgreSQL, and native WebSockets. The backend manages concurrent connections, channel-scoped broadcasting, presence, authentication, file sharing, and REST/WebSocket APIs; the frontend synchronizes chat and Canvas drawing through typed event protocols and custom connection hooks without Socket.IO or external drawing frameworks.",
+        tech:
+          "Go|React|TypeScript|WebSockets|PostgreSQL|Tailwind",
+        details:
+          "Gorilla Mux/WebSocket|Docker|Axios|Zod|Jest|Vite|Native Canvas API",
         complexity: "⭐⭐⭐⭐⭐",
         demoUrl: "https://rtc-nb-app.fly.dev/",
         repoUrl: "https://github.com/nikomayra/rtc-nb",
@@ -39,12 +44,14 @@ class ProjectsCarousel {
       },
       {
         title: "Bizarre Gallery",
-        subtitle: "Azure Serverless Image Processor",
+        subtitle: "Azure serverless image processor",
         image: serverlessImageProcessor,
         description:
-          "Serverless image processor using a Azure Function App and Azure Blob Storage. Users can upload images tagged with start/middle/end from the frontend. The Function App takes 3 uploaded images, (if available) selects 1 each of start/middle/end tagged images randomly, generates a Gif, and assigns a random title. On load of the static frontend the last 20 gifs are loaded from the server. Just a tech demo showing some serverless image processing architecture turned into a fun little art project.",
-        tech: "HTML|CSS|JS|Azure|AI/ML",
-        details: "Imagesharp|NSFWJS|Git Pages|Azure Functions|Azure Blob Storage",
+          "Serverless image-processing demo using Azure Functions and Azure Blob Storage. Users upload images tagged as start, middle, or end; the function selects compatible images, generates a randomized GIF and title, and publishes recent outputs to a static gallery. The project explores event-driven serverless processing through a lightweight generative-art experience.",
+        tech:
+          "HTML|CSS|JavaScript|Azure Functions|Azure Blob Storage",
+        details:
+          "ImageSharp|NSFWJS|GitHub Pages|Serverless Processing",
         complexity: "⭐⭐",
         demoUrl: "https://nikomayra.github.io/sl-img-prcr/",
         repoUrl: "https://github.com/nikomayra/sl-img-prcr",
@@ -52,47 +59,56 @@ class ProjectsCarousel {
       },
       {
         title: "Places Central-Zoner",
-        subtitle: "Places clustering algorithm web app",
+        subtitle: "Geospatial clustering and optimization platform",
         image: placesCentralZoner,
         description:
-          "Places Central Zoner is a web application that finds central zones which each contain at least one of each searched location within a minimized radius. For example, search for LA Fitness, Chipotle and Starbucks within the greater Seattle area and it will draw circular zones with a center point which is at a minimum distance to each of those three stores. In other words, this app helps find geographical areas which are minimally near at least one of each searched place. When I was living out of my car the original need was to find ideal areas to situate myself such that I had access to a multitude of places.",
-        tech: "MUI|Vite|React.ts|Flask|PostgreSQL|Google APIs|Google OAuth2.0",
-        details: "K-Means/DBSCAN Clustering|OAuth Implicit Flow|Flask SQLAlchemy|Google Maps/Location APIs",
+          "Full-stack geospatial application that identifies minimized-radius zones containing at least one of each selected place type. The Flask backend refines noisy Google Places results, clusters nearby duplicates, and compares brute-force, DBSCAN, and K-means approaches using WCSS-based evaluation; the React/TypeScript frontend provides interactive mapping, Google OAuth, saved user state, and configurable search-quality controls.",
+        tech:
+          "React|TypeScript|Flask|PostgreSQL|Google Maps/Places APIs",
+        details:
+          "K-means|DBSCAN|Brute-force Search|WCSS Evaluation|Google OAuth 2.0|Supabase",
         complexity: "⭐⭐⭐⭐",
         demoUrl: "https://places-central-zoner.onrender.com",
-        repoUrl: "https://github.com/nikomayra/places-central-zoner",
+        repoUrl:
+          "https://github.com/nikomayra/places-central-zoner",
         videoUrl: "https://youtu.be/gH2cRBy0p8o",
       },
       {
         title: "Caboh: The Game",
-        subtitle: "Multiplayer RESTful Card Game",
+        subtitle: "Multiplayer RESTful card game",
         image: caboh,
         description:
-          'This was my first project after completing the Fullstack Open fullstack coding bootcamp which focused on the MERN stack using REST API structure and CRUD style operations. My friend group used to like playing a card game called Cabo which is based on the game Golf or Cabo with our own extra rules. I felt it was a good game to practice implementing what I learned since the game is turn based and doesn\'t rely on dynamic "live" elements all players need to see and where websockets would be a better tool.',
-        tech: "Vite|React.js|Node.js|Express|MongoDB",
-        details: "RESTful|Mongoose|Axios",
+          "Turn-based multiplayer card game built after completing Full Stack Open to apply MERN-stack fundamentals. The application models custom game rules and shared player state through RESTful CRUD workflows, with React on the frontend and Node.js, Express, and MongoDB on the backend.",
+        tech: "React|Vite|Node.js|Express|MongoDB",
+        details:
+          "REST API|Mongoose|Axios|Turn-based State Management",
         complexity: "⭐⭐⭐",
         demoUrl: "https://caboh.onrender.com",
         repoUrl: "https://github.com/nikomayra/caboh",
         videoUrl: "https://youtu.be/JCAG6QyIfGM",
       },
     ];
+
     this.activeIndex = 0;
     this.startX = 0;
     this.isSwiping = false;
     this.swipeThreshold = 50;
+
     this.init();
   }
 
   init() {
     this.render();
-    // Wait for next frame to ensure DOM and styles are fully applied
+
     requestAnimationFrame(() => {
       this.setupNavigation();
       this.initializeFancybox();
       this.setupCards();
-      // Center the first card on init with a small delay to ensure proper rendering
-      setTimeout(() => this.setActiveCard(this.activeIndex), 100);
+
+      setTimeout(() => {
+        this.setActiveCard(this.activeIndex);
+      }, 100);
+
       this.setupSwipeSupport();
     });
   }
@@ -100,11 +116,14 @@ class ProjectsCarousel {
   render() {
     this.carousel.innerHTML = `
       <div class="carousel-track">
-        ${this.projects.map((project, index) => this.createProjectCard(project, index)).join("")}
+        ${this.projects
+          .map((project, index) =>
+            this.createProjectCard(project, index)
+          )
+          .join("")}
       </div>
     `;
 
-    // Keep arrow navigation for accessibility but more subtle
     this.container.insertAdjacentHTML(
       "beforeend",
       `<div class="carousel-controls">
@@ -121,36 +140,66 @@ class ProjectsCarousel {
   createProjectCard(project, index) {
     const techTags = project.tech
       .split("|")
-      .map((tech) => `<span class="tech-tag">${tech.trim()}</span>`)
+      .map(
+        (tech) =>
+          `<span class="tech-tag">${tech.trim()}</span>`
+      )
       .join("");
+
     const details = project.details
       .split("|")
-      .map((detail) => `<span class="detail">${detail.trim()}</span>`)
+      .map(
+        (detail) =>
+          `<span class="detail">${detail.trim()}</span>`
+      )
       .join("");
+
     return `
       <div class="project-card" data-index="${index}">
         <div class="card-inner">
           <div class="card-front">
-            <img src="${project.image}" alt="${project.title}" class="project-image">
+            <img
+              src="${project.image}"
+              alt="${project.title}"
+              class="project-image"
+            >
             <h3 class="project-title">${project.title}</h3>
             <p class="project-subtitle">${project.subtitle}</p>
+
             <div class="project-tech-stack">
               ${techTags}
             </div>
+
             <div class="project-complexity">
               <span class="complexity-label">Complexity:</span>
-              <span class="complexity-value">${project.complexity}</span>
+              <span class="complexity-value">
+                ${project.complexity}
+              </span>
             </div>
+
             <div class="project-links">
-              ${project.demoUrl ? `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer">Demo</a>` : ""}
-              ${project.repoUrl ? `<a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer">Repo</a>` : ""}
               ${
-                project.videoUrl
-                  ? `<a href="${project.videoUrl}"
-                       data-fancybox
-                       data-type="iframe">Video</a>`
+                project.demoUrl
+                  ? `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer">Demo</a>`
                   : ""
               }
+
+              ${
+                project.repoUrl
+                  ? `<a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer">Repo</a>`
+                  : ""
+              }
+
+              ${
+                project.videoUrl
+                  ? `<a
+                       href="${project.videoUrl}"
+                       data-fancybox
+                       data-type="iframe"
+                     >Video</a>`
+                  : ""
+              }
+
               ${
                 project.reportUrl
                   ? `<a href="${project.reportUrl}" target="_blank" rel="noopener noreferrer">Report</a>`
@@ -158,8 +207,12 @@ class ProjectsCarousel {
               }
             </div>
           </div>
+
           <div class="card-back">
-            <p class="project-description">${project.description}</p>
+            <p class="project-description">
+              ${project.description}
+            </p>
+
             <div class="project-details">
               ${details}
             </div>
@@ -170,57 +223,82 @@ class ProjectsCarousel {
   }
 
   setupNavigation() {
-    this.prevButton = document.querySelector(".carousel-nav.prev");
-    this.nextButton = document.querySelector(".carousel-nav.next");
+    this.prevButton =
+      document.querySelector(".carousel-nav.prev");
 
-    this.prevButton.addEventListener("click", () => this.navigate("prev"));
-    this.nextButton.addEventListener("click", () => this.navigate("next"));
+    this.nextButton =
+      document.querySelector(".carousel-nav.next");
+
+    this.prevButton.addEventListener("click", () => {
+      this.navigate("prev");
+    });
+
+    this.nextButton.addEventListener("click", () => {
+      this.navigate("next");
+    });
 
     this.updateNavigationVisibility();
 
-    // Add keyboard navigation
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
         this.navigate("prev");
-      } else if (e.key === "ArrowRight") {
+      } else if (event.key === "ArrowRight") {
         this.navigate("next");
       }
     });
   }
 
   navigate(direction) {
-    const newIndex = direction === "next" ? this.activeIndex + 1 : this.activeIndex - 1;
+    const newIndex =
+      direction === "next"
+        ? this.activeIndex + 1
+        : this.activeIndex - 1;
 
-    if (newIndex >= 0 && newIndex < this.projects.length) {
+    if (
+      newIndex >= 0 &&
+      newIndex < this.projects.length
+    ) {
       this.setActiveCard(newIndex);
     }
   }
 
   setActiveCard(index) {
-    if (index < 0 || index >= this.projects.length) return;
+    if (
+      index < 0 ||
+      index >= this.projects.length
+    ) {
+      return;
+    }
 
-    const cards = this.carousel.querySelectorAll(".project-card");
-    const track = this.carousel.querySelector(".carousel-track");
+    const cards =
+      this.carousel.querySelectorAll(".project-card");
 
-    // Flip back any cards that are no longer active
-    cards.forEach((card, i) => {
-      if (i !== index && card.classList.contains("flipped")) {
+    const track =
+      this.carousel.querySelector(".carousel-track");
+
+    cards.forEach((card, cardIndex) => {
+      if (
+        cardIndex !== index &&
+        card.classList.contains("flipped")
+      ) {
         card.classList.remove("flipped");
       }
     });
 
-    cards.forEach((card) => card.classList.remove("active"));
+    cards.forEach((card) => {
+      card.classList.remove("active");
+    });
+
     cards[index].classList.add("active");
 
     const cardWidth = cards[0].offsetWidth;
     const carouselWidth = this.carousel.offsetWidth;
-
-    // Calculate the offset to center the active card within the carousel
     const totalOffset = cardWidth * index;
-    const centerOffset = (carouselWidth - cardWidth) / 2;
+    const centerOffset =
+      (carouselWidth - cardWidth) / 2;
 
-    // Apply the transform with easing
-    track.style.transform = `translateX(${centerOffset - totalOffset}px)`;
+    track.style.transform =
+      `translateX(${centerOffset - totalOffset}px)`;
 
     this.activeIndex = index;
     this.updateNavigationVisibility();
@@ -233,7 +311,10 @@ class ProjectsCarousel {
       this.prevButton.classList.remove("disabled");
     }
 
-    if (this.activeIndex >= this.projects.length - 1) {
+    if (
+      this.activeIndex >=
+      this.projects.length - 1
+    ) {
       this.nextButton.classList.add("disabled");
     } else {
       this.nextButton.classList.remove("disabled");
@@ -241,77 +322,79 @@ class ProjectsCarousel {
   }
 
   initializeFancybox() {
-    Fancybox.bind("[data-fancybox]", {
-      // Your existing Fancybox options
-    });
+    Fancybox.bind("[data-fancybox]", {});
   }
 
   setupCards() {
-    const cards = this.carousel.querySelectorAll(".project-card");
+    const cards =
+      this.carousel.querySelectorAll(".project-card");
 
-    // Set up click on inactive cards to navigate to them
     cards.forEach((card) => {
-      card.addEventListener("click", (e) => {
-        const cardIndex = parseInt(card.dataset.index, 10);
+      card.addEventListener("click", (event) => {
+        const cardIndex = Number.parseInt(
+          card.dataset.index,
+          10
+        );
 
-        // Don't handle navigation if clicking on links
-        if (e.target.tagName === "A") {
+        if (event.target.tagName === "A") {
           return;
         }
 
-        // If clicking on an inactive card, make it active
         if (cardIndex !== this.activeIndex) {
           this.setActiveCard(cardIndex);
-          e.stopPropagation();
+          event.stopPropagation();
           return;
         }
 
-        // If clicking on the active card (and not on links), flip it
-        if (cardIndex === this.activeIndex) {
-          card.classList.toggle("flipped");
-          e.stopPropagation();
-        }
+        card.classList.toggle("flipped");
+        event.stopPropagation();
       });
     });
   }
 
   setupSwipeSupport() {
-    const track = this.carousel.querySelector(".carousel-track");
+    const track =
+      this.carousel.querySelector(".carousel-track");
 
-    // Touch events for mobile
-    track.addEventListener("touchstart", (e) => {
-      this.startX = e.touches[0].clientX;
+    track.addEventListener("touchstart", (event) => {
+      this.startX = event.touches[0].clientX;
       this.isSwiping = true;
     });
 
     track.addEventListener(
       "touchmove",
-      (e) => {
+      (event) => {
         if (!this.isSwiping) return;
 
-        const currentX = e.touches[0].clientX;
-        const diffX = this.startX - currentX;
+        const currentX =
+          event.touches[0].clientX;
 
-        // Prevent default to disable page scrolling while swiping
+        const diffX =
+          this.startX - currentX;
+
         if (Math.abs(diffX) > 5) {
-          e.preventDefault();
+          event.preventDefault();
         }
       },
       { passive: false }
     );
 
-    track.addEventListener("touchend", (e) => {
+    track.addEventListener("touchend", (event) => {
       if (!this.isSwiping) return;
 
-      const endX = e.changedTouches[0].clientX;
-      const diffX = this.startX - endX;
+      const endX =
+        event.changedTouches[0].clientX;
 
-      if (Math.abs(diffX) > this.swipeThreshold) {
+      const diffX =
+        this.startX - endX;
+
+      if (
+        Math.abs(diffX) >
+        this.swipeThreshold
+      ) {
         if (diffX > 0) {
-          // Swipe left, go next
           this.navigate("next");
         } else {
-          // Swipe right, go prev
           this.navigate("prev");
         }
       }
@@ -319,30 +402,29 @@ class ProjectsCarousel {
       this.isSwiping = false;
     });
 
-    // Mouse events for desktop
-    track.addEventListener("mousedown", (e) => {
-      this.startX = e.clientX;
+    track.addEventListener("mousedown", (event) => {
+      this.startX = event.clientX;
       this.isSwiping = true;
-      // Prevent text selection while swiping
-      e.preventDefault();
+      event.preventDefault();
     });
 
-    track.addEventListener("mousemove", (e) => {
+    track.addEventListener("mousemove", () => {
       if (!this.isSwiping) return;
     });
 
-    track.addEventListener("mouseup", (e) => {
+    track.addEventListener("mouseup", (event) => {
       if (!this.isSwiping) return;
 
-      const endX = e.clientX;
+      const endX = event.clientX;
       const diffX = this.startX - endX;
 
-      if (Math.abs(diffX) > this.swipeThreshold) {
+      if (
+        Math.abs(diffX) >
+        this.swipeThreshold
+      ) {
         if (diffX > 0) {
-          // Swipe left, go next
           this.navigate("next");
         } else {
-          // Swipe right, go prev
           this.navigate("prev");
         }
       }
@@ -350,14 +432,12 @@ class ProjectsCarousel {
       this.isSwiping = false;
     });
 
-    // Cancel swipe on mouse leave
     track.addEventListener("mouseleave", () => {
       this.isSwiping = false;
     });
   }
 }
 
-// Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   new ProjectsCarousel();
 });

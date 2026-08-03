@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://developer.mozilla.org/en-US/docs/Web/CSS",
     },
     {
-      name: "Go Lang",
+      name: "Go",
       level: levels.advanced,
       category: "Languages",
       url: "https://go.dev/",
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://sass-lang.com/",
     },
     {
-      name: "Tailwind",
+      name: "Tailwind CSS",
       level: levels.intermediate,
       category: "Tools",
       url: "https://tailwindcss.com/",
@@ -87,6 +87,12 @@ document.addEventListener("DOMContentLoaded", function () {
       level: levels.advanced,
       category: "Tools",
       url: "https://react.dev/",
+    },
+    {
+      name: "Next.js",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://nextjs.org/docs",
     },
     {
       name: "Vite",
@@ -101,13 +107,13 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://www.docker.com/",
     },
     {
-      name: "Node",
+      name: "Node.js",
       level: levels.intermediate,
       category: "Tools",
       url: "https://nodejs.org/docs/latest/api/",
     },
     {
-      name: "Express",
+      name: "Express.js",
       level: levels.intermediate,
       category: "Tools",
       url: "https://expressjs.com/",
@@ -143,7 +149,13 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://redis.io/",
     },
     {
-      name: "Redux",
+      name: "WebSockets",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+    },
+    {
+      name: "Redux Toolkit",
       level: levels.intermediate,
       category: "Tools",
       url: "https://redux.js.org/",
@@ -167,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://vitest.dev/",
     },
     {
-      name: "PyTest",
+      name: "pytest",
       level: levels.intermediate,
       category: "Tools",
       url: "https://docs.pytest.org/",
@@ -199,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://www.mongodb.com/docs/",
     },
     {
-      name: "Postgres",
+      name: "PostgreSQL",
       level: levels.intermediate,
       category: "Tools",
       url: "https://www.postgresql.org/docs/",
@@ -211,10 +223,10 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://learn.microsoft.com/en-us/azure",
     },
     {
-      name: "S3",
+      name: "AWS",
       level: levels.novice,
       category: "Tools",
-      url: "https://aws.amazon.com/s3/",
+      url: "https://aws.amazon.com/",
     },
     {
       name: "DynamoDB",
@@ -222,6 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "Tools",
       url: "https://aws.amazon.com/dynamodb/",
     },
+
     // Other misc
     {
       name: "Label Studio SDK",
@@ -250,6 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
       category: null,
       url: "https://www.mathworks.com/products/matlab.html",
     },
+
     // CAD & Design
     {
       name: "Creo",
@@ -281,6 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
       category: null,
       url: "https://www.anark.com/products/anark-workstation",
     },
+
     // PLM Systems
     {
       name: "Windchill",
@@ -300,6 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
       category: null,
       url: "https://www.3ds.com/products-services/smarteam/",
     },
+
     // Project Management
     {
       name: "Jira",
@@ -315,7 +331,6 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  // --- Refactored Helper Function ---
   function createSkillElement(skillData, maxLevelInCategory) {
     const skill = document.createElement("div");
     skill.className = "skill";
@@ -324,29 +339,29 @@ document.addEventListener("DOMContentLoaded", function () {
     link.href = skillData.url;
     link.target = "_blank";
 
-    // Create progress bar background - Use total number of levels
     const totalLevels = Object.keys(levels).length;
     const progress = document.createElement("div");
     progress.className = "skill-progress";
-    progress.style.width = `${(skillData.level / totalLevels) * 100}%`; // Use totalLevels
+    progress.style.width = `${(skillData.level / totalLevels) * 100}%`;
 
-    // Add text
     const text = document.createElement("span");
     text.className = "skill-text";
     text.textContent = skillData.name;
 
-    // Calculate opacity based on MAX LEVEL IN CATEGORY
     const baseOpacity = 1;
-    const minOpacity = 0.35; // Adjusted min opacity
-    const opacityExponent = 1.8; // Adjusted exponent for more emphasis on higher levels
+    const minOpacity = 0.35;
+    const opacityExponent = 1.8;
 
-    const normalizedLevel = maxLevelInCategory > 0 ? skillData.level / maxLevelInCategory : 0; // Use maxLevelInCategory, handle division by zero
-    const opacity = minOpacity + (baseOpacity - minOpacity) * Math.pow(normalizedLevel, opacityExponent);
+    const normalizedLevel =
+      maxLevelInCategory > 0 ? skillData.level / maxLevelInCategory : 0;
 
-    // Set opacity on the link element
+    const opacity =
+      minOpacity +
+      (baseOpacity - minOpacity) *
+        Math.pow(normalizedLevel, opacityExponent);
+
     link.style.opacity = opacity;
 
-    // Add data attribute if this skill is the max level in its category
     if (skillData.level === maxLevelInCategory) {
       skill.dataset.isMaxLevel = "true";
     }
@@ -357,13 +372,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return skill;
   }
-  // --- End Helper Function ---
 
   function createSkillsChart() {
-    // For mechanical skills, use the standard approach
     createSkillsSection(".skills-container.mechanical", mechanicalSkills);
-
-    // For software skills, handle the categories separately
     createSoftwareSkillsSections();
   }
 
@@ -371,14 +382,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const container = document.querySelector(".skills-container.software");
     if (!container) return;
 
-    // Clear container
     container.innerHTML = "";
 
-    // Group skills by category
-    const languageSkills = softwareSkills.filter((skill) => skill.category === "Languages");
-    const toolSkills = softwareSkills.filter((skill) => skill.category === "Tools");
+    const languageSkills = softwareSkills.filter(
+      (skill) => skill.category === "Languages"
+    );
 
-    // Create the Tools section
+    const toolSkills = softwareSkills.filter(
+      (skill) => skill.category === "Tools"
+    );
+
     const toolsSection = document.createElement("div");
     toolsSection.className = "skills-subcategory tools";
 
@@ -391,7 +404,6 @@ document.addEventListener("DOMContentLoaded", function () {
     toolsGrid.className = "skills-grid";
     toolsSection.appendChild(toolsGrid);
 
-    // Create the Languages section
     const languagesSection = document.createElement("div");
     languagesSection.className = "skills-subcategory languages";
 
@@ -404,25 +416,27 @@ document.addEventListener("DOMContentLoaded", function () {
     languagesGrid.className = "skills-grid";
     languagesSection.appendChild(languagesGrid);
 
-    // Add both sections to the container
     container.appendChild(toolsSection);
     container.appendChild(languagesSection);
 
-    // Populate the sections with skills using the helper
     populateSkillsGrid(toolsGrid, toolSkills);
     populateSkillsGrid(languagesGrid, languageSkills);
   }
 
   function populateSkillsGrid(grid, skills) {
-    // Sort skills by level (highest first)
     const sortedSkills = [...skills].sort((a, b) => b.level - a.level);
 
-    // Find the highest level within THIS category of skills
-    const maxLevelInCategory = Math.max(0, ...skills.map((skill) => skill.level)); // Calculate here, ensure non-negative
+    const maxLevelInCategory = Math.max(
+      0,
+      ...skills.map((skill) => skill.level)
+    );
 
-    // Create and add skill tags using the helper function
     sortedSkills.forEach((skillData) => {
-      const skillElement = createSkillElement(skillData, maxLevelInCategory); // Pass maxLevelInCategory
+      const skillElement = createSkillElement(
+        skillData,
+        maxLevelInCategory
+      );
+
       grid.appendChild(skillElement);
     });
   }
@@ -431,38 +445,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const container = document.querySelector(containerSelector);
     if (!container) return;
 
-    // Clear container
     container.innerHTML = "";
 
-    // Create grid
     const grid = document.createElement("div");
     grid.className = "skills-grid";
     container.appendChild(grid);
 
-    // Sort skills by level (highest first)
     const sortedSkills = [...skills].sort((a, b) => b.level - a.level);
 
-    // Find the highest level within THIS category of skills
-    const maxLevelInCategory = Math.max(0, ...skills.map((skill) => skill.level)); // Calculate here, ensure non-negative
+    const maxLevelInCategory = Math.max(
+      0,
+      ...skills.map((skill) => skill.level)
+    );
 
-    // Create and add skill tags using the helper function
     sortedSkills.forEach((skillData) => {
-      const skillElement = createSkillElement(skillData, maxLevelInCategory); // Pass maxLevelInCategory
+      const skillElement = createSkillElement(
+        skillData,
+        maxLevelInCategory
+      );
+
       grid.appendChild(skillElement);
     });
   }
 
   function addIntersectionObservers() {
-    // Add intersection observer for fade-in effect
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Check if the class is already present before adding it
             if (!entry.target.classList.contains("visible")) {
               entry.target.classList.add("visible");
             }
-            observer.unobserve(entry.target); // Unobserve after first intersection
+
+            observer.unobserve(entry.target);
           }
         });
       },
@@ -475,18 +490,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Initial creation
   createSkillsChart();
-  // Add observers ONCE after initial creation
   addIntersectionObservers();
 
-  // Update window resize handler to also adjust heights
   let resizeTimeout;
+
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
+
     resizeTimeout = setTimeout(() => {
-      // If specific resize adjustments are needed later, add them here.
-      // For now, CSS should handle responsiveness.
+      // CSS currently handles responsiveness.
     }, 250);
   });
 });

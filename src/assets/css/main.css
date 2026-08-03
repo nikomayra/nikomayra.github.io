@@ -6,11 +6,11 @@
   --skill-hover-scale: 1.05;
   --skill-hover-translate: -2px;
   --us-tour-state-unvisited-color: #3e2a37;
-  --us-tour-state-visited-color: #4e7645;
+  --us-tour-state-visited-color: #7aae70;
   --us-tour-state-hover-color: #b1d298;
   --us-tour-state-border-color: #b1973d;
   --world-land-color: #3e2a37;
-  --world-visited-country-color: #4e7645;
+  --world-visited-country-color: #7aae70;
   --world-current-country-color: #b1d298;
   --world-border-color: #b1973d;
   --world-ocean-color: #1d0e1a;
@@ -1203,22 +1203,22 @@ header.major h2 + p {
 .container {
   margin: 0 auto;
   max-width: calc(100% - 4rem);
-  width: 45em;
+  width: 55em;
 }
 .container.xsmall {
-  width: 11.25em;
+  width: 13.75em;
 }
 .container.small {
-  width: 22.5em;
+  width: 27.5em;
 }
 .container.medium {
-  width: 33.75em;
+  width: 41.25em;
 }
 .container.large {
-  width: 56.25em;
+  width: 68.75em;
 }
 .container.xlarge {
-  width: 67.5em;
+  width: 82.5em;
 }
 .container.max {
   width: 100%;
@@ -1230,7 +1230,7 @@ header.major h2 + p {
 }
 @media (max-width: 320px) {
   .container {
-    max-width: calc(100% - 67.5em);
+    max-width: calc(100% - 82.5em);
   }
 }
 
@@ -1589,6 +1589,8 @@ header.major h2 + p {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
 }
 #one .intro-footer .personality-tags .tag {
   font-size: 0.7rem;
