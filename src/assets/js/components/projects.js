@@ -62,11 +62,11 @@ class ProjectsCarousel {
         subtitle: "Geospatial clustering and optimization platform",
         image: placesCentralZoner,
         description:
-          "Full-stack geospatial application that identifies minimized-radius zones containing at least one of each selected place type. The Flask backend refines noisy Google Places results, clusters nearby duplicates, and compares brute-force, DBSCAN, and K-means approaches using WCSS-based evaluation; the React/TypeScript frontend provides interactive mapping, Google OAuth, saved user state, and configurable search-quality controls.",
+          "Public geospatial demo that identifies minimized-radius zones containing at least one of each selected place type. The Flask backend refines noisy Google Places results, clusters nearby duplicates, and compares brute-force, DBSCAN, and K-means approaches using WCSS-based evaluation; the React/TypeScript frontend provides interactive mapping and configurable search-quality controls. An earlier architecture used Google sign-in, Supabase persistence, and Redis before the live demo was simplified for reliability and easier access.",
         tech:
-          "React|TypeScript|Flask|PostgreSQL|Google Maps/Places APIs",
+          "React|TypeScript|Flask|scikit-learn|Google Maps/Places APIs",
         details:
-          "K-means|DBSCAN|Brute-force Search|WCSS Evaluation|Google OAuth 2.0|Supabase",
+          "K-means|DBSCAN|Brute-force Search|WCSS Evaluation|Rate Limiting|Previously: OAuth/Supabase/Redis",
         complexity: "⭐⭐⭐⭐",
         demoUrl: "https://places-central-zoner.onrender.com",
         repoUrl:
