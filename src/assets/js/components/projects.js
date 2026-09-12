@@ -13,23 +13,6 @@ class ProjectsCarousel {
 
     this.projects = [
       {
-        title: "Aditu",
-        subtitle: "AI-powered call quality assurance platform",
-        image: aditu,
-        description:
-          "Solo-founded B2B SaaS for recorded-call quality assurance. The platform processes audio batches through transcription and configurable rubric-based AI evaluation, anchors results to transcript evidence, and generates call-level and batch reports with PDF/spreadsheet exports. I owned product discovery, system design, full-stack delivery, vendor benchmarking, Stripe metered billing, pricing, market research, and production operations. Internal benchmarks showed roughly 8x lower cost and 12x faster processing than the manual review baseline, with English and Spanish support. Live operations are paused; the Report includes the full case study, benchmarks, and sample outputs.",
-        tech: "Next.js|FastAPI|PostgreSQL|Celery|Redis|Tailwind",
-        details:
-          "Stripe|Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|GitHub Actions|Sentry|Vercel",
-        complexity: "⭐⭐⭐⭐⭐",
-        websiteUrl: "https://aditu.app",
-        demoUrl: null,
-        repoUrl: null,
-        videoUrl: null,
-        reportUrl:
-          "https://drive.google.com/open?id=1XvE_k-gDJtM2Q4Vu0xZoXS3yPuCC9gNF&usp=drive_fs",
-      },
-      {
         title: "Agentic Workbench",
         subtitle: "Human-governed multi-agent engineering platform",
         image: agenticWorkbench,
@@ -45,6 +28,23 @@ class ProjectsCarousel {
         repoUrl: "https://github.com/nikomayra/agentic-workbench",
         videoUrl: null,
         reportUrl: null,
+      },
+      {
+        title: "Aditu",
+        subtitle: "AI-powered call quality assurance platform",
+        image: aditu,
+        description:
+          "Solo-founded B2B SaaS for recorded-call quality assurance. The platform processes audio batches through transcription and configurable rubric-based AI evaluation, anchors results to transcript evidence, and generates call-level and batch reports with PDF/spreadsheet exports. I owned product discovery, system design, full-stack delivery, vendor benchmarking, Stripe metered billing, pricing, market research, and production operations. Internal benchmarks showed roughly 8x lower cost and 12x faster processing than the manual review baseline, with English and Spanish support. Live operations are paused; the Report includes the full case study, benchmarks, and sample outputs.",
+        tech: "Next.js|FastAPI|PostgreSQL|Celery|Redis|Tailwind",
+        details:
+          "Stripe|Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|GitHub Actions|Sentry|Vercel",
+        complexity: "⭐⭐⭐⭐⭐",
+        websiteUrl: "https://aditu.app",
+        demoUrl: null,
+        repoUrl: null,
+        videoUrl: null,
+        reportUrl:
+          "https://drive.google.com/open?id=1XvE_k-gDJtM2Q4Vu0xZoXS3yPuCC9gNF&usp=drive_fs",
       },
       {
         title: "Chat & Sketch",
