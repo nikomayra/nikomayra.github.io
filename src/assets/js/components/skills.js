@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       name: "SQL",
-      level: levels.intermediate,
+      level: levels.novice,
       category: "Languages",
       url: "https://www.sql.com/",
     },
@@ -108,13 +108,13 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       name: "Node.js",
-      level: levels.intermediate,
+      level: levels.novice,
       category: "Tools",
       url: "https://nodejs.org/docs/latest/api/",
     },
     {
       name: "Express.js",
-      level: levels.intermediate,
+      level: levels.novice,
       category: "Tools",
       url: "https://expressjs.com/",
     },
@@ -131,8 +131,20 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://fastapi.tiangolo.com/",
     },
     {
-      name: "Flask",
+      name: "OpenAI Agents SDK",
       level: levels.intermediate,
+      category: "Tools",
+      url: "https://openai.github.io/openai-agents-python/",
+    },
+    {
+      name: "Model Context Protocol",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://modelcontextprotocol.io/",
+    },
+    {
+      name: "Flask",
+      level: levels.novice,
       category: "Tools",
       url: "https://flask.palletsprojects.com/",
     },
@@ -185,6 +197,24 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "https://docs.pytest.org/",
     },
     {
+      name: "Pydantic",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://docs.pydantic.dev/",
+    },
+    {
+      name: "SQLAlchemy",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://www.sqlalchemy.org/",
+    },
+    {
+      name: "Zod",
+      level: levels.intermediate,
+      category: "Tools",
+      url: "https://zod.dev/",
+    },
+    {
       name: "Playwright",
       level: levels.novice,
       category: "Tools",
@@ -206,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Data Storage
     {
       name: "MongoDB",
-      level: levels.intermediate,
+      level: levels.novice,
       category: "Tools",
       url: "https://www.mongodb.com/docs/",
     },

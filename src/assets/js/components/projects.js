@@ -1,5 +1,6 @@
 import { Fancybox } from "@fancyapps/ui";
 import aditu from "../../images/projects/aditu_p.webp";
+import agenticWorkbench from "../../images/projects/AW.webp";
 import caboh from "../../images/projects/caboh.webp";
 import placesCentralZoner from "../../images/projects/PCZ.webp";
 import serverlessImageProcessor from "../../images/projects/BG.webp";
@@ -20,12 +21,30 @@ class ProjectsCarousel {
         tech: "Next.js|FastAPI|PostgreSQL|Celery|Redis|Tailwind",
         details:
           "Stripe|Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|GitHub Actions|Sentry|Vercel",
-        complexity: "⭐⭐⭐⭐",
+        complexity: "⭐⭐⭐⭐⭐",
+        websiteUrl: "https://aditu.app",
         demoUrl: null,
         repoUrl: null,
         videoUrl: null,
         reportUrl:
           "https://drive.google.com/open?id=1XvE_k-gDJtM2Q4Vu0xZoXS3yPuCC9gNF&usp=drive_fs",
+      },
+      {
+        title: "Agentic Workbench",
+        subtitle: "Human-governed multi-agent engineering platform",
+        image: agenticWorkbench,
+        description:
+          "Full-stack agent orchestration platform that turns objectives or GitHub issues into reviewed code changes. A deterministic FastAPI coordinator decomposes approved plans into parallel workers isolated in Git worktrees, gates protected actions through persisted human approvals, runs tests, repairs conflicts and review findings, and publishes approved results as draft pull requests. MCP repository tools, Celery/Redis durable execution, SSE progress, and repeatable evals expose reliability, latency, token usage, and cost.",
+        tech:
+          "React|TypeScript|FastAPI|OpenAI Agents SDK|PostgreSQL|MCP",
+        details:
+          "Celery|Redis|Git Worktrees|Human-in-the-loop|SSE|Pydantic|SQLAlchemy|Docker",
+        complexity: "⭐⭐⭐⭐⭐",
+        websiteUrl: null,
+        demoUrl: null,
+        repoUrl: "https://github.com/nikomayra/agentic-workbench",
+        videoUrl: null,
+        reportUrl: null,
       },
       {
         title: "Chat & Sketch",
@@ -37,7 +56,7 @@ class ProjectsCarousel {
           "Go|React|TypeScript|WebSockets|PostgreSQL|Tailwind",
         details:
           "Gorilla Mux/WebSocket|Docker|Axios|Zod|Jest|Vite|Native Canvas API",
-        complexity: "⭐⭐⭐⭐⭐",
+        complexity: "⭐⭐⭐⭐",
         demoUrl: "https://rtc-nb-app.fly.dev/",
         repoUrl: "https://github.com/nikomayra/rtc-nb",
         videoUrl: "https://youtu.be/AIZz2XFL1Kc",
@@ -52,7 +71,7 @@ class ProjectsCarousel {
           "HTML|CSS|JavaScript|Azure Functions|Azure Blob Storage",
         details:
           "ImageSharp|NSFWJS|GitHub Pages|Serverless Processing",
-        complexity: "⭐⭐",
+        complexity: "⭐",
         demoUrl: "https://nikomayra.github.io/sl-img-prcr/",
         repoUrl: "https://github.com/nikomayra/sl-img-prcr",
         videoUrl: null,
@@ -67,7 +86,7 @@ class ProjectsCarousel {
           "React|TypeScript|Flask|scikit-learn|Google Maps/Places APIs",
         details:
           "K-means|DBSCAN|Brute-force Search|WCSS Evaluation|Rate Limiting|Previously: OAuth/Supabase/Redis",
-        complexity: "⭐⭐⭐⭐",
+        complexity: "⭐⭐⭐",
         demoUrl: "https://places-central-zoner.onrender.com",
         repoUrl:
           "https://github.com/nikomayra/places-central-zoner",
@@ -82,7 +101,7 @@ class ProjectsCarousel {
         tech: "React|Vite|Node.js|Express|MongoDB",
         details:
           "REST API|Mongoose|Axios|Turn-based State Management",
-        complexity: "⭐⭐⭐",
+        complexity: "⭐⭐",
         demoUrl: "https://caboh.onrender.com",
         repoUrl: "https://github.com/nikomayra/caboh",
         videoUrl: "https://youtu.be/JCAG6QyIfGM",
@@ -178,6 +197,12 @@ class ProjectsCarousel {
             </div>
 
             <div class="project-links">
+              ${
+                project.websiteUrl
+                  ? `<a href="${project.websiteUrl}" target="_blank" rel="noopener noreferrer">Web</a>`
+                  : ""
+              }
+
               ${
                 project.demoUrl
                   ? `<a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer">Demo</a>`
