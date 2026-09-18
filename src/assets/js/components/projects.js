@@ -17,11 +17,11 @@ class ProjectsCarousel {
         subtitle: "Human-governed multi-agent engineering platform",
         image: agenticWorkbench,
         description:
-          "Full-stack agent orchestration platform that turns objectives or GitHub issues into reviewed code changes. A deterministic FastAPI coordinator decomposes approved plans into parallel workers isolated in Git worktrees, gates protected actions through persisted human approvals, runs tests, repairs conflicts and review findings, and publishes approved results as draft pull requests. MCP repository tools, Celery/Redis durable execution, SSE progress, and repeatable evals expose reliability, latency, token usage, and cost.",
+          "Full-stack agent orchestration platform that turns GitHub issues into human-approved draft pull requests. A deterministic FastAPI coordinator manages planning, parallel workers isolated in Git worktrees, protected tool approvals, integration tests, independent review, and bounded repair. MCP repository tools, Celery/Redis durable execution, SSE progress, and repeatable evals measure reliability, latency, token usage, and cost; a 15-run benchmark passed all deterministic checks while exposing the overhead of multi-agent workflows.",
         tech:
           "React|TypeScript|FastAPI|OpenAI Agents SDK|PostgreSQL|MCP",
         details:
-          "Celery|Redis|Git Worktrees|Human-in-the-loop|SSE|Pydantic|SQLAlchemy|Docker",
+          "Celery|Redis|Git Worktrees|Human-in-the-loop|SSE|Pydantic|SQLAlchemy|Docker|GitHub Actions",
         complexity: "⭐⭐⭐⭐⭐",
         websiteUrl: null,
         demoUrl: null,
