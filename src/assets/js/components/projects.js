@@ -35,9 +35,9 @@ class ProjectsCarousel {
         image: aditu,
         description:
           "Solo-founded B2B SaaS for recorded-call quality assurance. The platform processes audio batches through transcription and configurable rubric-based AI evaluation, anchors results to transcript evidence, and generates call-level and batch reports with PDF/spreadsheet exports. I owned product discovery, system design, full-stack delivery, vendor benchmarking, Stripe metered billing, pricing, market research, and production operations. Internal benchmarks showed roughly 8x lower cost and 12x faster processing than the manual review baseline, with English and Spanish support. Live operations are paused; the Report includes the full case study, benchmarks, and sample outputs.",
-        tech: "Next.js|FastAPI|PostgreSQL|Celery|Redis|Tailwind",
+        tech: "Next.js|FastAPI|PostgreSQL|Tailwind",
         details:
-          "Stripe|Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|GitHub Actions|Sentry|Vercel",
+          "Postgres Job Polling|Stripe|Clerk|Cloudflare R2|ElevenLabs|Deepgram|Claude|Docker|GitHub Actions|Sentry|Vercel",
         complexity: "⭐⭐⭐⭐⭐",
         websiteUrl: "https://aditu.app",
         demoUrl: null,
